@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbc.properties" /> <!-- 引入数据库配置文件 -->
+
+    <typeAliases> <!-- 别名 使用注解的方法，进行包扫描 -->
+        <package name="testMapper"/>
+
+        <package name="dao.mappers"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${database.driver}"/>
+                <property name="url" value="${database.url}"/>
+                <property name="username" value="${database.username}"/>
+                <property name="password" value="${database.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <package name="testMapper"/> <!-- 注意使用package的时候，包里的xml和接口的命名要对应，否则报错。  还可以使用resource方法使用xml文件引入映射器 -->
+
+        <package name="dao.mappers"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.mappers.RecipeInstructionMapper">
+    <insert id="addRecipeInstruction" parameterType="RecipeInstruction">
+        insert into recipeinstruction
+        values (#{recipeInstruction.recipeId}, #{recipeInstruction.recipeName}, #{recipeInstruction.instructionId}, #{recipeInstruction.instructionText} )
+
+    </insert>
+
+
+    <delete id="deleteRecipeInstruction" parameterType="RecipeInstruction">
+        delete from recipeinstruction
+        where recipeId = #{recipeInstruction.recipeId} and instructionId = #{recipeInstruction.instructionId}
+    </delete>
+
+    <update id="updateRecipe" parameterType="RecipeInstruction">
+        update recipeinstruction
+        set instructionId = #{recipeInstruction.instructionId}, instructionText = #{recipeInstruction.instructionText}
+        where recipeId = #{recipe.recipeId} and instructionId = #{recipeInstruction.instructionId}
+    </update>
+
+    <select id="getRecipeByRecipeId" parameterType="int" resultType="RecipeInstruction">
+        select *
+        from recipeinstruction
+        where recipeId = #{recipeId}
+    </select>
+
+
+
+
+</mapper>

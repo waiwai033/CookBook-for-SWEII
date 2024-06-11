@@ -10,8 +10,9 @@ module com.example.cookbook {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires org.mybatis;
 
     opens com.example.cookbook to javafx.fxml;
     exports com.example.cookbook;
-    exports CookBookView to javafx.graphics;
+    exports Enter to javafx.graphics;
 }

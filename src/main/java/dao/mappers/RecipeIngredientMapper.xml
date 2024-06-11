@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.mappers.RecipeIngredientMapper">
+    <insert id="addRecipeIngredient" parameterType="RecipeIngredient">
+        insert into recipeingredient
+        values (#{recipeIngredient.recipeId}, #{recipeIngredient.recipeName}, #{recipeIngredient.ingredientId}, #{recipeIngredient.ingredientName}, #{recipeIngredient.quantity}, #{recipeIngredient.unit})
+
+    </insert>
+
+
+    <delete id="deleteRecipeIngredient" parameterType="RecipeIngredient">
+        delete from recipeingredient
+        where recipeId = #{recipeIngredient.recipeId} and ingredientId = #{recipeIngredient.ingredientId}
+    </delete>
+
+    <update id="updateRecipe" parameterType="RecipeIngredient">
+        update recipeingredient
+        set ingredientId = #{recipeIngredient.ingredientId}, ingredientName = #{recipeIngredient.ingredientName}, quantity = #{recipeIntegredient.quantity}, unit = #{recipeIngredient.unit}
+        where recipeId = #{recipe.recipeId} and ingredientId = #{recipeIngredient.ingredientId}
+    </update>
+
+    <select id="getRecipeByRecipeId" parameterType="int" resultType="Recipe">
+        select *
+        from recipeingredient
+        where recipeId = #{recipeId}
+    </select>
+
+
+
+
+</mapper>

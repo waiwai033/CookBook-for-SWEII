@@ -1,17 +1,19 @@
-package CookBookView;
+package view;
 
+import Enter.App;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.animation.TranslateTransition;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import control.LoginPageController;
 
 public class signinView extends Stage {
 
@@ -102,7 +104,8 @@ public class signinView extends Stage {
     }
 
     public void setSignupButton() {
-        signupButton = new Button("Sign Up");
+        signupButton = new Button("Sign up");
+        signupButton.setOnAction(new LoginPageController(this));
         signupButton.setLayoutX(350);
         signupButton.setLayoutY(350);
         signupButton.setPrefSize(100,40);
