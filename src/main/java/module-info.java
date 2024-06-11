@@ -2,7 +2,7 @@ module com.example.cookbook {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-
+    requires javafx.graphics;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
@@ -13,4 +13,5 @@ module com.example.cookbook {
 
     opens com.example.cookbook to javafx.fxml;
     exports com.example.cookbook;
+    exports CookBookView to javafx.graphics;
 }
