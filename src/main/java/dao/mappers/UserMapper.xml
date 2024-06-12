@@ -5,31 +5,31 @@
 <mapper namespace="dao.mappers.UserMapper">
     <insert id="addUser" parameterType="User">
         insert into users
-        values (#{user.userId}, #{user.userName}, #{user.password}, #{user.is_vip})
+        values (#{user.user_id}, #{user.user_name}, #{user.password}, #{user.is_vip})
 
     </insert>
 
 
     <delete id="deleteUser" parameterType="User">
         delete from user_table
-        where userId = #{user.userId}
+        where user_id = #{user.userId}
     </delete>
 
     <update id="updateUser" parameterType="User">
         update users
-        set userName = #{user.userName}, password = #{user.password}
-        where userId = #{user.userId}
+        set user_name = #{user.userName}, password = #{user.password}
+        where user_id = #{user.userId}
     </update>
 
     <select id="getUserById" parameterType="int" resultType="User">
         select *
         from users
-        where user_Id = #{id}
+        where user_id = #{id}
     </select>
 
     <select id="getUserByName" parameterType="string" resultType="User">
         select *
         from users
-        where userName = #{name}
+        where user_name = #{name}
     </select>
 </mapper>

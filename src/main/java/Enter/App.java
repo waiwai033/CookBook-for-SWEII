@@ -1,22 +1,17 @@
 package Enter;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
-import view.signinView;
+
 /**
- * @author Yanyi
- * used for checking result of each view
- * **/
-public class App extends Application {
-
-    public void start(Stage primaryStage) {
-        signinView signin = new signinView();
-        signin.show();
-//        signupView signup = new signupView();
-//        signup.show();
-    }
-
+ * The type Main.
+ */
+public class App {
+    /**
+     * The entry point of whole application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(ApplicationEntrance.class);
     }
 }

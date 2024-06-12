@@ -43,15 +43,8 @@ public class Model implements ModelMethod{
 
     }
 
-    @Override
-    public void sign(int userID, String password) {
 
-    }
 
-    @Override
-    public void login(int userID, String password) {
-
-    }
 
     @Override
     public void sign(String name, String password) {
@@ -65,9 +58,14 @@ public class Model implements ModelMethod{
     public void login(String name, String password) {
         User user = userMapper.getUserByName(name);
         if(user == null){
+            System.out.print(1111);
             sqlSession.rollback();
         }
+        else if(!user.getPassword().equals(password)){
+            System.out.print("password error");
+        }
         else if(user.getPassword().equals(password)){
+            System.out.println("successful");
             sqlSession.commit();
         }
 
@@ -81,11 +79,6 @@ public class Model implements ModelMethod{
     @Override
     public void loadRecipePage() {
 
-    }
-
-    @Override
-    public List<Recipe> updateRecipePageByName(String category, int recipeID) {
-        return List.of();
     }
 
 

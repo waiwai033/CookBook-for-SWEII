@@ -31,6 +31,12 @@ public class signinView extends Stage {
     }
 
 
+    public TextField getNewUserTextField() {
+        return usernameTextField;
+    }
+    public TextField getNewPasswordTextField() {
+        return passwordTextField;
+    }
     private ImageView createImageView(String imagepath,double LayoutX,double LayoutY,double width,double height) {
         Image image = new Image(imagepath);
         ImageView imageView = new ImageView(image);
@@ -98,6 +104,7 @@ public class signinView extends Stage {
 
     public void setSigninButton() {
         signinButton = new Button("Sign In");
+        signinButton.setOnAction(new LoginPageController(this));
         signinButton.setLayoutX(150);
         signinButton.setLayoutY(350);
         signinButton.setPrefSize(100,40);
@@ -134,8 +141,6 @@ public class signinView extends Stage {
 
         return PasswordLabel;
     }
-    public static void main(String[] args) {
-        Application.launch(App.class, args);
-    }
+
 }
 

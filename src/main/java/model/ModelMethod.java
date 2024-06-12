@@ -12,9 +12,7 @@ public interface ModelMethod {
 
     public void loadLoginPage();
 
-    public void sign(int userID, String password);
 
-    public void login(int userID, String password);
 
     void sign(String name, String password);
 
@@ -24,7 +22,6 @@ public interface ModelMethod {
 
     public void loadRecipePage();
 
-    public List<Recipe> updateRecipePageByName(String category, int recipeID);
 
     public List<Recipe> updateRecipePageByCategory(String category);
 

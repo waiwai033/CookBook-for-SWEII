@@ -1,6 +1,8 @@
 package view;
 
 import Enter.App;
+import control.LoginPageController;
+import control.SignPageController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +17,7 @@ import javafx.stage.Stage;
 public class signupView extends Stage {
     public TextField newUserTextField ,newPasswordTextField;
 
+
     public ImageView imageView;
 
     public Button createUserButton;
@@ -26,6 +29,12 @@ public class signupView extends Stage {
         this.setHeight(600);
         this.setResizable(false);
         init();
+    }
+    public TextField getNewUserTextField() {
+        return newUserTextField;
+    }
+    public TextField getNewPasswordTextField() {
+        return newPasswordTextField;
     }
     public void init() {
         AnchorPane background = new AnchorPane();
@@ -83,6 +92,7 @@ public class signupView extends Stage {
     }
     public void setSignupButton() {
         createUserButton = new Button("Create");
+        createUserButton.setOnAction(new SignPageController(this));
         createUserButton.setLayoutX(150);
         createUserButton.setLayoutY(350);
         createUserButton.setPrefSize(100,40);
@@ -92,9 +102,6 @@ public class signupView extends Stage {
         createVIPButton.setLayoutX(350);
         createVIPButton.setLayoutY(350);
         createVIPButton.setPrefSize(100,40);
-    }
-    public static void main(String[] args) {
-        Application.launch(App.class, args);
     }
 
 }
