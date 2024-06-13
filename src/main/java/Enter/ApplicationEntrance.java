@@ -10,7 +10,11 @@ import view.*;
 public class ApplicationEntrance extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws Exception {
-        signinView signinView = new signinView();
-        signinView.show();
+//        signinView signinView = new signinView();
+//        signinView.show();
+//        MainPageView mainPageView = new MainPageView();
+//        mainPageView.show();
+        VIPView vipView = new VIPView();
+        vipView.show();
     }
 }
