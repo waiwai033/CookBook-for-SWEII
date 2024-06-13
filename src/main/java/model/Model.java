@@ -1,6 +1,7 @@
 package model;
 
 import dao.mappers.*;
+import javafx.scene.control.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,25 +51,45 @@ public class Model implements ModelMethod{
     public void sign(String name, String password) {
         User user = new User();
         user.setUser(name,password);
-        userMapper.addUser(user);
-        sqlSession.commit();
+        if(userIsExist()){
+            displayAlert(Alert.AlertType.ERROR,"error","Already have same name!");
+        }
+        else{
+            userMapper.addUser(user);
+            sqlSession.commit();
+        }
+
+    }
+
+    private boolean userIsExist() {
+        return true;
     }
 
     @Override
     public void login(String name, String password) {
         User user = userMapper.getUserByName(name);
         if(user == null){
+            displayAlert(Alert.AlertType.ERROR,"error","Please input username");
             System.out.print(1111);
             sqlSession.rollback();
         }
         else if(!user.getPassword().equals(password)){
-            System.out.print("password error");
+//            System.out.print("password error");
+            displayAlert(Alert.AlertType.ERROR,"error","Username or password is incorrect");
         }
         else if(user.getPassword().equals(password)){
             System.out.println("successful");
             sqlSession.commit();
         }
 
+    }
+
+    private static void displayAlert(Alert.AlertType alertType,String title,String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     @Override
