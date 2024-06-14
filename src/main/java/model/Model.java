@@ -48,10 +48,17 @@ public class Model implements ModelMethod{
 
     @Override
     public void sign(String name, String password) {
+
         User user = new User();
         user.setUser(name,password);
-        userMapper.addUser(user);
-        sqlSession.commit();
+        User oldusername = userMapper.getUserByName(name);
+        if(oldusername == null) {
+            userMapper.addUser(user);
+            sqlSession.commit();
+        }
+        else {
+            System.out.println("error");
+        }
     }
 
     @Override
