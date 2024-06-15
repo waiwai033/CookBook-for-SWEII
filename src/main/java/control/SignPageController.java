@@ -21,7 +21,16 @@ public class SignPageController implements EventHandler<ActionEvent> {
 
            String username = usernametext.getText();
            String password = passwordtext.getText();
-           model.sign(username, password);
+           System.out.print(username);
+           if(username == "" || password == ""){
+               System.out.println("Username and password are null!");
+           }
+           else if(model.sign(username, password)){
+//               pop successfully sign window
+           }
+           else{
+//               pop warn window
+           }
 
 
         }

@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import model.Model;
 import view.signinView;
 import view.signupView;
+import view.MainPageView;
 public class LoginPageController implements EventHandler<ActionEvent> {
 
     private signinView signinView;
@@ -27,7 +28,12 @@ public class LoginPageController implements EventHandler<ActionEvent> {
 
             String username = usernametext.getText();
             String password = passwordtext.getText();
-            model.login(username, password);
+            System.out.println("Username is " + username);
+            if(model.login(username, password)){
+                MainPageView mainPageView = new MainPageView();
+                mainPageView.show();
+            }
+
         }
     }
 }

@@ -14,9 +14,9 @@ public interface ModelMethod {
 
 
 
-    void sign(String name, String password);
+    public boolean sign(String name, String password);
 
-    void login(String name, String password);
+    public boolean login(String name, String password);
 
     public void logout();
 

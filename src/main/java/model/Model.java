@@ -47,35 +47,41 @@ public class Model implements ModelMethod{
 
 
     @Override
-    public void sign(String name, String password) {
-
-        User user = new User();
-        user.setUser(name,password);
-        User oldusername = userMapper.getUserByName(name);
-        if(oldusername == null) {
-            userMapper.addUser(user);
-            sqlSession.commit();
+    public boolean sign(String name, String password) {
+        if(userMapper.getUserByName(name)!=null){
+            System.out.print("User already exist");
+            return false;
         }
         else {
-            System.out.println("error");
+            User user = new User();
+            user.setUser(name, password);
+            userMapper.addUser(user);
+            sqlSession.commit();
+            return true;
         }
+
     }
 
     @Override
-    public void login(String name, String password) {
+    public boolean login(String name, String password) {
         User user = userMapper.getUserByName(name);
         if(user == null){
             System.out.print(1111);
             sqlSession.rollback();
+            return false;
+
         }
         else if(!user.getPassword().equals(password)){
+
             System.out.print("password error");
+            return false;
         }
         else if(user.getPassword().equals(password)){
             System.out.println("successful");
             sqlSession.commit();
+            return true;
         }
-
+        return false;
     }
 
     @Override
