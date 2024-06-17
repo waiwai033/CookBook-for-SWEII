@@ -1,0 +1,177 @@
+package view;
+
+import control.RecipeSelectController;
+
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.List;
+
+public class recipeSelectView extends Stage {
+    public TextField searchField;
+    public Button searchButton;
+    public Button vipButton;
+    public Button backButton;
+    public Button nextButton;
+    public Button prevButton;
+    private int currentPage = 0;
+    private static final int ITEMS_PER_PAGE = 3;
+    private List<String> imageUrls;
+    private List<String> imageNames;
+
+//    public AnchorPane background;
+
+    public recipeSelectView() {
+        this.setWidth(800);
+        this.setHeight(600);
+        this.setResizable(false);
+        init();
+    }
+    public void init(){
+        AnchorPane background = new AnchorPane();
+        background.setPrefSize(800, 600);
+
+        Pane pane = new Pane();
+        String img_url1 = "src/images/dishes/001.png";
+        String img_url2 = "src/images/dishes/002.png";
+        String img_url3 = "src/images/dishes/003.png";
+        String img_url4 = "src/images/dishes/004.png";
+        String img_url5 = "src/images/dishes/001.png";
+        String img_url6 = "src/images/dishes/002.png";
+        String img_url7 = "src/images/dishes/003.png";
+        imageUrls = Arrays.asList(
+                img_url1,
+                img_url2,
+                img_url3,
+                img_url4,
+                img_url5,
+                img_url6,
+                img_url7
+        );
+        imageNames = Arrays.asList(
+                "001","002","003","004","005","006","007"
+        );
+//        pane.setStyle("-fx-background-color: transparent;");
+        setRecipeButtons(pane, currentPage);
+        setNextButton(pane);
+        setPreButton(pane);
+        setSearchField();
+        setSearchButton();
+        setBackButton();
+        setVIPButton();
+        background.getChildren().addAll(pane, nextButton, prevButton,searchField,searchButton,vipButton,backButton);
+        Scene scene = new Scene(background);
+        this.setScene(scene);
+    }
+
+    private void setVIPButton() {
+        vipButton = new Button("GetVIP!");
+        vipButton.setOnAction(new RecipeSelectController(this));
+        vipButton.setLayoutX(700);
+        vipButton.setLayoutY(20);
+    }
+
+    private void setBackButton() {
+        backButton = new Button("Back");
+        backButton.setLayoutX(20);
+        backButton.setLayoutY(500);
+    }
+
+    private void setSearchButton() {
+        searchButton = new Button("->");
+        searchButton.setLayoutX(620);
+        searchButton.setLayoutY(100);
+        searchButton.setPrefSize(40,40);
+    }
+
+    private void setNextButton(Pane pane) {
+        nextButton = new Button(">");
+        nextButton.setLayoutX(500);
+        nextButton.setLayoutY(450);
+        nextButton.setOnAction(e -> {
+            if ((currentPage + 1) * ITEMS_PER_PAGE < imageUrls.size()) {
+                currentPage++;
+                setRecipeButtons(pane, currentPage);
+            }
+        });
+    }
+
+    private void setPreButton(Pane pane) {
+        prevButton = new Button("<");
+        prevButton.setLayoutX(300);
+        prevButton.setLayoutY(450);
+        prevButton.setOnAction(e -> {
+            if (currentPage > 0) {
+                currentPage--;
+                setRecipeButtons(pane, currentPage);
+            }
+        });
+    }
+
+    public void setRecipeButtons(Pane pane, int page) {
+        pane.getChildren().clear();
+        int start = page * ITEMS_PER_PAGE;
+        int end = Math.min(start + ITEMS_PER_PAGE, imageUrls.size());
+
+        for (int i = start; i < end; i++) {
+            String url = imageUrls.get(i);
+            String imageName = imageNames.get(i);
+            File imageUrl = new File(url);
+            if (!imageUrl.exists()) {
+                System.out.println("not found " + url);
+                continue;
+            }
+
+            Image recipeImage;
+            try {
+                recipeImage = new Image(new FileInputStream(imageUrl));
+            } catch (FileNotFoundException e) {
+                System.out.println("not found: " + e.getMessage());
+                continue;
+            }
+
+            VBox recipeButton = createButtonWithImage(recipeImage, imageName, 50 + (i - start) * 250, 200);
+            pane.getChildren().add(recipeButton);
+        }
+    }
+
+    private VBox createButtonWithImage(Image recipeImage, String imageName, int x, int y) {
+        Button recipeButton = new Button();
+        ImageView imageView = new ImageView(recipeImage);
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
+        recipeButton.setGraphic(imageView);
+        Label label = new Label(imageName);
+
+        VBox vbox = new VBox(recipeButton, label);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setLayoutX(x);
+        vbox.setLayoutY(y);
+        vbox.setSpacing(10); // Add some spacing between button and label
+
+        return vbox;
+    }
+    public void setSearchField() {
+        searchField = new TextField();
+        searchField.setPrefHeight(40.0);
+        searchField.setPrefWidth(400.0);
+        searchField.setText("Search");
+        searchField.setLayoutX(200);
+        searchField.setLayoutY(100);
+        searchField.setEditable(true);
+
+//        background.getChildren().add(stackPane);
+    }
+}
