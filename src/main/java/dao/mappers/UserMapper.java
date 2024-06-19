@@ -13,9 +13,8 @@ public interface UserMapper {
      * Add user boolean.
      *
      * @param user the user
-     * @return the boolean
      */
-    public boolean addUser(@Param("user") User user);
+    public void addUser(@Param("user") User user);
     /**
      * Delete user boolean.
      *

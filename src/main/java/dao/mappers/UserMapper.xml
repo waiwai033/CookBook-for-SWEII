@@ -9,7 +9,6 @@
 
     </insert>
 
-
     <delete id="deleteUser" parameterType="User">
         delete from user_table
         where user_id = #{user.userId}
@@ -32,4 +31,5 @@
         from users
         where user_name = #{name}
     </select>
+
 </mapper>
