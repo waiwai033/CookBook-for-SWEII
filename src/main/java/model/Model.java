@@ -16,7 +16,7 @@ public class Model implements ModelMethod{
     private UserMapper userMapper;
     private RecipeMapper recipeMapper;
     private RecipeIngredientMapper recipeIngredientMapper;
-    private RecipeInstructionMapper recipeInstructionMapper;
+    private PreparationStepMapper preparationStepMapper;
     private SqlSession sqlSession;
 
 
@@ -30,7 +30,7 @@ public class Model implements ModelMethod{
             userMapper = sqlSession.getMapper(UserMapper.class);
             recipeMapper = sqlSession.getMapper(RecipeMapper.class);
             recipeIngredientMapper = sqlSession.getMapper(RecipeIngredientMapper.class);
-            recipeInstructionMapper = sqlSession.getMapper(RecipeInstructionMapper.class);
+            preparationStepMapper = sqlSession.getMapper(PreparationStepMapper.class);
             // 处理 inputStream
         } catch (IOException e) {
             // 处理异常，或者将异常向上层抛出
@@ -141,12 +141,12 @@ public class Model implements ModelMethod{
 
     @Override
     public List<RecipeIngredient> loadIngredientPage(int recipeID) {
-        List<RecipeIngredient> ingredients = recipeIngredientMapper.getRecipeById(recipeID);
+        List<RecipeIngredient> ingredients = recipeIngredientMapper.getRecipeIngredientsByRecipeId(recipeID);
         return ingredients;
     }
 
-    public List<RecipeInstruction> loadInstructionPage(int recipeID) {
-        List<RecipeInstruction> instructions = recipeInstructionMapper.getRecipeInstructionById(recipeID);
+    public List<PreparationStep> loadInstructionPage(int recipeID) {
+        List<PreparationStep> instructions = preparationStepMapper.getPreparationStepsByRecipeId(recipeID);
         return instructions;
     }
 }

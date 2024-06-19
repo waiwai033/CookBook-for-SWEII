@@ -2,7 +2,7 @@ package model;
 
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
-import dao.mappers.RecipeInstruction;
+import dao.mappers.PreparationStep;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public interface ModelMethod {
 
     public List<RecipeIngredient> loadIngredientPage(int recipeID);
 
-    public List<RecipeInstruction> loadInstructionPage(int recipeID);
+    public List<PreparationStep> loadInstructionPage(int recipeID);
 
 
 }

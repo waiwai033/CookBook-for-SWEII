@@ -12,53 +12,57 @@ import java.util.List;
  */
 public interface RecipeMapper {
     /**
-     * Add user boolean.
+     * Add recipe boolean.
      *
-     * @param recipe
+     * @param recipe the recipe
      * @return the boolean
      */
-    public boolean addRecipe(@Param("recipe") Recipe recipe);
-
+    boolean addRecipe(@Param("recipe") Recipe recipe);
 
     /**
-     * Delete user boolean.
+     * Delete recipe boolean.
      *
-     * @param recipe
+     * @param recipeId the recipe id
      * @return the boolean
      */
-    public boolean deleteRecipe(@Param("recipe") Recipe recipe);
+    boolean deleteRecipe(@Param("recipeId") int recipeId);
 
     /**
      * Update recipe boolean.
      *
-     * @param recipe
+     * @param recipe the recipe
      * @return the boolean
      */
-    public boolean updateRecipe(@Param("recipe") Recipe recipe);
+    boolean updateRecipe(@Param("recipe") Recipe recipe);
 
     /**
      * Gets recipe by id.
      *
-     * @param recipeId
-     * @return the user by id
+     * @param recipeId the recipe id
+     * @return the recipe by id
      */
-    public Recipe getRecipeById(@Param("recipeId") int recipeId);
+    Recipe getRecipeById(@Param("recipeId") int recipeId);
 
     /**
      * Gets recipe by name.
      *
-     * @param recipeName
-     * @return the user by name
+     * @param recipeName the recipe name
+     * @return the recipe by name
      */
-    public Recipe getRecipeByName(@Param("recipeName") String recipeName);
+    Recipe getRecipeByName(@Param("recipeName") String recipeName);
 
+    /**
+     * Gets all recipes.
+     *
+     * @return the list of all recipes
+     */
+    List<Recipe> getAllRecipes();
 
-    public List<Recipe> getAllRecipes();
     /**
      * Gets recipe list by category.
      *
-     * @param category
+     * @param category the category
      * @return the recipe list by category
      */
-    public List<Recipe> getRecipeByCategory(@Param("category") String category);
+    List<Recipe> getRecipeByCategory(@Param("category") String category);
 }

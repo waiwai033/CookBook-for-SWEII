@@ -74,4 +74,14 @@ public class User implements Serializable {
     }
 
     public void setVip() {this.is_vip = true;}
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", password=" + password +
+                ", is_vip=" + is_vip +
+                '}';
+    }
 }

@@ -2,34 +2,26 @@ package dao.mappers;
 
 import java.io.Serializable;
 
-/**
- * The type Recipe.
- *
- * @author Chenyi He
- */
-
 public class Recipe implements Serializable {
     private int recipeId;
     private String recipeName;
-    private String description;
-    private String imageUrl;
-    private String category;
-    private String cookTime;
+    private int serveAmount;
+    private int preparationTime;
+    private int cookingTime;
 
-    public Recipe() {}
+    public Recipe() {
+    }
 
-    // 全参数构造函数
-    public Recipe(int recipeId, String recipeName, String description, String imageUrl, String category, String cookTime) {
+    public Recipe(int recipeId, String recipeName, int serveAmount, int preparationTime, int cookingTime) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.category = category;
-        this.cookTime = cookTime;
+        this.serveAmount = serveAmount;
+        this.preparationTime = preparationTime;
+        this.cookingTime = cookingTime;
     }
 
     public int getRecipeId() {
-        return recipeId;
+        return this.recipeId;
     }
 
     public void setRecipeId(int recipeId) {
@@ -37,42 +29,45 @@ public class Recipe implements Serializable {
     }
 
     public String getRecipeName() {
-        return recipeName;
+        return this.recipeName;
     }
 
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
 
-    public String getDescription() {
-        return description;
+    public int getServeAmount() {
+        return this.serveAmount;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setServeAmount(int serveAmount) {
+        this.serveAmount = serveAmount;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public int getPreparationTime() {
+        return this.preparationTime;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPreparationTime(int preparationTime) {
+        this.preparationTime = preparationTime;
     }
 
-    public String getCategory() {
-        return category;
+    public int getCookingTime() {
+        return this.cookingTime;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCookingTime(int cookingTime) {
+        this.cookingTime = cookingTime;
+    }
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "recipeId=" + recipeId +
+                ", recipeName='" + recipeName + '\'' +
+                ", serveAmount=" + serveAmount +
+                ", preparationTime=" + preparationTime +
+                ", cookingTime=" + cookingTime +
+                '}';
     }
 
-    public String getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(String cookTime) {
-        this.cookTime = cookTime;
-    }
 }

@@ -3,41 +3,42 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mappers.RecipeMapper">
-    <insert id="addRecipe" parameterType="Recipe">
-        insert into recipe
-        values (#{recipe.recipeId}, #{recipe.recipeName}, #{recipe.category}, #{recipe.description}, #{recipe.imageUrl}, #{recipe.cookTime})
 
+    <insert id="addRecipe" parameterType="Recipe">
+        insert into recipe (recipe_id, name, serveamount, preparationTime, cookingTime)
+        values (#{recipe.recipeId}, #{recipeName}, #{serveAmount}, #{preparationTime}, #{cookingTime})
     </insert>
 
-
-    <delete id="deleteRecipe" parameterType="Recipe">
+    <delete id="deleteRecipe" parameterType="int">
         delete from recipe
-        where recipeId = #{recipe.recipeId}
+        where recipe_id = #{recipeId}
     </delete>
-    <select id="getAllRecipes" >
-        select *
+
+    <select id="getAllRecipes" resultType="Recipe">
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
         from recipe
     </select>
+
     <update id="updateRecipe" parameterType="Recipe">
         update recipe
-        set recipeName = #{recipe.recipeName}, category = #{recipe.category}, description = #{recipe.description}, imageUrl = #{recipe.imageUrl}, cookTime = #{recipe.cookTime}
-        where recipeId = #{recipe.recipeId}
+        set name = #{recipeName}, serveamount = #{serveAmount}, preparationTime = #{preparationTime}, cookingTime = #{cookingTime}
+        where recipe_id = #{recipeId}
     </update>
 
     <select id="getRecipeById" parameterType="int" resultType="Recipe">
-        select *
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
         from recipe
-        where recipeId = #{recipeId}
+        where recipe_id = #{recipeId}
     </select>
 
     <select id="getRecipeByName" parameterType="string" resultType="Recipe">
-        select *
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
         from recipe
-        where recipeName = #{recipeName}
+        where name = #{recipeName}
     </select>
 
     <select id="getRecipeByCategory" parameterType="string" resultType="Recipe">
-        select *
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
         from recipe
         where category = #{category}
     </select>
