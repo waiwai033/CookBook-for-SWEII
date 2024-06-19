@@ -2,7 +2,10 @@ package control;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Model;
 import view.signupView;
 public class SignPageController implements EventHandler<ActionEvent> {
@@ -26,10 +29,19 @@ public class SignPageController implements EventHandler<ActionEvent> {
                System.out.println("Username and password are null!");
            }
            else if(model.sign(username, password)){
-//               pop successfully sign window
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("Sign Up");
+               alert.setHeaderText(null);
+               alert.setContentText("Successfully signed up!");
+
+               alert.showAndWait().ifPresent(response -> {
+                   // 获取当前的Stage并关闭
+                   Stage stage = (Stage) signupView.getStage();
+                   stage.close();
+               });
            }
            else{
-//               pop warn window
+               Model.displayAlert(Alert.AlertType.ERROR,"error","Already have same name!");
            }
 
 

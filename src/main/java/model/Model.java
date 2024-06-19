@@ -1,6 +1,7 @@
 package model;
 
 import dao.mappers.*;
+import javafx.scene.control.Alert;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -62,17 +63,19 @@ public class Model implements ModelMethod{
 
     }
 
+
     @Override
     public boolean login(String name, String password) {
         User user = userMapper.getUserByName(name);
         if(user == null){
+            displayAlert(Alert.AlertType.ERROR,"error","Please input username!");
             System.out.print(1111);
             sqlSession.rollback();
             return false;
 
         }
         else if(!user.getPassword().equals(password)){
-
+            displayAlert(Alert.AlertType.ERROR,"error","password error");
             System.out.print("password error");
             return false;
         }
@@ -148,5 +151,12 @@ public class Model implements ModelMethod{
     public List<PreparationStep> loadInstructionPage(int recipeID) {
         List<PreparationStep> instructions = preparationStepMapper.getPreparationStepsByRecipeId(recipeID);
         return instructions;
+    }
+    public static void displayAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

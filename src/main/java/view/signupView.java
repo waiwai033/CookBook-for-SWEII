@@ -103,6 +103,9 @@ public class signupView extends Stage {
         createVIPButton.setLayoutY(350);
         createVIPButton.setPrefSize(100,40);
     }
+    public Stage getStage() {
+        return (Stage) createUserButton.getScene().getWindow();
+    }
 
 }
 
