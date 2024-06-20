@@ -24,7 +24,7 @@ public class LoginPageController implements EventHandler<ActionEvent> {
         if (event.getSource() == signinView.signinButton) {
             TextField passwordtext = signinView.getNewPasswordTextField();
             TextField usernametext = signinView.getNewUserTextField();
-           System.out.println("Signup button pressed");
+            System.out.println("Signup button pressed");
 
             String username = usernametext.getText();
             String password = passwordtext.getText();
