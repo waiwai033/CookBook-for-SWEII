@@ -95,11 +95,11 @@ public class Model implements ModelMethod{
     }
 
 
-    public List<Recipe> updateRecipePageByName(String name) {
-        List<Recipe> recipes = recipeMapper.getAllRecipes();
+    public ArrayList<Recipe> updateRecipePageByName(String name) {
+        ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
         String regex = ".*" + name + ".*";
         Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
-        List<Recipe> matches = new ArrayList<>();
+        ArrayList<Recipe> matches = new ArrayList<>();
         for(Recipe recipe : recipes){
             Matcher matcher = pattern.matcher(recipe.getRecipeName());
             if(matcher.matches()){
@@ -111,8 +111,8 @@ public class Model implements ModelMethod{
     }
 
     @Override
-    public List<Recipe> updateRecipePageByCategory(String category) {
-        List<Recipe> recipeList = recipeMapper.getRecipeByCategory(category);
+    public ArrayList<Recipe> updateRecipePageByCategory(String category) {
+        ArrayList<Recipe> recipeList = recipeMapper.getRecipeByCategory(category);
         return recipeList;
     }
 
@@ -148,5 +148,42 @@ public class Model implements ModelMethod{
     public List<PreparationStep> loadInstructionPage(int recipeID) {
         List<PreparationStep> instructions = preparationStepMapper.getPreparationStepsByRecipeId(recipeID);
         return instructions;
+    }
+
+    public  ArrayList<String>  updateImageUrls(String recipeName){
+        ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
+        ArrayList<String> imageUrls = new ArrayList<>();
+        for(Recipe recipe : recipes){
+
+            imageUrls.add(recipe.getImageUrl());
+        }
+        System.out.println(imageUrls);
+        return imageUrls;
+    }
+    public  ArrayList<String>  updateImageNames(String recipeName){
+        ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
+        ArrayList<String> imageNames = new ArrayList<>();
+        for(Recipe recipe : recipes){
+
+            imageNames.add(recipe.getRecipeName());
+        }
+
+        return imageNames;
+    }
+    public ArrayList<String> getImageUrls(){
+        ArrayList<String> imageUrls = new ArrayList<>();
+        ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
+        for(Recipe recipe : recipes){
+            imageUrls.add(recipe.getImageUrl());
+        }
+        return imageUrls;
+    }
+    public ArrayList<String> getImageNames(){
+        ArrayList<String> imageNames = new ArrayList<>();
+        ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
+        for(Recipe recipe : recipes){
+            imageNames.add(recipe.getRecipeName());
+        }
+        return imageNames;
     }
 }

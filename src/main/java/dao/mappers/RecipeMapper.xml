@@ -5,8 +5,8 @@
 <mapper namespace="dao.mappers.RecipeMapper">
 
     <insert id="addRecipe" parameterType="Recipe">
-        insert into recipe (recipe_id, name, serveamount, preparationTime, cookingTime)
-        values (#{recipe.recipeId}, #{recipeName}, #{serveAmount}, #{preparationTime}, #{cookingTime})
+        insert into recipe (recipe_id, name, serveamount, preparationTime, cookingTime, image_url)
+        values (#{recipe.recipeId}, #{recipeName}, #{serveAmount}, #{preparationTime}, #{cookingTime}, #{imageUrl})
     </insert>
 
     <delete id="deleteRecipe" parameterType="int">
@@ -15,30 +15,31 @@
     </delete>
 
     <select id="getAllRecipes" resultType="Recipe">
-        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime, image_url as imageUrl
         from recipe
     </select>
 
     <update id="updateRecipe" parameterType="Recipe">
         update recipe
-        set name = #{recipeName}, serveamount = #{serveAmount}, preparationTime = #{preparationTime}, cookingTime = #{cookingTime}
+        set name = #{recipeName}, serveamount = #{serveAmount}, preparationTime = #{preparationTime}, cookingTime = #{cookingTime}, image_url = #{imageUrl}
         where recipe_id = #{recipeId}
     </update>
 
     <select id="getRecipeById" parameterType="int" resultType="Recipe">
-        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime,image_url as imageUrl
         from recipe
         where recipe_id = #{recipeId}
     </select>
 
     <select id="getRecipeByName" parameterType="string" resultType="Recipe">
-        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime,image_url as imageUrl
         from recipe
-        where name = #{recipeName}
+        where name like concat('%', #{recipeName}, '%')
     </select>
 
+
     <select id="getRecipeByCategory" parameterType="string" resultType="Recipe">
-        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime
+        select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime,image_url as imageUrl
         from recipe
         where category = #{category}
     </select>

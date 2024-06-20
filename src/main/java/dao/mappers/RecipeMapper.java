@@ -2,6 +2,7 @@ package dao.mappers;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,14 +50,14 @@ public interface RecipeMapper {
      * @param recipeName the recipe name
      * @return the recipe by name
      */
-    Recipe getRecipeByName(@Param("recipeName") String recipeName);
+    ArrayList<Recipe> getRecipeByName(@Param("recipeName") String recipeName);
 
     /**
      * Gets all recipes.
      *
      * @return the list of all recipes
      */
-    List<Recipe> getAllRecipes();
+    ArrayList<Recipe> getAllRecipes();
 
     /**
      * Gets recipe list by category.
@@ -64,5 +65,5 @@ public interface RecipeMapper {
      * @param category the category
      * @return the recipe list by category
      */
-    List<Recipe> getRecipeByCategory(@Param("category") String category);
+    ArrayList<Recipe> getRecipeByCategory(@Param("category") String category);
 }

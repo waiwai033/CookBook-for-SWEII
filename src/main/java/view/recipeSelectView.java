@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,8 +30,8 @@ public class recipeSelectView extends Stage {
     public Button prevButton;
     private int currentPage = 0;
     private static final int ITEMS_PER_PAGE = 3;
-    private List<String> imageUrls;
-    private List<String> imageNames;
+    public List<String> imageUrls;
+    public List<String> imageNames;
 
 //    public AnchorPane background;
 
@@ -40,30 +42,13 @@ public class recipeSelectView extends Stage {
         init();
     }
     public void init(){
+        // Load initial data
+        RecipeSelectController controller = new RecipeSelectController(this);
+        controller.initializeData();
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800, 600);
-
         Pane pane = new Pane();
-        String img_url1 = "src/images/dishes/001.png";
-        String img_url2 = "src/images/dishes/002.png";
-        String img_url3 = "src/images/dishes/003.png";
-        String img_url4 = "src/images/dishes/004.png";
-        String img_url5 = "src/images/dishes/001.png";
-        String img_url6 = "src/images/dishes/002.png";
-        String img_url7 = "src/images/dishes/003.png";
-        imageUrls = Arrays.asList(
-                img_url1,
-                img_url2,
-                img_url3,
-                img_url4,
-                img_url5,
-                img_url6,
-                img_url7
-        );
-        imageNames = Arrays.asList(
-                "001","002","003","004","005","006","007"
-        );
-//        pane.setStyle("-fx-background-color: transparent;");
+
         setRecipeButtons(pane, currentPage);
         setNextButton(pane);
         setPreButton(pane);
@@ -76,6 +61,24 @@ public class recipeSelectView extends Stage {
         this.setScene(scene);
     }
 
+    public void update(ArrayList<String> _imageUrls, ArrayList<String> _imageNames){
+        imageUrls = _imageUrls;
+        imageNames = _imageNames;
+        AnchorPane background = new AnchorPane();
+        background.setPrefSize(800, 600);
+        Pane pane = new Pane();
+
+        setRecipeButtons(pane, currentPage);
+        setNextButton(pane);
+        setPreButton(pane);
+        setSearchField();
+        setSearchButton();
+        setBackButton();
+        setVIPButton();
+        background.getChildren().addAll(pane, nextButton, prevButton,searchField,searchButton,vipButton,backButton);
+        Scene scene = new Scene(background);
+        this.setScene(scene);
+    }
     private void setVIPButton() {
         vipButton = new Button("GetVIP!");
         vipButton.setOnAction(new RecipeSelectController(this));
@@ -91,6 +94,7 @@ public class recipeSelectView extends Stage {
 
     private void setSearchButton() {
         searchButton = new Button("->");
+        searchButton.setOnAction(new RecipeSelectController(this));
         searchButton.setLayoutX(620);
         searchButton.setLayoutY(100);
         searchButton.setPrefSize(40,40);

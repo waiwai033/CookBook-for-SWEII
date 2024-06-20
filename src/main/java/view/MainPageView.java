@@ -87,6 +87,7 @@ public class MainPageView extends Stage {
                 ImageView imageViewLeft = new ImageView(imageLeft);
                 imageViewLeft.setFitHeight(300);
                 imageViewLeft.setFitWidth(250);
+                chooseRecipe.setOnAction(new MainPageController(this));
                 chooseRecipe.setLayoutX(75);
                 chooseRecipe.setLayoutY(150);
                 chooseRecipe.setGraphic(imageViewLeft);

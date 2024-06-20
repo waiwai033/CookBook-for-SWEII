@@ -7,6 +7,7 @@ import model.Model;
 import view.signupView;
 import view.MainPageView;
 import view.VIPView;
+import view.recipeSelectView;
 public class MainPageController implements EventHandler<ActionEvent> {
 
     private MainPageView mainPageView;
@@ -19,9 +20,13 @@ public class MainPageController implements EventHandler<ActionEvent> {
         if (event.getSource() == mainPageView.getVIP) {
             VIPView vipView = new VIPView();
             vipView.show();
-
+        }
+        else if(event.getSource() == mainPageView.chooseRecipe){
+            recipeSelectView recipeSelectView = new recipeSelectView();
+            recipeSelectView.show();
+        }
 
         }
-    }
+
 }
 

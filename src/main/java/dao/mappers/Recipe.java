@@ -8,16 +8,17 @@ public class Recipe implements Serializable {
     private int serveAmount;
     private int preparationTime;
     private int cookingTime;
-
+    private String imageUrl;
     public Recipe() {
     }
 
-    public Recipe(int recipeId, String recipeName, int serveAmount, int preparationTime, int cookingTime) {
+    public Recipe(int recipeId, String recipeName, int serveAmount, int preparationTime, int cookingTime, String imageUrl) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.serveAmount = serveAmount;
         this.preparationTime = preparationTime;
         this.cookingTime = cookingTime;
+        this.imageUrl = imageUrl;
     }
 
     public int getRecipeId() {
@@ -59,6 +60,9 @@ public class Recipe implements Serializable {
     public void setCookingTime(int cookingTime) {
         this.cookingTime = cookingTime;
     }
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
     @Override
     public String toString() {
         return "Recipe{" +
@@ -67,6 +71,7 @@ public class Recipe implements Serializable {
                 ", serveAmount=" + serveAmount +
                 ", preparationTime=" + preparationTime +
                 ", cookingTime=" + cookingTime +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 

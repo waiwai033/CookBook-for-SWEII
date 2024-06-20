@@ -37,5 +37,8 @@ public interface ModelMethod {
 
     public List<PreparationStep> loadInstructionPage(int recipeID);
 
-
+    public List<String> getImageUrls();
+    public List<String> getImageNames();
+    public  List<String>  updateImageNames(String recipeName);
+    public List<String> updateImageUrls(String recipeName);
 }
