@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import view.*;
 
 public class Model implements ModelMethod{
     private UserMapper userMapper;
@@ -95,6 +96,11 @@ public class Model implements ModelMethod{
     @Override
     public void loadRecipePage() {
 
+//        需要变化的标签
+//       recipeNameLabel.setText("");
+//       cookingTimeLabel.setText("");
+//       preparationTimeLabel.setText("");
+//       serveNumberTextField.setText("");
     }
 
 
