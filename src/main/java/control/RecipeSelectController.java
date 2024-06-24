@@ -2,11 +2,14 @@ package control;
 import dao.mappers.Recipe;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Model;
+import javafx.scene.control.Button;
 import view.MainPageView;
 import view.VIPView;
 import view.recipeSelectView;
+import view.recipeDisplayView;
 public class RecipeSelectController implements EventHandler<ActionEvent> {
     private recipeSelectView recipeSelectView;
     private MainPageView mainPageView;
@@ -25,15 +28,24 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
     }
     @Override
     public void handle(ActionEvent actionEvent) {
-        System.out.println(222222);
+
+        for(Button button : recipeSelectView.buttonMap.keySet()){
+            if (actionEvent.getSource() == button){
+
+                recipeDisplayView view = new recipeDisplayView(recipeSelectView.buttonMap.get(button));
+                Integer recipeNumber = recipeSelectView.buttonMap.get(button);
+//                System.out.println(recipeNumber);
+                view.show();
+            }
+        }
         if (actionEvent.getSource() == recipeSelectView.vipButton) {
             VIPView vipView = new VIPView();
             vipView.show();
         }
         else if(actionEvent.getSource() == recipeSelectView.searchButton){
             String recipeName = recipeSelectView.searchField.textProperty().getValue();
-            recipeSelectView.update(model.updateImageUrls(recipeName),model.updateImageNames(recipeName));
-            System.out.println(recipeSelectView.imageUrls);
+            recipeSelectView.update(model.updateImageUrls(recipeName), model.updateImageNames(recipeName));
+//            System.out.println(recipeSelectView.imageUrls);
 
         }
 

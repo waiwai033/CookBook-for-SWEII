@@ -2,6 +2,8 @@ package view;
 
 import control.RecipeSelectController;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,11 +18,9 @@ import javafx.scene.control.Label;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
+import java.util.HashMap;
 public class recipeSelectView extends Stage {
     public TextField searchField;
     public Button searchButton;
@@ -30,11 +30,11 @@ public class recipeSelectView extends Stage {
     public Button prevButton;
     private int currentPage = 0;
     private static final int ITEMS_PER_PAGE = 3;
-    public List<String> imageUrls;
+    public HashMap<String, Integer> imageUrls;
     public List<String> imageNames;
-
+    public List<Button> buttonList = new ArrayList<>();
 //    public AnchorPane background;
-
+    public HashMap<Button, Integer> buttonMap = new HashMap<>();
     public recipeSelectView() {
         this.setWidth(800);
         this.setHeight(600);
@@ -61,7 +61,7 @@ public class recipeSelectView extends Stage {
         this.setScene(scene);
     }
 
-    public void update(ArrayList<String> _imageUrls, ArrayList<String> _imageNames){
+    public void update(HashMap<String, Integer> _imageUrls, ArrayList<String> _imageNames){
         imageUrls = _imageUrls;
         imageNames = _imageNames;
         AnchorPane background = new AnchorPane();
@@ -128,9 +128,14 @@ public class recipeSelectView extends Stage {
         pane.getChildren().clear();
         int start = page * ITEMS_PER_PAGE;
         int end = Math.min(start + ITEMS_PER_PAGE, imageUrls.size());
-
+//        for( String imageName : imageNames) {
+//            System.out.println(imageName);
+//        }
         for (int i = start; i < end; i++) {
-            String url = imageUrls.get(i);
+            // 获取第 i 对的键值对
+            HashMap.Entry<String, Integer> entry = new ArrayList<>(imageUrls.entrySet()).get(i);
+            String url = entry.getKey(); // 获取 url
+
             String imageName = imageNames.get(i);
             File imageUrl = new File(url);
             if (!imageUrl.exists()) {
@@ -146,19 +151,28 @@ public class recipeSelectView extends Stage {
                 continue;
             }
 
-            VBox recipeButton = createButtonWithImage(recipeImage, imageName, 50 + (i - start) * 250, 200);
+            VBox recipeButton = createButtonWithImage(entry.getValue(), recipeImage, imageName, 50 + (i - start) * 250, 200);
             pane.getChildren().add(recipeButton);
         }
     }
 
-    private VBox createButtonWithImage(Image recipeImage, String imageName, int x, int y) {
+    private VBox createButtonWithImage(Integer recipeNumber, Image recipeImage, String imageName, int x, int y) {
         Button recipeButton = new Button();
+        recipeButton.setOnAction(new RecipeSelectController(this));
+        buttonList.add(recipeButton);
+//        recipeButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                System.out.println("Clicked on image: " + imageName);
+//                // 这里可以添加其他点击事件处理逻辑
+//            }
+//        });
         ImageView imageView = new ImageView(recipeImage);
         imageView.setFitHeight(200);
         imageView.setFitWidth(200);
         recipeButton.setGraphic(imageView);
         Label label = new Label(imageName);
-
+        buttonMap.put(recipeButton, recipeNumber);
         VBox vbox = new VBox(recipeButton, label);
         vbox.setAlignment(Pos.CENTER);
         vbox.setLayoutX(x);

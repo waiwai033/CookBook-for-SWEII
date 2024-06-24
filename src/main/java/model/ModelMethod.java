@@ -5,14 +5,11 @@ import dao.mappers.RecipeIngredient;
 import dao.mappers.PreparationStep;
 
 import java.util.List;
+import java.util.HashMap;
 
 public interface ModelMethod {
 
-
-
     public void loadLoginPage();
-
-
 
     public boolean sign(String name, String password);
 
@@ -21,7 +18,6 @@ public interface ModelMethod {
     public void logout();
 
     public void loadRecipePage();
-
 
     public List<Recipe> updateRecipePageByCategory(String category);
 
@@ -37,8 +33,15 @@ public interface ModelMethod {
 
     public List<PreparationStep> loadInstructionPage(int recipeID);
 
-    public List<String> getImageUrls();
+    public HashMap<String, Integer>  getImageUrls();
+
     public List<String> getImageNames();
+
     public  List<String>  updateImageNames(String recipeName);
-    public List<String> updateImageUrls(String recipeName);
+
+    public HashMap<String, Integer>updateImageUrls(String recipeName);
+
+    public Recipe getRecipeByID(Integer id);
+
+
 }

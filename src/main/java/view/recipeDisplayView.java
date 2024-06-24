@@ -1,5 +1,7 @@
 package view;
 
+import control.RecipeDisplayController;
+import control.RecipeSelectController;
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import javafx.geometry.Pos;
@@ -20,22 +22,28 @@ public class recipeDisplayView extends Stage {
 
     public TextField serveNumberTextField;
 
-    public Label recipeNameLabel,cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
+    public Label recipeNameLabel=new Label("");
+    public Label cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
 
     public ImageView recipeImage;
+    public String imageurl = "";
 
     private Tab ingredientsTab, instructionsTab;
 
     public TableView<RecipeIngredient> tableView;
     public TextArea instructionsTextArea;
 
+    public Integer selectedRecipeNumber;
 
+    public recipeDisplayView(Integer recipeNumber) {
+//        this.selectedButton = selectedButton;
 
-    public recipeDisplayView() {
+        System.out.print(recipeNumber);
         this.setTitle("");
         this.setResizable(false);
         this.setWidth(800);
         this.setHeight(600);
+        this.selectedRecipeNumber = recipeNumber;
         init();
     }
 
@@ -44,8 +52,9 @@ public class recipeDisplayView extends Stage {
         background.setPrefSize(800,600);
         background.setStyle("-fx-background-color: #f6ef97;");
 
-
-        String imageurl = "file:src/images/background/bg.png";
+        RecipeDisplayController controller = new RecipeDisplayController(this);
+        controller.initializeData();
+//        String imageurl = "file:src/images/background/bg.png";
         setupImageView(imageurl);
         Pane imagePane = new Pane();
         imagePane.setStyle("-fx-background-color: #f8f5f5;-fx-background-radius: 10;");
@@ -110,10 +119,7 @@ public class recipeDisplayView extends Stage {
         cookingTimeLabel.setLayoutY(160);
     }
 
-
-
     private void setRecipename() {
-        recipeNameLabel = new Label("HONG SHAO ROU");
         recipeNameLabel.setFont(new Font("Comic Sans MS", 50));
         recipeNameLabel.setStyle("-fx-text-fill: #333;");
     }

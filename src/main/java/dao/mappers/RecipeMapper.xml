@@ -17,6 +17,7 @@
     <select id="getAllRecipes" resultType="Recipe">
         select recipe_id as recipeId, name as recipeName, serveamount as serveAmount, preparationTime, cookingTime, image_url as imageUrl
         from recipe
+        order by recipe_id asc
     </select>
 
     <update id="updateRecipe" parameterType="Recipe">

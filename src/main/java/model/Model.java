@@ -9,9 +9,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.LinkedHashMap;
+import java.util.HashMap;
 import view.*;
 
 public class Model implements ModelMethod{
@@ -160,15 +163,15 @@ public class Model implements ModelMethod{
     }
 
 
-    public  ArrayList<String>  updateImageUrls(String recipeName){
+    public  LinkedHashMap<String, Integer>   updateImageUrls(String recipeName){
         ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
-        ArrayList<String> imageUrls = new ArrayList<>();
+        LinkedHashMap<String, Integer> imageHashMap = new LinkedHashMap<>();
         for(Recipe recipe : recipes){
 
-            imageUrls.add(recipe.getImageUrl());
+            imageHashMap.put(recipe.getImageUrl(),recipe.getRecipeId());
         }
-        System.out.println(imageUrls);
-        return imageUrls;
+
+        return imageHashMap;
     }
     public  ArrayList<String>  updateImageNames(String recipeName){
         ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
@@ -180,13 +183,13 @@ public class Model implements ModelMethod{
 
         return imageNames;
     }
-    public ArrayList<String> getImageUrls(){
-        ArrayList<String> imageUrls = new ArrayList<>();
+    public LinkedHashMap<String, Integer> getImageUrls(){
+        LinkedHashMap<String, Integer> imageHashMap = new LinkedHashMap<>();
         ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
         for(Recipe recipe : recipes){
-            imageUrls.add(recipe.getImageUrl());
+            imageHashMap.put(recipe.getImageUrl(),recipe.getRecipeId());
         }
-        return imageUrls;
+        return imageHashMap;
     }
     public ArrayList<String> getImageNames() {
         ArrayList<String> imageNames = new ArrayList<>();
@@ -202,5 +205,9 @@ public class Model implements ModelMethod{
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public Recipe getRecipeByID(Integer id){
+        return recipeMapper.getRecipeById(id);
     }
 }
