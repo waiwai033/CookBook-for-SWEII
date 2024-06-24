@@ -1,8 +1,6 @@
 package view;
 
 import control.RecipeDisplayController;
-import control.RecipeSelectController;
-import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -47,6 +45,7 @@ public class recipeDisplayView extends Stage {
         init();
     }
 
+
     private void init() {
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800,600);
@@ -70,6 +69,7 @@ public class recipeDisplayView extends Stage {
         tabPane.setLayoutY(150);
         setIngredientsTab();
         setInstructionTab();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setStyle("-fx-background-color: transparent;");
         tabPane.getTabs().addAll(ingredientsTab, instructionsTab);
 
@@ -77,6 +77,10 @@ public class recipeDisplayView extends Stage {
         setCookingTime();
         setPreparationTime();
         setSeverNumber();
+        setBackButton();
+        setEditButton();
+        setDeleteButton();
+        setVIPButton();
 
 
         background.getChildren().addAll(
@@ -86,11 +90,50 @@ public class recipeDisplayView extends Stage {
                 cookingTimeLabel,
                 preparationTimeLabel,
                 serveNumberLabel,
-                serveNumberTextField);
+                serveNumberTextField,
+                backButton,
+                editRecipeButton,
+                deleteRecipeButton,
+                VIPbutton);
 
 
         Scene scene = new Scene(background);
         this.setScene(scene);
+    }
+
+    private void setVIPButton() {
+        VIPbutton = new Button("""
+                        join our
+                        VIP Plan !
+                        """);
+        VIPbutton.setPrefSize(100,100);
+        VIPbutton.setLayoutX(660);
+        VIPbutton.setLayoutY(20);
+        VIPbutton.setOnAction(new RecipeDisplayController(this));
+    }
+
+    private void setDeleteButton() {
+        deleteRecipeButton = new Button("Delete Recipe");
+        deleteRecipeButton.setLayoutX(520);
+        deleteRecipeButton.setLayoutY(510);
+        deleteRecipeButton.setPrefSize(200,40);
+        deleteRecipeButton.setOnAction(new RecipeDisplayController(this));
+    }
+
+    private void setEditButton() {
+        editRecipeButton = new Button("Edit Recipe");
+        editRecipeButton.setLayoutX(280);
+        editRecipeButton.setLayoutY(510);
+        editRecipeButton.setPrefSize(200,40);
+        editRecipeButton.setOnAction(new RecipeDisplayController(this));
+    }
+
+    private void setBackButton() {
+        backButton = new Button("Back");
+        backButton.setLayoutX(20);
+        backButton.setLayoutY(500);
+        backButton.setPrefSize(60,40);
+        backButton.setOnAction(new RecipeDisplayController(this));
     }
 
     private void setSeverNumber() {

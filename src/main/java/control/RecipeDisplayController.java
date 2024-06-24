@@ -2,6 +2,8 @@ package control;
 import dao.mappers.Recipe;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Model;
@@ -10,7 +12,10 @@ import view.MainPageView;
 import view.VIPView;
 import view.recipeDisplayView;
 import view.recipeSelectView;
-public class RecipeDisplayController  {
+
+import java.io.IOException;
+
+public class RecipeDisplayController implements EventHandler<ActionEvent> {
     private recipeDisplayView recipeDisplayView;
     private MainPageView mainPageView;
     private Model model;
@@ -28,6 +33,39 @@ public class RecipeDisplayController  {
         System.out.println("Initializing RecipeSelectController");
         recipeDisplayView.recipeNameLabel.setText( selectedRecipe.getRecipeName());
         recipeDisplayView.imageurl = "file:"+selectedRecipe.getImageUrl();
+
+    }
+    public void handle(ActionEvent event) {
+        if (event.getSource() == recipeDisplayView.VIPbutton) {
+            if(!model.userIsVip(123)){
+                VIPView vipView1 = new VIPView();
+                vipView1.show();
+            }else {
+                model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
+            }
+
+        } else if (event.getSource() == recipeDisplayView.deleteRecipeButton) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this recipe?", ButtonType.YES, ButtonType.NO);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    model.displayAlert(Alert.AlertType.INFORMATION,"Info","Successfully deleted this recipe");
+//                    deleterecipe();
+                }
+            });
+        }else if (event.getSource() == recipeDisplayView.editRecipeButton) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Do you want to edit this recipe?", ButtonType.YES, ButtonType.NO);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+//                   editRecipe();
+                }
+            });
+        }else if (event.getSource() == recipeDisplayView.backButton) {
+            recipeDisplayView.close();
+        }
 
     }
 
