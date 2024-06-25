@@ -6,10 +6,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Model;
 import javafx.scene.control.Button;
-import view.MainPageView;
-import view.VIPView;
-import view.recipeSelectView;
-import view.recipeDisplayView;
+import view.*;
+
 public class RecipeSelectController implements EventHandler<ActionEvent> {
     private recipeSelectView recipeSelectView;
     private MainPageView mainPageView;
@@ -32,10 +30,33 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
         for(Button button : recipeSelectView.buttonMap.keySet()){
             if (actionEvent.getSource() == button){
 
-                recipeDisplayView view = new recipeDisplayView(recipeSelectView.buttonMap.get(button));
+//                recipeDisplayView view = new recipeDisplayView(recipeSelectView.buttonMap.get(button));
                 Integer recipeNumber = recipeSelectView.buttonMap.get(button);
+                AdvertiseView advertiseView = new AdvertiseView();
+                advertiseView.setOnEndOfMedia(() -> {
+                    advertiseView.close();
+                    // 展示 RecipeDisplayView
+                    recipeDisplayView view = new recipeDisplayView(recipeNumber);
+                    view.show();
+                });
+
+                // 设置跳过按钮事件处理
+                advertiseView.setOnSkipButton(event -> {
+                    if(!model.userIsVip('1')){
+                        vipView = new VIPView();
+                        vipView.show();
+                    }else{
+                    advertiseView.mediaPlayer.stop();
+                    advertiseView.close();
+                    // 展示 RecipeDisplayView
+                    recipeDisplayView view = new recipeDisplayView(recipeNumber);
+                    view.show();
+                    }
+                });
+
+                advertiseView.show();
 //                System.out.println(recipeNumber);
-                view.show();
+//                view.show();
             }
         }
         if (actionEvent.getSource() == recipeSelectView.vipButton) {
