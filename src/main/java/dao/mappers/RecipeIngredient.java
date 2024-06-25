@@ -1,21 +1,28 @@
 package dao.mappers;
 
-import java.math.BigDecimal;
 
 public class RecipeIngredient {
     private int recipeId;
     private String name;
-    private BigDecimal quantity;
+    private Float quantity;
     private String unit;
     private String description;
 
-    public RecipeIngredient(int recipeId, String name, BigDecimal quantity, String unit, String description) {
+    public RecipeIngredient(int recipeId, String name, Float quantity, String unit, String description) {
         this.recipeId = recipeId;
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
         this.description = description;
     }
+    public RecipeIngredient(RecipeIngredient ingredient) {
+        this.name = ingredient.name;
+        this.quantity = ingredient.quantity;
+        this.unit = ingredient.unit;
+        this.description = ingredient.description;
+        this.recipeId = ingredient.recipeId;
+    }
+
 
     // Getters and Setters
     public int getRecipeId() {
@@ -34,11 +41,11 @@ public class RecipeIngredient {
         this.name = name;
     }
 
-    public BigDecimal getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

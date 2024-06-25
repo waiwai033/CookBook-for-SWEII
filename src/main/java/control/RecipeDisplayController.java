@@ -1,9 +1,13 @@
 package control;
 import dao.mappers.Recipe;
+import dao.mappers.RecipeIngredient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Model;
@@ -13,6 +17,8 @@ import view.VIPView;
 import view.recipeDisplayView;
 import view.recipeSelectView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 
 public class RecipeDisplayController implements EventHandler<ActionEvent> {
@@ -21,18 +27,41 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
     private Model model;
     private VIPView vipView;
     private Recipe selectedRecipe;
+    private List<RecipeIngredient> selectedIngredient;
+    private List<String> selectedInstructions;
     public RecipeDisplayController(recipeDisplayView recipeDisplayView) {
         Integer selectedRecipeNumber = recipeDisplayView.selectedRecipeNumber;
         this.recipeDisplayView = recipeDisplayView;
         this.model = new Model();
         selectedRecipe = model.getRecipeByID(selectedRecipeNumber);
-
+        selectedIngredient = model.getIngredientByID(selectedRecipeNumber);
+        selectedInstructions = model.getRecipeInstruction(selectedRecipeNumber);
+        // 在构造函数中添加 TextField 的监听器
 
     }
     public void initializeData() {
+        recipeDisplayView.serveNumberTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                recipeDisplayView.selectedIngredients.clear();
+                List<RecipeIngredient> updatedRecipeIngredients = model.updateIngredientByServeNumber(selectedRecipe.getRecipeId(), recipeDisplayView.serveNumberTextField.getText());
+                for(RecipeIngredient updatedRecipeIngredient: updatedRecipeIngredients){
+                    recipeDisplayView.selectedIngredients.add(updatedRecipeIngredient);
+                }
+            }
+        });
         System.out.println("Initializing RecipeSelectController");
         recipeDisplayView.recipeNameLabel.setText( selectedRecipe.getRecipeName());
         recipeDisplayView.imageurl = "file:"+selectedRecipe.getImageUrl();
+        for(RecipeIngredient recipeIngredient : selectedIngredient){
+            recipeDisplayView.selectedIngredients.add(recipeIngredient);
+        }
+        recipeDisplayView.serveNumberTextField.setText(String.valueOf(selectedRecipe.getServeAmount()));
+        recipeDisplayView.cookingTimeLabel.setText("Cooking Time: "+selectedRecipe.getCookingTime()+"min");
+        recipeDisplayView.preparationTimeLabel.setText("Preparation Time: "+selectedRecipe.getPreparationTime()+"min");
+        for(String instruction : selectedInstructions){
+            recipeDisplayView.instructionsTextArea.appendText(instruction+"\n");
+        }
 
     }
     public void handle(ActionEvent event) {

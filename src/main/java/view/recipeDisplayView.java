@@ -14,22 +14,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 public class recipeDisplayView extends Stage {
     public Button editRecipeButton,deleteRecipeButton,backButton,VIPbutton;
 
-    public TextField serveNumberTextField;
 
+    public ObservableList<RecipeIngredient> selectedIngredients = FXCollections.observableArrayList();
     public Label recipeNameLabel=new Label("");
-    public Label cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
-
+    public Label serveNumberLabel;
+    public Label cookingTimeLabel = new Label();
+    public Label preparationTimeLabel = new Label();
+    public TextField serveNumberTextField = new TextField("dsd");
     public ImageView recipeImage;
     public String imageurl = "";
 
     private Tab ingredientsTab, instructionsTab;
 
     public TableView<RecipeIngredient> tableView;
-    public TextArea instructionsTextArea;
+    public TextArea instructionsTextArea = new TextArea();;
 
     public Integer selectedRecipeNumber;
 
@@ -141,7 +144,7 @@ public class recipeDisplayView extends Stage {
         serveNumberLabel.setLayoutX(260);
         serveNumberLabel.setLayoutY(100);
         serveNumberLabel.setFont(Font.font("System Bold Italic", 15));
-        serveNumberTextField = new TextField();
+
         serveNumberTextField.setLayoutX(380);
         serveNumberTextField.setLayoutY(100);
         serveNumberTextField.setPrefSize(60, 20);
@@ -149,14 +152,13 @@ public class recipeDisplayView extends Stage {
     }
 
     private void setPreparationTime() {
-        preparationTimeLabel = new Label("Preparation Time: ");
         preparationTimeLabel.setFont(new Font("Times New Roman", 20));
         preparationTimeLabel.setLayoutX(20);
         preparationTimeLabel.setLayoutY(200);
     }
 
     private void setCookingTime() {
-        cookingTimeLabel = new Label("Cooking Time:");
+
         cookingTimeLabel.setFont(new Font("Times New Roman", 20));
         cookingTimeLabel.setLayoutX(20);
         cookingTimeLabel.setLayoutY(160);
@@ -179,7 +181,7 @@ public class recipeDisplayView extends Stage {
     private void setInstructionTab() {
         instructionsTab = new Tab("Instructions");
         AnchorPane instructionsPane = new AnchorPane();
-        instructionsTextArea = new TextArea();
+
         instructionsTextArea.setEditable(true);
         instructionsTextArea.setWrapText(true);
         instructionsTextArea.setPrefSize(500,350);
@@ -198,15 +200,30 @@ public class recipeDisplayView extends Stage {
         tableView.setPrefSize(500,350);
         tableView.setEffect(new DropShadow());
 
-        TableColumn<RecipeIngredient, String> ingredientsColumn = new TableColumn<>("Ingredient name");
-        ingredientsColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<RecipeIngredient,String> quantityColumn = new TableColumn<>("quantity");
+
+
+        TableColumn<RecipeIngredient, String> nameColumn = new TableColumn<>("Ingredient name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<RecipeIngredient, String> quantityColumn = new TableColumn<>("Quantity");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        TableColumn<RecipeIngredient,String> unitsColumn = new TableColumn<>("units");
-        unitsColumn.setCellValueFactory(new PropertyValueFactory<>("units"));
-        TableColumn<RecipeIngredient,String> descriptionColumn = new TableColumn<>("description");
+
+        TableColumn<RecipeIngredient, String> unitsColumn = new TableColumn<>("Units");
+        unitsColumn.setCellValueFactory(new PropertyValueFactory<>("unit"));
+
+        TableColumn<RecipeIngredient, String> descriptionColumn = new TableColumn<>("Description");
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        tableView.getColumns().addAll(ingredientsColumn,quantityColumn,unitsColumn,descriptionColumn);
+
+        tableView.getColumns().addAll( nameColumn, quantityColumn, unitsColumn, descriptionColumn);
+
+//        selectedIngredients = FXCollections.observableArrayList(
+//                new RecipeIngredient(1, "Flour", "2", "cups", "All-purpose flour"),
+//                new RecipeIngredient(1, "Sugar", "3", "cup", "Granulated sugar"),
+//                new RecipeIngredient(1, "Eggs", "4", "pieces", "Large eggs"),
+//                new RecipeIngredient(1, "Butter", "1", "cup", "Unsalted butter, melted")
+//        );
+
+        tableView.setItems(selectedIngredients);
 
         AnchorPane ingredientsPane = new AnchorPane();
         ingredientsPane.setStyle("-fx-background-color: transparent;");

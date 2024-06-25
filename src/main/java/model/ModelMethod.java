@@ -42,6 +42,7 @@ public interface ModelMethod {
     public HashMap<String, Integer>updateImageUrls(String recipeName);
 
     public Recipe getRecipeByID(Integer id);
+    public List<String> getRecipeInstruction(Integer id);
 
 
 }

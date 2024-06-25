@@ -8,12 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.LinkedHashMap;
 import java.util.HashMap;
 import view.*;
 
@@ -210,4 +207,31 @@ public class Model implements ModelMethod{
     public Recipe getRecipeByID(Integer id){
         return recipeMapper.getRecipeById(id);
     }
+
+    public List<RecipeIngredient> getIngredientByID(Integer id){
+        return recipeIngredientMapper.getRecipeIngredientsByRecipeId(id);
+    }
+
+    public List<String> getRecipeInstruction(Integer id){
+        List<String> instructions = new ArrayList<>();
+        List<PreparationStep> preparationSteps = preparationStepMapper.getPreparationStepsByRecipeId(id);
+        for(PreparationStep preparationStep : preparationSteps){
+            instructions.add(preparationStep.getStep() + ". " + preparationStep.getDescription());
+        }
+        return instructions;
+    }
+    public List<RecipeIngredient> updateIngredientByServeNumber(Integer id,String serveNumber){
+        Float serveNumberInt = Float.parseFloat(serveNumber);
+        List<RecipeIngredient> updatedIngredients = new ArrayList<>();
+        List<RecipeIngredient> ingredients = recipeIngredientMapper.getRecipeIngredientsByRecipeId(id);
+        for(RecipeIngredient ingredient : ingredients){
+            updatedIngredients.add(new RecipeIngredient(ingredient));
+        }
+        for(RecipeIngredient ingredient : updatedIngredients){
+            ingredient.setQuantity(serveNumberInt * ingredient.getQuantity());
+        }
+        return updatedIngredients;
+    }
+
 }
+
