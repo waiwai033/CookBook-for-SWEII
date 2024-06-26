@@ -1,7 +1,9 @@
 package control;
+import config.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import model.Model;
 import view.signupView;
@@ -18,8 +20,13 @@ public class MainPageController implements EventHandler<ActionEvent> {
     }
     public void handle(ActionEvent event) {
         if (event.getSource() == mainPageView.getVIP) {
-            VIPView vipView = new VIPView();
-            vipView.show();
+            if(!model.userIsVip(SessionManager.getCurrentUserName())){
+                VIPView vipView1 = new VIPView();
+                vipView1.show();
+            }else {
+                model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
+            }
+
         }
         else if(event.getSource() == mainPageView.chooseRecipe){
             recipeSelectView recipeSelectView = new recipeSelectView();

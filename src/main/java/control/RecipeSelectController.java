@@ -2,6 +2,7 @@ package control;
 import dao.mappers.Recipe;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Model;
@@ -61,8 +62,13 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
             }
         }
         if (actionEvent.getSource() == recipeSelectView.vipButton) {
-            VIPView vipView = new VIPView();
-            vipView.show();
+            if(!model.userIsVip(SessionManager.getCurrentUserName())){
+                VIPView vipView1 = new VIPView();
+                vipView1.show();
+            }else {
+                model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
+            }
+
         }
         else if(actionEvent.getSource() == recipeSelectView.searchButton){
             String recipeName = recipeSelectView.searchField.textProperty().getValue();
