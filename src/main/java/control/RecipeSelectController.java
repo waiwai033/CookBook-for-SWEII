@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import model.Model;
 import javafx.scene.control.Button;
 import view.*;
+import config.SessionManager;
 
 public class RecipeSelectController implements EventHandler<ActionEvent> {
     private recipeSelectView recipeSelectView;
@@ -42,7 +43,7 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
 
                 // 设置跳过按钮事件处理
                 advertiseView.setOnSkipButton(event -> {
-                    if(!model.userIsVip('1')){
+                    if(!model.userIsVip(SessionManager.getCurrentUserName())){
                         vipView = new VIPView();
                         vipView.show();
                     }else{

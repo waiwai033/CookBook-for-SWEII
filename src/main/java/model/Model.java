@@ -1,5 +1,5 @@
 package model;
-
+import config.SessionManager;
 import dao.mappers.*;
 import javafx.scene.control.Alert;
 import org.apache.ibatis.io.Resources;
@@ -82,6 +82,7 @@ public class Model implements ModelMethod{
         }
         else if(user.getPassword().equals(password)){
             System.out.println("successful");
+            SessionManager.setCurrentUserName(name);
             sqlSession.commit();
             return true;
         }
@@ -131,8 +132,8 @@ public class Model implements ModelMethod{
     }
 
     @Override
-    public boolean userIsVip(int userID) {
-        User user = userMapper.getUserById(userID);
+    public boolean userIsVip(String userName) {
+        User user = userMapper.getUserByName(userName);
         return user.isVip();
     }
 
@@ -232,6 +233,10 @@ public class Model implements ModelMethod{
         }
         return updatedIngredients;
     }
-
+    public void setVIP(String username){
+        User user = userMapper.getUserByName(username);
+        userMapper.setVIP(username);
+        sqlSession.commit();
+    }
 }
 

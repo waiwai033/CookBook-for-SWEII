@@ -39,11 +39,8 @@ public interface UserMapper {
      */
     public User getUserById(@Param("id") int userId);
 
-    /**
-     * Gets user by name.
-     *
-     * @param userName the user name
-     * @return the user by name
-     */
+
     public User getUserByName(@Param("name") String name);
+
+    public void setVIP(@Param("name") String name);
 }

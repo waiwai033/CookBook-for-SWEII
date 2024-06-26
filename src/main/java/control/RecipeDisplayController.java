@@ -1,4 +1,5 @@
 package control;
+import config.SessionManager;
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import view.MainPageView;
 import view.VIPView;
 import view.recipeDisplayView;
 import view.recipeSelectView;
-
+import config.SessionManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
     }
     public void handle(ActionEvent event) {
         if (event.getSource() == recipeDisplayView.VIPbutton) {
-            if(!model.userIsVip(123)){
+            if(!model.userIsVip(SessionManager.getCurrentUserName())){
                 VIPView vipView1 = new VIPView();
                 vipView1.show();
             }else {

@@ -23,7 +23,7 @@ public interface ModelMethod {
 
     public void loadAdvertisementPage();
 
-    public boolean userIsVip(int userID);
+    public boolean userIsVip(String userName);
 
     public void loadVipPage(int userID);
 

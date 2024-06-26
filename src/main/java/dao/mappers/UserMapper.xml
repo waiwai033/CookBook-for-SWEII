@@ -32,4 +32,8 @@
         where user_name = #{name}
     </select>
 
+    <update id="setVIP" parameterType="string" >
+     update users set  is_vip = true where user_name = #{name}
+    </update>
+
 </mapper>
