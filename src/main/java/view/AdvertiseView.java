@@ -27,7 +27,7 @@ public class AdvertiseView extends Stage {
     private void init(){
         String videoPath = Paths.get("src/video/advertisement.MP4").toUri().toString();
         Media media = new Media(videoPath);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer = new MediaPlayer(media);
         MediaView mediaView = new MediaView(mediaPlayer);
 
         mediaView.setFitWidth(800);
@@ -49,7 +49,9 @@ public class AdvertiseView extends Stage {
         mediaPlayer.setAutoPlay(true);
     }
     public void setOnEndOfMedia(Runnable handler) {
-        mediaPlayer.setOnEndOfMedia(handler);
+        if (mediaPlayer != null) {
+            mediaPlayer.setOnEndOfMedia(handler);
+        }
     }
 
     public void setOnSkipButton(EventHandler<ActionEvent> handler) {
