@@ -1,10 +1,12 @@
 package view;
 
+import control.recipeCreateController;
 import dao.mappers.RecipeIngredient;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,13 +15,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.converter.FloatStringConverter;
 
 public class recipeCreateView extends Stage {
 
     public Button submitButton,backButton,uploadButton,addButton,deleteButton,clearButton;
     public TextField recipeNameTextField,preparationTextField, cookingTimeTextField,servenumberTextField;
     public ImageView recipeImage;
-    public String imageurl = "";
     public TableView<RecipeIngredient> tableView;
     public TextArea instructionTextArea = new TextArea();
     private Label cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
@@ -37,7 +39,7 @@ public class recipeCreateView extends Stage {
         background.setPrefSize(800,600);
         background.setStyle("-fx-background-color: #f6ef97;");
 
-        setupImage(imageurl);
+        setupImage();
         Pane imagePane = new Pane();
         imagePane.setPrefSize(200,200);
         imagePane.setStyle("-fx-background-color: #f8f5f5;-fx-background-radius: 10;");
@@ -100,6 +102,7 @@ public class recipeCreateView extends Stage {
         clearButton.setLayoutX(320);
         clearButton.setLayoutY(510);
         clearButton.setPrefSize(200,40);
+        clearButton.setOnAction(new recipeCreateController(this));
 
     }
 
@@ -114,6 +117,7 @@ public class recipeCreateView extends Stage {
         deleteButton.setLayoutX(260);
         deleteButton.setLayoutY(245);
         deleteButton.setPrefSize(30,30);
+        deleteButton.setOnAction(new recipeCreateController(this));
     }
 
     private void setAddButton() {
@@ -121,6 +125,7 @@ public class recipeCreateView extends Stage {
         addButton.setLayoutX(260);
         addButton.setLayoutY(210);
         addButton.setPrefSize(30,30);
+        addButton.setOnAction(new recipeCreateController(this));
     }
 
     private void setSubminButtton() {
@@ -135,6 +140,7 @@ public class recipeCreateView extends Stage {
         uploadButton.setLayoutX(20);
         uploadButton.setLayoutY(470);
         uploadButton.setPrefSize(200,40);
+        uploadButton.setOnAction(new recipeCreateController(this));
     }
 
     private void setServenumber() {
@@ -215,18 +221,40 @@ public class recipeCreateView extends Stage {
         tableView.setLayoutY(0);
         tableView.setPrefSize(450,350);
         tableView.setEffect(new DropShadow());
+        tableView.setEditable(true);
+
 
         TableColumn<RecipeIngredient, String> nameColumn = new TableColumn<>("Ingredient name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setOnEditCommit(event ->{
+            RecipeIngredient ingredient = event.getRowValue();
+            ingredient.setName(event.getNewValue());
+        });
 
-        TableColumn<RecipeIngredient, String> quantityColumn = new TableColumn<>("Quantity");
+        TableColumn<RecipeIngredient, Float> quantityColumn = new TableColumn<>("Quantity");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        quantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        quantityColumn.setOnEditCommit(event ->{
+            RecipeIngredient ingredient = event.getRowValue();
+            ingredient.setQuantity(event.getNewValue());
+        });
 
         TableColumn<RecipeIngredient, String> unitsColumn = new TableColumn<>("Units");
         unitsColumn.setCellValueFactory(new PropertyValueFactory<>("unit"));
+        unitsColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        unitsColumn.setOnEditCommit(event ->{
+            RecipeIngredient ingredient = event.getRowValue();
+            ingredient.setUnit(event.getNewValue());
+        });
 
         TableColumn<RecipeIngredient, String> descriptionColumn = new TableColumn<>("Description");
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionColumn.setOnEditCommit(event ->{
+            RecipeIngredient ingredient = event.getRowValue();
+            ingredient.setDescription(event.getNewValue());
+        });
 
         tableView.getColumns().addAll(nameColumn, quantityColumn, unitsColumn, descriptionColumn);
 
@@ -239,23 +267,19 @@ public class recipeCreateView extends Stage {
         ingredientsTab.setContent(ingredientsPane);
     }
 
-    public void setupImage(String imageurl) {
-        if(imageurl == null || imageurl.isEmpty()){
-            return;
-        }else {
-            Image image = new Image(imageurl);
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(200);
-            imageView.setFitHeight(200);
-            recipeImage = imageView;
+    public void setupImage() {
+            recipeImage = new ImageView();
+            recipeImage.setFitWidth(200);
+            recipeImage.setFitHeight(200);
             recipeImage.setLayoutX(0);
             recipeImage.setLayoutY(0);
         }
+
+
+
+    public void updateImage(String temp) {
+        recipeImage.setImage(new Image("file:"+ temp));
     }
-
-
-
-
 }
 
 
