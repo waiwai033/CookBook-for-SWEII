@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import java.io.File;
@@ -33,6 +34,7 @@ public class recipeSelectView extends Stage {
     public HashMap<String, Integer> imageUrls;
     public List<String> imageNames;
     public List<Button> buttonList = new ArrayList<>();
+    public Label titleLabel;
 //    public AnchorPane background;
     public HashMap<Button, Integer> buttonMap = new HashMap<>();
     public recipeSelectView() {
@@ -47,6 +49,7 @@ public class recipeSelectView extends Stage {
         controller.initializeData();
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800, 600);
+        background.setStyle("-fx-background-color: #f6ef97;");
         Pane pane = new Pane();
 
         setRecipeButtons(pane, currentPage);
@@ -56,9 +59,18 @@ public class recipeSelectView extends Stage {
         setSearchButton();
         setBackButton();
         setVIPButton();
-        background.getChildren().addAll(pane, nextButton, prevButton,searchField,searchButton,vipButton,backButton);
+        setTitleLabel();
+        background.getChildren().addAll(pane, nextButton, prevButton,searchField,searchButton,vipButton,backButton,titleLabel);
         Scene scene = new Scene(background);
         this.setScene(scene);
+    }
+
+    private void setTitleLabel() {
+        titleLabel = new Label("Choose a recipe");
+        titleLabel.setFont(new Font("Comic Sans MS", 50));
+        titleLabel.setLayoutX(200);
+        titleLabel.setLayoutY(10);
+
     }
 
     public void update(HashMap<String, Integer> _imageUrls, ArrayList<String> _imageNames){

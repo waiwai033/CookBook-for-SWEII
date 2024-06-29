@@ -43,8 +43,9 @@ public class SignPageController implements EventHandler<ActionEvent> {
            else{
                Model.displayAlert(Alert.AlertType.ERROR,"error","Already have same name!");
            }
-
-
+        } else if (event.getSource() == signupView.createBackButton) {
+            System.out.println("Back button clicked");
+            signupView.close();
         }
     }
 }

@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import control.LoginPageController;
@@ -21,6 +22,7 @@ public class signinView extends Stage {
     public Button signupButton;
     public TextField usernameTextField;
     public TextField passwordTextField;
+    public Label titleLabel;
 
     public signinView() {
         this.setTitle("Sign In");
@@ -82,31 +84,39 @@ public class signinView extends Stage {
 
 
         AnchorPane frontPane = new AnchorPane();
-        frontPane.setPrefSize(700, 500);
+        frontPane.setPrefSize(600, 400);
         frontPane.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7);");
 
 
         Label usernameLabel = setUsernameTextField();
         Label passwordLabel = setPasswordTextField();
+        setTitleLabel();
 
         setSigninButton();
         setSignupButton();
 
-        frontPane.getChildren().addAll(signinButton, signupButton, usernameLabel, passwordLabel,usernameTextField,passwordTextField);
+        frontPane.getChildren().addAll(signinButton, signupButton, usernameLabel, passwordLabel,usernameTextField,passwordTextField,titleLabel);
 
         backPane.getChildren().add(frontPane);
-        frontPane.setLayoutX(50);
-        frontPane.setLayoutY(50);
+        frontPane.setLayoutX(100);
+        frontPane.setLayoutY(80);
         Scene scene = new Scene(backPane);
         this.setScene(scene);
 
+    }
+
+    private void setTitleLabel() {
+        titleLabel = new Label("Please Login In");
+        titleLabel.setFont(new Font("Comic Sans MS", 50));
+        titleLabel.setLayoutX(115);
+        titleLabel.setLayoutY(30);
     }
 
     public void setSigninButton() {
         signinButton = new Button("Sign In");
         signinButton.setOnAction(new LoginPageController(this));
         signinButton.setLayoutX(150);
-        signinButton.setLayoutY(350);
+        signinButton.setLayoutY(320);
         signinButton.setPrefSize(100,40);
     }
 
@@ -114,30 +124,34 @@ public class signinView extends Stage {
         signupButton = new Button("Sign up");
         signupButton.setOnAction(new LoginPageController(this));
         signupButton.setLayoutX(350);
-        signupButton.setLayoutY(350);
+        signupButton.setLayoutY(320);
         signupButton.setPrefSize(100,40);
     }
 
     public Label setUsernameTextField() {
         Label UsernameLabel = new Label("Username:");
-        UsernameLabel.setLayoutX(100);
-        UsernameLabel.setLayoutY(100);
+        UsernameLabel.setFont(new Font("Times New Roman", 25));
+        UsernameLabel.setLayoutX(120);
+        UsernameLabel.setLayoutY(150);
 
         usernameTextField = new TextField();
-        usernameTextField.setLayoutX(180);
-        usernameTextField.setLayoutY(100);
+        usernameTextField.setLayoutX(245);
+        usernameTextField.setLayoutY(152);
+        usernameTextField.setPrefSize(200,30);
 
         return UsernameLabel;
     }
 
     public Label setPasswordTextField() {
         Label PasswordLabel = new Label("Password:");
-        PasswordLabel.setLayoutX(100);
-        PasswordLabel.setLayoutY(300);
+        PasswordLabel.setFont(new Font("Times New Roman", 25));
+        PasswordLabel.setLayoutX(120);
+        PasswordLabel.setLayoutY(240);
 
         passwordTextField = new PasswordField();
-        passwordTextField.setLayoutX(180);
-        passwordTextField.setLayoutY(300);
+        passwordTextField.setLayoutX(242);
+        passwordTextField.setLayoutY(242);
+        passwordTextField.setPrefSize(200,30);
 
         return PasswordLabel;
     }
