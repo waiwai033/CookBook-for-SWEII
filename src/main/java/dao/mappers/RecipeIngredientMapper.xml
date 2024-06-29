@@ -7,7 +7,7 @@
     <!-- 添加食谱成分 -->
     <insert id="addRecipeIngredient" parameterType="RecipeIngredient">
         INSERT INTO ingredient (recipe_id, name, quantity, unit, description)
-        VALUES (#{recipeId}, #{name}, #{quantity}, #{unit}, #{description})
+        VALUES (#{recipeIngredient.recipeId}, #{recipeIngredient.name}, #{recipeIngredient.quantity}, #{recipeIngredient.unit}, #{recipeIngredient.description})
     </insert>
 
     <!-- 删除食谱成分 -->

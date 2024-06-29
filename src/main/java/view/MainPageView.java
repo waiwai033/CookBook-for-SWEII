@@ -66,6 +66,7 @@ public class MainPageView extends Stage {
                 ImageView imageViewRight = new ImageView(imageRight);
                 imageViewRight.setFitHeight(300);
                 imageViewRight.setFitWidth(250);
+                addRecipe.setOnAction(new MainPageController(this));
                 addRecipe.setLayoutX(445);
                 addRecipe.setLayoutY(150);
                 addRecipe.setGraphic(imageViewRight);

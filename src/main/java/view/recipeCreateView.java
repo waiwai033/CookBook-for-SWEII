@@ -107,7 +107,8 @@ public class recipeCreateView extends Stage {
     }
 
     private void setBackButton() {
-        backButton = new Button("Cancel");
+        backButton = new Button("Back");
+        backButton.setOnAction(new recipeCreateController(this));
         backButton.setLayoutX(10);
         backButton.setLayoutY(10);
     }
@@ -130,6 +131,7 @@ public class recipeCreateView extends Stage {
 
     private void setSubminButtton() {
         submitButton = new Button("Save recipe");
+        submitButton.setOnAction(new recipeCreateController(this));
         submitButton.setLayoutX(550);
         submitButton.setLayoutY(510);
         submitButton.setPrefSize(200,40);
@@ -183,7 +185,7 @@ public class recipeCreateView extends Stage {
     }
 
     private void setRecipename() {
-        recipeNameTextField = new TextField("Input Recipe name");
+        recipeNameTextField = new TextField("");
         recipeNameTextField.setFont(new Font("Comic Sans MS", 50));
         recipeNameTextField.setStyle("-fx-text-fill: #333;");
         recipeNameTextField.setPrefSize(600,40);
@@ -234,9 +236,29 @@ public class recipeCreateView extends Stage {
 
         TableColumn<RecipeIngredient, Float> quantityColumn = new TableColumn<>("Quantity");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        quantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        quantityColumn.setCellFactory(column -> {
+            TextFieldTableCell<RecipeIngredient, Float> cell = new TextFieldTableCell<>(new FloatStringConverter());
+
+            cell.setConverter(new FloatStringConverter() {
+                @Override
+                public Float fromString(String value) {
+                    if (value.matches("-?\\d*(\\.\\d+)?")) {
+                        return super.fromString(value);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("警告");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Please input number");
+                        alert.showAndWait();
+                        return null; // 返回 null 表示无效输入
+                    }
+                }
+            });
+            return cell;
+        });
         quantityColumn.setOnEditCommit(event ->{
             RecipeIngredient ingredient = event.getRowValue();
+            System.out.println(event.getNewValue());
             ingredient.setQuantity(event.getNewValue());
         });
 

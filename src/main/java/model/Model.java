@@ -238,5 +238,26 @@ public class Model implements ModelMethod{
         userMapper.setVIP(username);
         sqlSession.commit();
     }
+
+   public Integer addRecipe(Recipe recipe){
+        recipeMapper.addRecipe(recipe);
+        System.out.println(recipe.getRecipeName());
+        Integer recipeID = 0;
+        List<Recipe> newRecipes = recipeMapper.getRecipeByName(recipe.getRecipeName());
+        for(Recipe newRecipe : newRecipes){
+            System.out.println(newRecipe.getRecipeId());
+            recipeID = newRecipe.getRecipeId();
+
+        }
+       sqlSession.commit();
+        return recipeID;
+
+   }
+    public void addRecipeIngredient(RecipeIngredient recipeIngredient){
+        recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
+        sqlSession.commit();
+    }
+
+
 }
 

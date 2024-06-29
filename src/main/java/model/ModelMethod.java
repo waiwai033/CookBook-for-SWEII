@@ -44,5 +44,7 @@ public interface ModelMethod {
     public Recipe getRecipeByID(Integer id);
     public List<String> getRecipeInstruction(Integer id);
 
+    public Integer addRecipe(Recipe recipe);
 
+    public void addRecipeIngredient(RecipeIngredient recipeIngredient);
 }

@@ -88,6 +88,7 @@ public class recipeSelectView extends Stage {
 
     private void setBackButton() {
         backButton = new Button("Back");
+        backButton.setOnAction(new RecipeSelectController(this));
         backButton.setLayoutX(20);
         backButton.setLayoutY(500);
     }

@@ -1,6 +1,7 @@
 package control;
 
 
+import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +13,8 @@ import model.Model;
 import view.recipeCreateView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class recipeCreateController implements EventHandler<ActionEvent> {
 
@@ -19,7 +22,7 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
     private recipeCreateView recipeCreateView;
     private Model model;
     private String currentImagePath;
-
+    public static String imageUrl = "";
     public recipeCreateController(recipeCreateView recipeCreateView) {
         this.recipeCreateView = recipeCreateView;
         this.model = new Model();
@@ -29,10 +32,14 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if (event.getSource() == recipeCreateView.uploadButton){
             String temp = imageChoose(recipeCreateView);
+            imageUrl = temp;
             if (temp != null){
                 System.out.println(temp);
                 recipeCreateView.updateImage(temp);
             }
+        }
+        if(event.getSource() == recipeCreateView.backButton){
+            recipeCreateView.close();
         }
         if (event.getSource() == recipeCreateView.addButton){
             handleAddButtonAction();
@@ -43,10 +50,70 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
         if (event.getSource() == recipeCreateView.clearButton) {
             handleClearButtonAction();
         }
+        if(event.getSource() == recipeCreateView.submitButton){
+            String recipeName = recipeCreateView.recipeNameTextField.getText();
+            String cookingTime = recipeCreateView.cookingTimeTextField.getText();
+            String preparation = recipeCreateView.preparationTextField.getText();
+
+            if (recipeName.isEmpty() || cookingTime.isEmpty() || preparation.isEmpty()) {
+                AlertUtils.showWarning("Warn","Please complete form！");
+                return;
+            }
+            if (!cookingTime.matches("\\d+") || !preparation.matches("\\d+")) {
+                AlertUtils.showWarning("Warn","Please input number！");
+                return;
+            }
+
+            if(imageUrl.isEmpty()){
+                AlertUtils.showWarning("Warn","Please upload image！");
+
+                return;
+            }
+            Recipe recipe = new Recipe(0,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),imageUrl);
+            Integer recipeID = model.addRecipe(recipe);
+
+            for(RecipeIngredient recipeIngredient: recipeCreateView.tableView.getItems()){
+                recipeIngredient.setRecipeId(recipeID);
+                if(recipeIngredient.getName().isEmpty()){
+                    AlertUtils.showWarning("Warn","Please input ingredient name！");
+                    return;
+                }
+                if(recipeIngredient.getQuantity() == null || recipeIngredient.getQuantity() == 0.0){
+                    AlertUtils.showWarning("Warn","Please input ingredient quantity ！");
+                    return;
+                }
+                if(recipeIngredient.getUnit().isEmpty()){
+                    AlertUtils.showWarning("Warn","Please ingredient unit！");
+                    return;
+                }
+                if(recipeIngredient.getDescription().isEmpty()){
+                    AlertUtils.showWarning("Warn","Please input ingredient description！");
+                    return;
+                }
+
+                model.addRecipeIngredient(recipeIngredient);
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Recipe and ingredients added successfully!");
+                successAlert.showAndWait();
+
+            }
+
+        }
 
 
     }
 
+    public class AlertUtils {
+        public static void showWarning(String title, String message) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        }
+    }
     public String imageChoose(Stage stage){
         FileChooser fileChooser = new FileChooser();
         stage.setOpacity(0);
@@ -66,7 +133,7 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
         return file != null && file.exists();
     }
     private void handleAddButtonAction() {
-        RecipeIngredient newIngredient = new RecipeIngredient(0,"name",0.0f,"unit","des"); // Assuming default constructor creates an empty ingredient
+        RecipeIngredient newIngredient = new RecipeIngredient(0,"",new Float(0.0),"",""); // Assuming default constructor creates an empty ingredient
         recipeCreateView.tableView.getItems().add(newIngredient);
     }
 

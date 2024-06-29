@@ -5,8 +5,8 @@
 <mapper namespace="dao.mappers.RecipeMapper">
 
     <insert id="addRecipe" parameterType="Recipe">
-        insert into recipe (recipe_id, name, serveamount, preparationTime, cookingTime, image_url)
-        values (#{recipe.recipeId}, #{recipeName}, #{serveAmount}, #{preparationTime}, #{cookingTime}, #{imageUrl})
+        insert into recipe (name, serveamount, preparationTime, cookingTime, image_url)
+        values  (#{recipe.recipeName}, #{recipe.serveAmount}, #{recipe.preparationTime}, #{recipe.cookingTime}, #{recipe.imageUrl})
     </insert>
 
     <delete id="deleteRecipe" parameterType="int">

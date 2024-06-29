@@ -76,6 +76,9 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
 //            System.out.println(recipeSelectView.imageUrls);
 
         }
+        else if(actionEvent.getSource() == recipeSelectView.backButton){
+            recipeSelectView.close();
+        }
 
     }
 

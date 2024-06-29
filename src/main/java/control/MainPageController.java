@@ -6,10 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import model.Model;
-import view.signupView;
-import view.MainPageView;
-import view.VIPView;
-import view.recipeSelectView;
+import view.*;
+
 public class MainPageController implements EventHandler<ActionEvent> {
 
     private MainPageView mainPageView;
@@ -31,6 +29,10 @@ public class MainPageController implements EventHandler<ActionEvent> {
         else if(event.getSource() == mainPageView.chooseRecipe){
             recipeSelectView recipeSelectView = new recipeSelectView();
             recipeSelectView.show();
+        }
+        else if(event.getSource() == mainPageView.addRecipe){
+            recipeCreateView recipeCreateView = new recipeCreateView();
+            recipeCreateView.show();
         }
 
         }
