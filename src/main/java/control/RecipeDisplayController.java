@@ -9,14 +9,12 @@ import javafx.scene.control.ButtonType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Model;
 import javafx.scene.control.Button;
-import view.MainPageView;
-import view.VIPView;
-import view.recipeDisplayView;
-import view.recipeSelectView;
+import view.*;
 import config.SessionManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +25,7 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
     private MainPageView mainPageView;
     private Model model;
     private VIPView vipView;
+    private recipeCreateView recipeCreateView;
     private Recipe selectedRecipe;
     private List<RecipeIngredient> selectedIngredient;
     private List<String> selectedInstructions;
@@ -90,14 +89,23 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
             alert.setHeaderText(null);
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
-//                   editRecipe();
+                    //            recipeDisplayView.close();
+                    recipeCreateView = new recipeCreateView();
+                    recipeCreateView.recipeNameTextField.setText(selectedRecipe.getRecipeName());
+                    recipeCreateView.cookingTimeTextField.setText(String.valueOf(selectedRecipe.getCookingTime()));
+                    recipeCreateView.preparationTextField.setText(String.valueOf(selectedRecipe.getPreparationTime()));
+                    recipeCreateView.recipeImage.setImage(new Image("file:"+selectedRecipe.getImageUrl()));
+                    for(RecipeIngredient recipeIngredient : selectedIngredient){
+
+                    }
+                    for(String instruction : selectedInstructions){
+                        recipeDisplayView.instructionsTextArea.appendText(instruction+"\n");
+                    }
+                    recipeCreateView.show();
                 }
             });
         }else if (event.getSource() == recipeDisplayView.backButton) {
             recipeDisplayView.close();
         }
-
     }
-
-
 }
