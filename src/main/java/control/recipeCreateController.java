@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 public class recipeCreateController implements EventHandler<ActionEvent> {
 
-
     private recipeCreateView recipeCreateView;
     private Model model;
     private String currentImagePath;
@@ -64,16 +63,25 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
                 return;
             }
 
-            if(imageUrl.isEmpty()){
-                AlertUtils.showWarning("Warn","Please upload image！");
-
+            if (recipeCreateView.recipeImage.getImage() == null) {
+                AlertUtils.showWarning("Warn", "Please upload image!");
                 return;
             }
-            Recipe recipe = new Recipe(0,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),imageUrl);
-            Integer recipeID = model.addRecipe(recipe);
+            Recipe recipe;
+            Integer recipeId = 0;
+            if(recipeCreateView.isEdited == false) {
+                recipe = new Recipe(0,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),recipeCreateView.recipeImage.getImage().getUrl().replace("file:", ""));
+
+                recipeId = model.addRecipe(recipe);
+            }
+            else if(recipeCreateView.isEdited == true){
+                recipe = new Recipe(recipeCreateView.editedRecipeId,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),recipeCreateView.recipeImage.getImage().getUrl().replace("file:", ""));
+                recipeId = recipeCreateView.editedRecipeId;
+                model.updateRecipe(recipe);
+            }
 
             for(RecipeIngredient recipeIngredient: recipeCreateView.tableView.getItems()){
-                recipeIngredient.setRecipeId(recipeID);
+                recipeIngredient.setRecipeId(recipeId);
                 if(recipeIngredient.getName().isEmpty()){
                     AlertUtils.showWarning("Warn","Please input ingredient name！");
                     return;
@@ -91,12 +99,12 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
                     return;
                 }
 
-                model.addRecipeIngredient(recipeIngredient);
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Success");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Recipe and ingredients added successfully!");
-                successAlert.showAndWait();
+//                model.addRecipeIngredient(recipeIngredient);
+//                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+//                successAlert.setTitle("Success");
+//                successAlert.setHeaderText(null);
+//                successAlert.setContentText("Recipe and ingredients added successfully!");
+//                successAlert.showAndWait();
 
             }
 

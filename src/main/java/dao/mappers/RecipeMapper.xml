@@ -22,8 +22,8 @@
 
     <update id="updateRecipe" parameterType="Recipe">
         update recipe
-        set name = #{recipeName}, serveamount = #{serveAmount}, preparationTime = #{preparationTime}, cookingTime = #{cookingTime}, image_url = #{imageUrl}
-        where recipe_id = #{recipeId}
+        set name = #{recipe.recipeName}, serveamount = #{recipe.serveAmount}, preparationTime = #{recipe.preparationTime}, cookingTime = #{recipe.cookingTime}, image_url = #{recipe.imageUrl}
+        where recipe_id = #{recipe.recipeId}
     </update>
 
     <select id="getRecipeById" parameterType="int" resultType="Recipe">

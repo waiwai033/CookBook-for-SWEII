@@ -239,17 +239,28 @@ public class Model implements ModelMethod{
         sqlSession.commit();
     }
 
+    public void updateRecipe(Recipe recipe){
+        recipeMapper.updateRecipe(recipe);
+        sqlSession.commit();
+    }
    public Integer addRecipe(Recipe recipe){
-        recipeMapper.addRecipe(recipe);
-        System.out.println(recipe.getRecipeName());
-        Integer recipeID = 0;
-        List<Recipe> newRecipes = recipeMapper.getRecipeByName(recipe.getRecipeName());
-        for(Recipe newRecipe : newRecipes){
-            System.out.println(newRecipe.getRecipeId());
-            recipeID = newRecipe.getRecipeId();
+        if(!recipeMapper.getRecipeByName(recipe.getRecipeName()).isEmpty()){
+            System.out.println(recipe.getCookingTime());
+            recipeMapper.updateRecipe(recipe);
+            System.out.println(recipe.getRecipeName());
+            sqlSession.commit();
+        }
+        else {
+            recipeMapper.addRecipe(recipe);
+            sqlSession.commit();
+        }
+            Integer recipeID = 0;
+            List<Recipe> newRecipes = recipeMapper.getRecipeByName(recipe.getRecipeName());
+            for (Recipe newRecipe : newRecipes) {
+                System.out.println(newRecipe.getRecipeId());
+                recipeID = newRecipe.getRecipeId();
 
         }
-       sqlSession.commit();
         return recipeID;
 
    }

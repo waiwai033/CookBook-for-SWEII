@@ -19,6 +19,8 @@ import javafx.util.converter.FloatStringConverter;
 
 public class recipeCreateView extends Stage {
 
+    public boolean isEdited = false;
+    public Integer editedRecipeId = 0;
     public Button submitButton,backButton,uploadButton,addButton,deleteButton,clearButton;
     public TextField recipeNameTextField,preparationTextField, cookingTimeTextField,servenumberTextField;
     public ImageView recipeImage;
@@ -246,7 +248,7 @@ public class recipeCreateView extends Stage {
                         return super.fromString(value);
                     } else {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("警告");
+                        alert.setTitle("Warn");
                         alert.setHeaderText(null);
                         alert.setContentText("Please input number");
                         alert.showAndWait();
