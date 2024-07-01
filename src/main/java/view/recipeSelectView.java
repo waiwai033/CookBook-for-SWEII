@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 public class recipeSelectView extends Stage {
     public TextField searchField;
     public Button searchButton;
@@ -31,7 +32,7 @@ public class recipeSelectView extends Stage {
     public Button prevButton;
     private int currentPage = 0;
     private static final int ITEMS_PER_PAGE = 3;
-    public HashMap<String, Integer> imageUrls;
+    public LinkedHashMap<Integer, String> imageUrls = new LinkedHashMap<>();
     public List<String> imageNames;
     public List<Button> buttonList = new ArrayList<>();
     public Label titleLabel;
@@ -73,7 +74,7 @@ public class recipeSelectView extends Stage {
 
     }
 
-    public void update(HashMap<String, Integer> _imageUrls, ArrayList<String> _imageNames){
+    public void update(LinkedHashMap<Integer, String>  _imageUrls, ArrayList<String> _imageNames){
         imageUrls = _imageUrls;
         imageNames = _imageNames;
         AnchorPane background = new AnchorPane();
@@ -144,8 +145,8 @@ public class recipeSelectView extends Stage {
         int end = Math.min(start + ITEMS_PER_PAGE, imageUrls.size());
         for (int i = start; i < end; i++) {
             // 获取第 i 对的键值对
-            HashMap.Entry<String, Integer> entry = new ArrayList<>(imageUrls.entrySet()).get(i);
-            String url = entry.getKey(); // 获取 url
+            HashMap.Entry< Integer,String> entry = new ArrayList<>(imageUrls.entrySet()).get(i);
+            String url = entry.getValue(); // 获取 url
             String imageName = imageNames.get(i);
             System.out.println(imageName);
             System.out.println(1);
@@ -163,7 +164,7 @@ public class recipeSelectView extends Stage {
                 continue;
             }
 
-            VBox recipeButton = createButtonWithImage(entry.getValue(), recipeImage, imageName, 50 + (i - start) * 250, 200);
+            VBox recipeButton = createButtonWithImage(entry.getKey(), recipeImage, imageName, 50 + (i - start) * 250, 200);
             pane.getChildren().add(recipeButton);
         }
     }

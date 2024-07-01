@@ -71,11 +71,13 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
             Recipe recipe;
             Integer recipeId = 0;
             if(recipeCreateView.isEdited == false) {
+                System.out.println("create");
                 recipe = new Recipe(0,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),recipeCreateView.recipeImage.getImage().getUrl().replace("file:", ""));
 
                 recipeId = model.addRecipe(recipe);
             }
             else if(recipeCreateView.isEdited == true){
+                System.out.println("edit");
                 recipe = new Recipe(recipeCreateView.editedRecipeId,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),recipeCreateView.recipeImage.getImage().getUrl().replace("file:", ""));
                 recipeId = recipeCreateView.editedRecipeId;
                 model.updateRecipe(recipe);

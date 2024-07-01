@@ -10,6 +10,11 @@ import javafx.scene.control.Button;
 import view.*;
 import config.SessionManager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 public class RecipeSelectController implements EventHandler<ActionEvent> {
     private recipeSelectView recipeSelectView;
     private MainPageView mainPageView;
@@ -23,9 +28,18 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
     }
     public void initializeData() {
         System.out.println("Initializing RecipeSelectController");
+        List<Recipe> allRecipes = model.getAllRecipes();
+        recipeSelectView.imageUrls =  new LinkedHashMap<>();;
+        recipeSelectView.imageNames = new ArrayList<>();
+        for(Recipe recipe : allRecipes) {
+            recipeSelectView.imageNames.add(recipe.getRecipeName());
 
-        recipeSelectView.imageUrls = model.getImageUrls();
-        recipeSelectView.imageNames = model.getImageNames();
+            recipeSelectView.imageUrls.put( recipe.getRecipeId(),recipe.getImageUrl());
+            System.out.println(recipe.getRecipeName());
+            System.out.println(recipe.getImageUrl());
+        }
+//        recipeSelectView.imageUrls = model.getImageUrls();
+//        recipeSelectView.imageNames = model.getImageNames();
 
     }
     @Override

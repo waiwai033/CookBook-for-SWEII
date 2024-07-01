@@ -12,7 +12,7 @@ public class Recipe implements Serializable {
     public Recipe() {
     }
 
-    public Recipe(int recipeId, String recipeName, int serveAmount, int preparationTime, int cookingTime, String imageUrl) {
+    public Recipe(int recipeId, String recipeName, int serveAmount, int cookingTime,int preparationTime,  String imageUrl) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.serveAmount = serveAmount;

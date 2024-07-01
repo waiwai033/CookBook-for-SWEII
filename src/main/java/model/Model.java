@@ -161,12 +161,12 @@ public class Model implements ModelMethod{
     }
 
 
-    public  LinkedHashMap<String, Integer>   updateImageUrls(String recipeName){
+    public  LinkedHashMap< Integer,String>   updateImageUrls(String recipeName){
         ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
-        LinkedHashMap<String, Integer> imageHashMap = new LinkedHashMap<>();
+        LinkedHashMap< Integer,String> imageHashMap = new LinkedHashMap<>();
         for(Recipe recipe : recipes){
 
-            imageHashMap.put(recipe.getImageUrl(),recipe.getRecipeId());
+            imageHashMap.put(recipe.getRecipeId(),recipe.getImageUrl());
         }
 
         return imageHashMap;
@@ -245,16 +245,10 @@ public class Model implements ModelMethod{
         sqlSession.commit();
     }
    public Integer addRecipe(Recipe recipe){
-        if(!recipeMapper.getRecipeByName(recipe.getRecipeName()).isEmpty()){
-            System.out.println(recipe.getCookingTime());
-            recipeMapper.updateRecipe(recipe);
-            System.out.println(recipe.getRecipeName());
-            sqlSession.commit();
-        }
-        else {
+
+
             recipeMapper.addRecipe(recipe);
             sqlSession.commit();
-        }
             Integer recipeID = 0;
             List<Recipe> newRecipes = recipeMapper.getRecipeByName(recipe.getRecipeName());
             for (Recipe newRecipe : newRecipes) {
@@ -276,6 +270,10 @@ public class Model implements ModelMethod{
             recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
         }
         sqlSession.commit();
+    }
+
+    public List<Recipe> getAllRecipes(){
+        return recipeMapper.getAllRecipes();
     }
 
 

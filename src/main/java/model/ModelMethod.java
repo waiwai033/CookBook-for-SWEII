@@ -39,7 +39,7 @@ public interface ModelMethod {
 
     public  List<String>  updateImageNames(String recipeName);
 
-    public HashMap<String, Integer>updateImageUrls(String recipeName);
+    public HashMap<Integer,String >updateImageUrls(String recipeName);
 
     public Recipe getRecipeByID(Integer id);
     public List<String> getRecipeInstruction(Integer id);
@@ -49,4 +49,5 @@ public interface ModelMethod {
     public void addRecipeIngredient(RecipeIngredient recipeIngredient);
 
     public void updateRecipeIngredient(Integer recipeID,List<RecipeIngredient> recipeIngredients);
+    public List<Recipe> getAllRecipes();
 }
