@@ -78,6 +78,7 @@ public class recipeSelectView extends Stage {
         imageNames = _imageNames;
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800, 600);
+        background.setStyle("-fx-background-color: #f6ef97;");
         Pane pane = new Pane();
 
         setRecipeButtons(pane, currentPage);
@@ -189,7 +190,6 @@ public class recipeSelectView extends Stage {
         vbox.setLayoutX(x);
         vbox.setLayoutY(y);
         vbox.setSpacing(10); // Add some spacing between button and label
-
         return vbox;
     }
     public void setSearchField() {

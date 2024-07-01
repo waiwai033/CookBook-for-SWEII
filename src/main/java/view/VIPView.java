@@ -25,9 +25,9 @@ public class VIPView extends Stage {
         Label Joinus = setuplabel("Join us!",85,40,50);
         Label label1 = setuplabel("Our VIP can get:",30,120,35);
         Label label2 = setuplabel("1.Skip advertise",50,200,30);
-        Label label3 = setuplabel("2.Advertise Skip",50,280,30);
-        Label label4 = setuplabel("3.Skipskipskipskip",50,360,30);
-        Label label5 = setuplabel("4.something",50,440,30);
+        Label label3 = setuplabel("2.VIP Right2",50,280,30);
+        Label label4 = setuplabel("3.VIP Right3",50,360,30);
+        Label label5 = setuplabel("4.VIP Right4",50,440,30);
         setButton1();
         setButton2();
 
