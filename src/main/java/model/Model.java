@@ -172,6 +172,7 @@ public class Model implements ModelMethod{
         return imageHashMap;
     }
     public  ArrayList<String>  updateImageNames(String recipeName){
+//        System.out.println(recipeName);
         ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
         ArrayList<String> imageNames = new ArrayList<>();
         for(Recipe recipe : recipes){
@@ -266,6 +267,14 @@ public class Model implements ModelMethod{
    }
     public void addRecipeIngredient(RecipeIngredient recipeIngredient){
         recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
+        sqlSession.commit();
+    }
+
+    public void updateRecipeIngredient(Integer recipeID,List<RecipeIngredient> recipeIngredients){
+        recipeIngredientMapper.deleteRecipeIngredient(recipeID);
+        for(RecipeIngredient recipeIngredient : recipeIngredients){
+            recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
+        }
         sqlSession.commit();
     }
 

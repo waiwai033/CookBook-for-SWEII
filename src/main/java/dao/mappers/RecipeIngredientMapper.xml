@@ -11,9 +11,9 @@
     </insert>
 
     <!-- 删除食谱成分 -->
-    <delete id="deleteRecipeIngredient" parameterType="RecipeIngredient">
+    <delete id="deleteRecipeIngredient" parameterType="Integer">
         DELETE FROM ingredient
-        WHERE recipe_id = #{recipeId} AND name = #{name}
+        WHERE recipe_id = #{recipeID}
     </delete>
 
     <!-- 更新食谱成分 -->

@@ -141,15 +141,13 @@ public class recipeSelectView extends Stage {
         pane.getChildren().clear();
         int start = page * ITEMS_PER_PAGE;
         int end = Math.min(start + ITEMS_PER_PAGE, imageUrls.size());
-//        for( String imageName : imageNames) {
-//            System.out.println(imageName);
-//        }
         for (int i = start; i < end; i++) {
             // 获取第 i 对的键值对
             HashMap.Entry<String, Integer> entry = new ArrayList<>(imageUrls.entrySet()).get(i);
             String url = entry.getKey(); // 获取 url
-
             String imageName = imageNames.get(i);
+            System.out.println(imageName);
+            System.out.println(1);
             File imageUrl = new File(url);
             if (!imageUrl.exists()) {
                 System.out.println("not found " + url);

@@ -23,8 +23,10 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
     }
     public void initializeData() {
         System.out.println("Initializing RecipeSelectController");
+
         recipeSelectView.imageUrls = model.getImageUrls();
         recipeSelectView.imageNames = model.getImageNames();
+
     }
     @Override
     public void handle(ActionEvent actionEvent) {

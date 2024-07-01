@@ -19,11 +19,10 @@ public interface RecipeIngredientMapper {
 
     /**
      * Delete recipe ingredient.
-     *
-     * @param recipeIngredient the recipe ingredient to delete
+
      * @return true if the ingredient was successfully deleted, false otherwise
      */
-    boolean deleteRecipeIngredient(@Param("recipeIngredient") RecipeIngredient recipeIngredient);
+    boolean deleteRecipeIngredient(@Param("recipeID") Integer recipeID);
 
     /**
      * Update recipe ingredient.

@@ -14,6 +14,7 @@ import view.recipeCreateView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class recipeCreateController implements EventHandler<ActionEvent> {
@@ -79,7 +80,7 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
                 recipeId = recipeCreateView.editedRecipeId;
                 model.updateRecipe(recipe);
             }
-
+            List<RecipeIngredient> updatedRecipeIngredients = new ArrayList<>();
             for(RecipeIngredient recipeIngredient: recipeCreateView.tableView.getItems()){
                 recipeIngredient.setRecipeId(recipeId);
                 if(recipeIngredient.getName().isEmpty()){
@@ -99,14 +100,24 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
                     return;
                 }
 
-//                model.addRecipeIngredient(recipeIngredient);
-//                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-//                successAlert.setTitle("Success");
-//                successAlert.setHeaderText(null);
-//                successAlert.setContentText("Recipe and ingredients added successfully!");
-//                successAlert.showAndWait();
+
+                if(recipeCreateView.isEdited == false) {
+                    model.addRecipeIngredient(recipeIngredient);
+                }
+                else if(recipeCreateView.isEdited == true){
+                    updatedRecipeIngredients.add(recipeIngredient);
+
+                }
 
             }
+            if(recipeCreateView.isEdited == true){
+                model.updateRecipeIngredient(recipeId,updatedRecipeIngredients);
+            }
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Success");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("Recipe and ingredients added successfully!");
+            successAlert.showAndWait();
 
         }
 

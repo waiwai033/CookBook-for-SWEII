@@ -47,4 +47,6 @@ public interface ModelMethod {
     public Integer addRecipe(Recipe recipe);
 
     public void addRecipeIngredient(RecipeIngredient recipeIngredient);
+
+    public void updateRecipeIngredient(Integer recipeID,List<RecipeIngredient> recipeIngredients);
 }
