@@ -47,7 +47,7 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
 
         for(Button button : recipeSelectView.buttonMap.keySet()){
             if (actionEvent.getSource() == button){
-
+                recipeSelectView.close();
 //                recipeDisplayView view = new recipeDisplayView(recipeSelectView.buttonMap.get(button));
                 Integer recipeNumber = recipeSelectView.buttonMap.get(button);
                 AdvertiseView advertiseView = new AdvertiseView();
@@ -61,7 +61,12 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
                 // 设置跳过按钮事件处理
                 advertiseView.setOnSkipButton(event -> {
                     if(!model.userIsVip(SessionManager.getCurrentUserName())){
-                        vipView = new VIPView();
+                        vipView = new VIPView(v -> {
+                            advertiseView.mediaPlayer.stop();
+                            advertiseView.close();
+                            recipeDisplayView view = new recipeDisplayView(recipeNumber);
+                            view.show();
+                        });
                         vipView.show();
                     }else{
                     advertiseView.mediaPlayer.stop();
@@ -79,8 +84,12 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
         }
         if (actionEvent.getSource() == recipeSelectView.vipButton) {
             if(!model.userIsVip(SessionManager.getCurrentUserName())){
-                VIPView vipView1 = new VIPView();
-                vipView1.show();
+                VIPView vipView = new VIPView(v ->{
+                    if (model.userIsVip(SessionManager.getCurrentUserName())){
+                        model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are now vip");
+                    }
+                });
+                vipView.show();
             }else {
                 model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
             }

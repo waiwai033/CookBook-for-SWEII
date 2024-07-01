@@ -9,14 +9,18 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.function.Consumer;
+
 public class VIPView extends Stage {
     public Button button1;
     public Button button2;
-    public VIPView() {
+    public Consumer<Void> onBecomeVIP;
+    public VIPView(Consumer<Void> onBecomeVIP) {
         this.setTitle("TryVIP");
         this.setResizable(false);
         this.setHeight(650);
         this.setWidth(400);
+        this.onBecomeVIP =onBecomeVIP;
         init();
     }
     private void init() {
@@ -55,14 +59,14 @@ public class VIPView extends Stage {
     }
     public void setButton1() {
         button1 = new Button("Join right now");
-        button1.setOnAction(new VIPViewController(this));
+        button1.setOnAction(new VIPViewController(this,onBecomeVIP));
         button1.setLayoutX(50);
         button1.setLayoutY(520);
         button1.setPrefSize(100,40);
     }
     public void setButton2() {
         button2 = new Button("Cancel");
-        button2.setOnAction(new VIPViewController(this));
+        button2.setOnAction(new VIPViewController(this,onBecomeVIP));
         button2.setLayoutX(250);
         button2.setLayoutY(520);
         button2.setPrefSize(100,40);

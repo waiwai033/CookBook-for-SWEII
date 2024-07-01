@@ -19,8 +19,12 @@ public class MainPageController implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if (event.getSource() == mainPageView.getVIP) {
             if(!model.userIsVip(SessionManager.getCurrentUserName())){
-                VIPView vipView1 = new VIPView();
-                vipView1.show();
+                VIPView vipView = new VIPView(v ->{
+                    if(model.userIsVip(SessionManager.getCurrentUserName())){
+                        model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are now vip");
+                    }
+                });
+                vipView.show();
             }else {
                 model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
             }
