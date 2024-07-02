@@ -71,8 +71,12 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         if (event.getSource() == recipeDisplayView.VIPbutton) {
             if(!model.userIsVip(SessionManager.getCurrentUserName())){
-                VIPView vipView1 = new VIPView();
-                vipView1.show();
+                VIPView vipView = new VIPView(v ->{
+                    if (model.userIsVip(SessionManager.getCurrentUserName())){
+                        model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are now vip");
+                    }
+                });
+                vipView.show();
             }else {
                 model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
             }
@@ -121,6 +125,8 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
             });
         }else if (event.getSource() == recipeDisplayView.backButton) {
             recipeDisplayView.close();
+            recipeSelectView recipeSelectView = new recipeSelectView();
+            recipeSelectView.show();
         }
     }
 }
