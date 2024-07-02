@@ -1,11 +1,13 @@
 package control;
 
 
+import dao.mappers.PreparationStep;
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -186,15 +188,36 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
         return file != null && file.exists();
     }
     private void handleAddButtonAction() {
-        RecipeIngredient newIngredient = new RecipeIngredient(0,"",new Float(0.0),"",""); // Assuming default constructor creates an empty ingredient
-        recipeCreateView.tableView.getItems().add(newIngredient);
+        Tab selectedTab = recipeCreateView.tabPane.getSelectionModel().getSelectedItem();
+        if(selectedTab.equals(recipeCreateView.ingredientsTab)){
+//            System.out.println(111);
+            RecipeIngredient newIngredient = new RecipeIngredient(0,"",new Float(0.0),"",""); // Assuming default constructor creates an empty ingredient
+            recipeCreateView.tableView.getItems().add(newIngredient);
+        }
+        else if(selectedTab.equals(recipeCreateView.instructionTab)){
+//            System.out.println(222);
+            PreparationStep newInstruction = new PreparationStep(0,0,"");
+            recipeCreateView.instructionTableView.getItems().add(newInstruction);
+        }
     }
 
     private void handleDeleteButtonAction() {
-        if (!recipeCreateView.tableView.getItems().isEmpty()) {
-            recipeCreateView.tableView.getItems().remove(0);
-        } else {
-            model.displayAlert(Alert.AlertType.INFORMATION,"No rows to delete", "There are no rows to delete from the table.");
+        Tab selectedTab = recipeCreateView.tabPane.getSelectionModel().getSelectedItem();
+
+        if (selectedTab.equals(recipeCreateView.ingredientsTab)) {
+            int selectedIndex = recipeCreateView.tableView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                recipeCreateView.tableView.getItems().remove(selectedIndex);
+            } else {
+                model.displayAlert(Alert.AlertType.INFORMATION, "No rows selected", "Please select a row to delete.");
+            }
+        } else if (selectedTab.equals(recipeCreateView.instructionTab)) {
+            int selectedIndex = recipeCreateView.instructionTableView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                recipeCreateView.instructionTableView.getItems().remove(selectedIndex);
+            } else {
+                model.displayAlert(Alert.AlertType.INFORMATION, "No rows selected", "Please select a row to delete.");
+            }
         }
     }
 

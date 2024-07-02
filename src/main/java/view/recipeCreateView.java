@@ -1,6 +1,7 @@
 package view;
 
 import control.recipeCreateController;
+import dao.mappers.PreparationStep;
 import dao.mappers.RecipeIngredient;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+
 
 public class recipeCreateView extends Stage {
 
@@ -25,9 +28,14 @@ public class recipeCreateView extends Stage {
     public TextField recipeNameTextField,preparationTextField, cookingTimeTextField,servenumberTextField;
     public ImageView recipeImage;
     public TableView<RecipeIngredient> tableView;
+    public TableView<PreparationStep> instructionTableView;
     public TextArea instructionTextArea = new TextArea();
     private Label cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
-    private Tab ingredientsTab, instructionTab;
+    public Tab ingredientsTab;
+    public Tab instructionTab;
+    public AnchorPane ingredientsPane;
+    public AnchorPane instructionPane;
+    public TabPane tabPane;
 
     public recipeCreateView() {
         this.setTitle("");
@@ -52,7 +60,7 @@ public class recipeCreateView extends Stage {
             imagePane.getChildren().add(recipeImage);
         }
 
-        TabPane tabPane = new TabPane();
+        tabPane = new TabPane();
         tabPane.setPrefSize(450,350);
         tabPane.setLayoutX(300);
         tabPane.setLayoutY(150);
@@ -81,7 +89,6 @@ public class recipeCreateView extends Stage {
                 createHeader(),
                 cookingTimeLabel,
                 cookingTimeTextField,
-                preparationTextField,
                 preparationTimeLabel,
                 serveNumberLabel,
 //                servenumberTextField,
@@ -205,17 +212,40 @@ public class recipeCreateView extends Stage {
 
     private void setInstructionTab() {
         instructionTab = new Tab("Instructions");
-        AnchorPane instructionPane = new AnchorPane();
+        instructionTableView = new TableView<>();
+        instructionTableView.setLayoutX(0);
+        instructionTableView.setLayoutY(0);
+        instructionTableView.setPrefSize(450,350);
+        instructionTableView.setEffect(new DropShadow());
+        instructionTableView.setEditable(true);
 
-        instructionTextArea.setEditable(true);
-        instructionTextArea.setWrapText(true);
-        instructionTextArea.setPrefSize(450,350);
-        instructionTextArea.setLayoutX(0);
-        instructionTextArea.setLayoutY(0);
-        instructionPane.getChildren().add(instructionTextArea);
+        TableColumn<PreparationStep,Integer> stepColumn = new TableColumn<>("Step");
+        stepColumn.setCellValueFactory(new PropertyValueFactory<>("step"));
+        stepColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        stepColumn.setOnEditCommit(event ->{
+            PreparationStep step = event.getRowValue();
+            step.setStep(event.getNewValue());
+        });
+
+        TableColumn<PreparationStep,String> descriptionColumn = new TableColumn<>("Description");
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionColumn.setOnEditCommit(event ->{
+            PreparationStep step = event.getRowValue();
+            step.setDescription(event.getNewValue());
+                }
+        );
+
+        instructionTableView.getColumns().addAll(stepColumn,descriptionColumn);
+        instructionPane = new AnchorPane();
+        instructionPane.setPrefSize(450,350);
+        instructionPane.setStyle("-fx-background-color: transparent;");
+        instructionPane.setLayoutX(0);
+        instructionPane.setLayoutY(0);
+        instructionPane.getChildren().add(instructionTableView);
 
         instructionTab.setContent(instructionPane);
-        instructionPane.setStyle("-fx-background-color: transparent;");
+
     }
 
     private void setIngredientTab() {
@@ -282,7 +312,7 @@ public class recipeCreateView extends Stage {
 
         tableView.getColumns().addAll(nameColumn, quantityColumn, unitsColumn, descriptionColumn);
 
-        AnchorPane ingredientsPane = new AnchorPane();
+        ingredientsPane = new AnchorPane();
         ingredientsPane.setPrefSize(450,350);
         ingredientsPane.setStyle("-fx-background-color: transparent;");
         ingredientsPane.setLayoutX(0);
