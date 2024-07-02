@@ -13,6 +13,10 @@ import model.Model;
 import view.recipeCreateView;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -27,15 +31,43 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
         this.recipeCreateView = recipeCreateView;
         this.model = new Model();
     }
-
+    private static String getFileExtension(String filename) {
+        if (filename.lastIndexOf(".") != -1 && filename.lastIndexOf(".") != 0) {
+            return filename.substring(filename.lastIndexOf(".") + 1);
+        } else {
+            return ""; // 没有扩展名的情况
+        }
+    }
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == recipeCreateView.uploadButton){
             String temp = imageChoose(recipeCreateView);
+            String projectPath = System.getProperty("user.dir");
+            String targetPath = projectPath + "/src/images/dishes";
+            System.out.println(targetPath);
             imageUrl = temp;
-            if (temp != null){
-                System.out.println(temp);
-                recipeCreateView.updateImage(temp);
+            String fileExtension = getFileExtension(temp);
+            System.out.println(fileExtension);
+
+            long timestamp = System.currentTimeMillis();
+            System.out.println(timestamp);
+            String newFileName = timestamp + "." + fileExtension;
+//            Path fullPath = Paths.get(targetPath+"/005.jpeg");
+            Path fullPath = Paths.get(targetPath).resolve(newFileName);
+            System.out.println(fullPath.toString());
+            Path imagePath = Paths.get(imageUrl);
+            try {
+                // 使用 Files.copy 方法复制文件
+                Files.copy(imagePath,fullPath);
+                System.out.println("文件复制成功");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("复制文件时发生错误: " + e.getMessage());
+            }
+
+            if (fullPath.toString() != null){
+//                System.out.println(temp);
+                recipeCreateView.updateImage(fullPath.toString());
             }
         }
         if(event.getSource() == recipeCreateView.backButton){

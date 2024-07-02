@@ -46,9 +46,11 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 recipeDisplayView.selectedIngredients.clear();
-                List<RecipeIngredient> updatedRecipeIngredients = model.updateIngredientByServeNumber(selectedRecipe.getRecipeId(), recipeDisplayView.serveNumberTextField.getText());
-                for(RecipeIngredient updatedRecipeIngredient: updatedRecipeIngredients){
-                    recipeDisplayView.selectedIngredients.add(updatedRecipeIngredient);
+                if(!recipeDisplayView.serveNumberTextField.getText().isEmpty()) {
+                    List<RecipeIngredient> updatedRecipeIngredients = model.updateIngredientByServeNumber(selectedRecipe.getRecipeId(), recipeDisplayView.serveNumberTextField.getText());
+                    for (RecipeIngredient updatedRecipeIngredient : updatedRecipeIngredients) {
+                        recipeDisplayView.selectedIngredients.add(updatedRecipeIngredient);
+                    }
                 }
             }
         });
