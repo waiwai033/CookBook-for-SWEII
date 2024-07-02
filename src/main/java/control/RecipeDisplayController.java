@@ -1,5 +1,6 @@
 package control;
 import config.SessionManager;
+import dao.mappers.PreparationStep;
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import javafx.collections.FXCollections;
@@ -30,14 +31,16 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
     private recipeCreateView recipeCreateView;
     private Recipe selectedRecipe;
     private List<RecipeIngredient> selectedIngredient;
-    private List<String> selectedInstructions;
+    private List<PreparationStep> selectedInstructions;
+    private List<PreparationStep> selectedPreparation;
     public RecipeDisplayController(recipeDisplayView recipeDisplayView) {
         Integer selectedRecipeNumber = recipeDisplayView.selectedRecipeNumber;
         this.recipeDisplayView = recipeDisplayView;
         this.model = new Model();
         selectedRecipe = model.getRecipeByID(selectedRecipeNumber);
         selectedIngredient = model.getIngredientByID(selectedRecipeNumber);
-        selectedInstructions = model.getRecipeInstruction(selectedRecipeNumber);
+//        selectedInstructions = model.getRecipeInstruction(selectedRecipeNumber);
+        selectedPreparation = model.getRecipeInstruction(selectedRecipeNumber);
         // 在构造函数中添加 TextField 的监听器
 
     }
@@ -63,8 +66,8 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
         recipeDisplayView.serveNumberTextField.setText(String.valueOf(selectedRecipe.getServeAmount()));
         recipeDisplayView.cookingTimeLabel.setText("Cooking Time: "+selectedRecipe.getCookingTime()+"min");
         recipeDisplayView.preparationTimeLabel.setText("Preparation Time: "+selectedRecipe.getPreparationTime()+"min");
-        for(String instruction : selectedInstructions){
-            recipeDisplayView.instructionsTextArea.appendText(instruction+"\n");
+        for(PreparationStep preparationStep : selectedPreparation){
+            recipeDisplayView.instructionsTextArea.appendText(preparationStep.getStep()+". "+preparationStep.getDescription()+"\n");
         }
 
     }
@@ -100,25 +103,28 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
                 if (response == ButtonType.YES) {
                     //            recipeDisplayView.close();
                     recipeDisplayView.close();
-                    recipeCreateView = new recipeCreateView();
+                    recipeCreateView = new recipeCreateView(selectedRecipe.getRecipeId());
                     recipeCreateView.recipeNameTextField.setText(selectedRecipe.getRecipeName());
                     recipeCreateView.cookingTimeTextField.setText(String.valueOf(selectedRecipe.getCookingTime()));
                     recipeCreateView.preparationTextField.setText(String.valueOf(selectedRecipe.getPreparationTime()));
                     recipeCreateView.recipeImage.setImage(new Image("file:"+selectedRecipe.getImageUrl()));
                     ObservableList<RecipeIngredient> selectedIngredients = FXCollections.observableArrayList();
+                    ObservableList<PreparationStep> selectedPreparations = FXCollections.observableArrayList();
                     for(RecipeIngredient recipeIngredient : selectedIngredient){
 
                         selectedIngredients.add(recipeIngredient);
 
                     }
+
+                    for(PreparationStep preparationStep : selectedPreparation){
+                        selectedPreparations.add(preparationStep);
+                    }
                     System.out.print(selectedInstructions);
                     System.out.println(111);
-                    recipeCreateView.isEdited = true;
-                    recipeCreateView.editedRecipeId = selectedRecipe.getRecipeId();
+//                    recipeCreateView.isEdited = true;
+//                    recipeCreateView.editedRecipeId = selectedRecipe.getRecipeId();
                     recipeCreateView.tableView.setItems(selectedIngredients);
-                    for(String instruction : selectedInstructions){
-                        recipeCreateView.instructionTextArea.appendText(instruction+"\n");
-                    }
+                    recipeCreateView.instructionTableView.setItems(selectedPreparations);
 
                     recipeCreateView.show();
                 }

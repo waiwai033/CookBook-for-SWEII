@@ -15,7 +15,7 @@ public interface PreparationStepMapper {
      * @param preparationStep the preparation step to add
      * @return true if the step was successfully added, false otherwise
      */
-    boolean addPreparationStep(@Param("recipeInstruction") PreparationStep preparationStep);
+    boolean addPreparationStep(@Param("preparationStep") PreparationStep preparationStep);
 
     /**
      * Delete preparation step.
@@ -23,7 +23,7 @@ public interface PreparationStepMapper {
      * @param preparationStep the preparation step to delete
      * @return true if the step was successfully deleted, false otherwise
      */
-    boolean deletePreparationStep(@Param("recipeInstruction") PreparationStep preparationStep);
+    boolean deletePreparationStep(@Param("recipeID") Integer recipeID);;
 
     /**
      * Update preparation step.
@@ -31,7 +31,7 @@ public interface PreparationStepMapper {
      * @param preparationStep the preparation step to update
      * @return true if the step was successfully updated, false otherwise
      */
-    boolean updatePreparationStep(@Param("recipeInstruction") PreparationStep preparationStep);
+    boolean updatePreparationStep(@Param("preparationStep") PreparationStep preparationStep);
 
     /**
      * Get preparation steps by recipe id.

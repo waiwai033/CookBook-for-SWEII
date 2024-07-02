@@ -8,6 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -214,13 +217,11 @@ public class Model implements ModelMethod{
         return recipeIngredientMapper.getRecipeIngredientsByRecipeId(id);
     }
 
-    public List<String> getRecipeInstruction(Integer id){
+    public List<PreparationStep> getRecipeInstruction(Integer id){
         List<String> instructions = new ArrayList<>();
         List<PreparationStep> preparationSteps = preparationStepMapper.getPreparationStepsByRecipeId(id);
-        for(PreparationStep preparationStep : preparationSteps){
-            instructions.add(preparationStep.getStep() + ". " + preparationStep.getDescription());
-        }
-        return instructions;
+
+        return preparationSteps;
     }
     public List<RecipeIngredient> updateIngredientByServeNumber(Integer id,String serveNumber){
         Float serveNumberInt = Float.parseFloat(serveNumber);
@@ -274,6 +275,48 @@ public class Model implements ModelMethod{
 
     public List<Recipe> getAllRecipes(){
         return recipeMapper.getAllRecipes();
+    }
+
+    public void addRecipePreparationStep(PreparationStep preparationStep){
+        preparationStepMapper.addPreparationStep(preparationStep);
+        sqlSession.commit();
+    }
+    public void updateRecipePreparationStep(Integer recipeID, List<PreparationStep> preparationSteps){
+        preparationStepMapper.deletePreparationStep(recipeID);
+        for(PreparationStep preparationStep : preparationSteps){
+            preparationStepMapper.addPreparationStep(preparationStep);
+        }
+        sqlSession.commit();
+
+    }
+    private static String getFileExtension(String filename) {
+        if (filename.lastIndexOf(".") != -1 && filename.lastIndexOf(".") != 0) {
+            return filename.substring(filename.lastIndexOf(".") + 1);
+        } else {
+            return ""; // 没有扩展名的情况
+        }
+    }
+    public Path duplicateImage(String imageUrl){
+        String projectPath = System.getProperty("user.dir");
+        String targetPath = projectPath + "/src/images/dishes";
+        System.out.println(targetPath);
+        String fileExtension = getFileExtension(imageUrl);
+        System.out.println(fileExtension);
+        long timestamp = System.currentTimeMillis();
+        System.out.println(timestamp);
+        String newFileName = timestamp + "." + fileExtension;
+        Path fullPath = Paths.get(targetPath).resolve(newFileName);
+        System.out.println(fullPath.toString());
+        Path imagePath = Paths.get(imageUrl);
+        try {
+            // 使用 Files.copy 方法复制文件
+            Files.copy(imagePath,fullPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return  null;
+        }
+        return  fullPath;
+
     }
 
 

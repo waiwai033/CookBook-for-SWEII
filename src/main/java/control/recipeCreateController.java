@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
@@ -21,10 +20,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class recipeCreateController implements EventHandler<ActionEvent> {
 
+    private int preparationStepNumber = 0;
     private recipeCreateView recipeCreateView;
     private Model model;
     private String currentImagePath;
@@ -32,45 +31,25 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
     public recipeCreateController(recipeCreateView recipeCreateView) {
         this.recipeCreateView = recipeCreateView;
         this.model = new Model();
-    }
-    private static String getFileExtension(String filename) {
-        if (filename.lastIndexOf(".") != -1 && filename.lastIndexOf(".") != 0) {
-            return filename.substring(filename.lastIndexOf(".") + 1);
-        } else {
-            return ""; // 没有扩展名的情况
+        System.out.println(recipeCreateView.editedRecipeId);
+        System.out.println(recipeCreateView.isEdited);
+        List<PreparationStep> preparationSteps = model.getRecipeInstruction(recipeCreateView.editedRecipeId);
+        System.out.println(preparationSteps);
+        for(PreparationStep preparationStep : preparationSteps){
+            System.out.println(preparationStep.getStep());
+            System.out.println(preparationStep.getDescription());
+            preparationStepNumber = Math.max(preparationStepNumber,preparationStep.getStep());
         }
+        preparationStepNumber++;
     }
+
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == recipeCreateView.uploadButton){
             String temp = imageChoose(recipeCreateView);
-            String projectPath = System.getProperty("user.dir");
-            String targetPath = projectPath + "/src/images/dishes";
-            System.out.println(targetPath);
             imageUrl = temp;
-            String fileExtension = getFileExtension(temp);
-            System.out.println(fileExtension);
+            recipeCreateView.updateImage(model.duplicateImage(imageUrl).toString());
 
-            long timestamp = System.currentTimeMillis();
-            System.out.println(timestamp);
-            String newFileName = timestamp + "." + fileExtension;
-//            Path fullPath = Paths.get(targetPath+"/005.jpeg");
-            Path fullPath = Paths.get(targetPath).resolve(newFileName);
-            System.out.println(fullPath.toString());
-            Path imagePath = Paths.get(imageUrl);
-            try {
-                // 使用 Files.copy 方法复制文件
-                Files.copy(imagePath,fullPath);
-                System.out.println("文件复制成功");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.err.println("复制文件时发生错误: " + e.getMessage());
-            }
-
-            if (fullPath.toString() != null){
-//                System.out.println(temp);
-                recipeCreateView.updateImage(fullPath.toString());
-            }
         }
         if(event.getSource() == recipeCreateView.backButton){
             recipeCreateView.close();
@@ -97,7 +76,6 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
                 AlertUtils.showWarning("Warn","Please input number！");
                 return;
             }
-
             if (recipeCreateView.recipeImage.getImage() == null) {
                 AlertUtils.showWarning("Warn", "Please upload image!");
                 return;
@@ -117,6 +95,7 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
                 model.updateRecipe(recipe);
             }
             List<RecipeIngredient> updatedRecipeIngredients = new ArrayList<>();
+            List<PreparationStep> updatedPreparationSteps = new ArrayList<>();
             for(RecipeIngredient recipeIngredient: recipeCreateView.tableView.getItems()){
                 recipeIngredient.setRecipeId(recipeId);
                 if(recipeIngredient.getName().isEmpty()){
@@ -149,6 +128,23 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
             if(recipeCreateView.isEdited == true){
                 model.updateRecipeIngredient(recipeId,updatedRecipeIngredients);
             }
+
+
+            for(PreparationStep preparationStep : recipeCreateView.instructionTableView.getItems()){
+                preparationStep.setRecipeId(recipeId);
+
+                if(recipeCreateView.isEdited == false) {
+                    model.addRecipePreparationStep(preparationStep);
+                }
+                else if(recipeCreateView.isEdited == true){
+                    updatedPreparationSteps.add(preparationStep);
+
+                }
+            }
+            if(recipeCreateView.isEdited == true){
+                model.updateRecipePreparationStep(recipeId, updatedPreparationSteps);
+            }
+
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
             successAlert.setTitle("Success");
             successAlert.setHeaderText(null);
@@ -188,15 +184,15 @@ public class recipeCreateController implements EventHandler<ActionEvent> {
         return file != null && file.exists();
     }
     private void handleAddButtonAction() {
+
         Tab selectedTab = recipeCreateView.tabPane.getSelectionModel().getSelectedItem();
         if(selectedTab.equals(recipeCreateView.ingredientsTab)){
-//            System.out.println(111);
             RecipeIngredient newIngredient = new RecipeIngredient(0,"",new Float(0.0),"",""); // Assuming default constructor creates an empty ingredient
             recipeCreateView.tableView.getItems().add(newIngredient);
         }
         else if(selectedTab.equals(recipeCreateView.instructionTab)){
-//            System.out.println(222);
-            PreparationStep newInstruction = new PreparationStep(0,0,"");
+//
+            PreparationStep newInstruction = new PreparationStep(0, preparationStepNumber++,"");
             recipeCreateView.instructionTableView.getItems().add(newInstruction);
         }
     }

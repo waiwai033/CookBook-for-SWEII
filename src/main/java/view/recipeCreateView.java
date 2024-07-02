@@ -44,6 +44,15 @@ public class recipeCreateView extends Stage {
         this.setHeight(600);
         init();
     }
+    public recipeCreateView(int _editedRecipeId){
+        this.editedRecipeId = _editedRecipeId;
+        this.isEdited = true;
+        this.setTitle("");
+        this.setResizable(false);
+        this.setWidth(800);
+        this.setHeight(600);
+        init();
+    }
     public void init() {
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800,600);
@@ -89,6 +98,7 @@ public class recipeCreateView extends Stage {
                 createHeader(),
                 cookingTimeLabel,
                 cookingTimeTextField,
+                preparationTextField,
                 preparationTimeLabel,
                 serveNumberLabel,
 //                servenumberTextField,

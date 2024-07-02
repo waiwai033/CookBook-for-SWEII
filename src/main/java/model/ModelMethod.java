@@ -4,6 +4,7 @@ import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import dao.mappers.PreparationStep;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.HashMap;
 
@@ -42,7 +43,7 @@ public interface ModelMethod {
     public HashMap<Integer,String >updateImageUrls(String recipeName);
 
     public Recipe getRecipeByID(Integer id);
-    public List<String> getRecipeInstruction(Integer id);
+    public List<PreparationStep> getRecipeInstruction(Integer id);
 
     public Integer addRecipe(Recipe recipe);
 
@@ -50,4 +51,5 @@ public interface ModelMethod {
 
     public void updateRecipeIngredient(Integer recipeID,List<RecipeIngredient> recipeIngredients);
     public List<Recipe> getAllRecipes();
+    public Path duplicateImage(String imageURL);
 }
