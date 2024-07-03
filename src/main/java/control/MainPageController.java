@@ -1,45 +1,64 @@
 package control;
+
 import config.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import model.Model;
 import view.*;
 
+/**
+ * Controller for handling actions on the main page.
+ *
+ * @author He Chenyi
+ */
 public class MainPageController implements EventHandler<ActionEvent> {
 
-    private MainPageView mainPageView;
-    private Model model;
+    private final MainPageView mainPageView;
+    private final Model model;
+
+    /**
+     * Constructs a MainPageController with a MainPageView instance.
+     *
+     * @param mainPageView The MainPageView associated with this controller.
+     */
     public MainPageController(MainPageView mainPageView) {
         this.mainPageView = mainPageView;
         this.model = new Model();
     }
+
+    /**
+     * Handles button click events and other actions from the MainPageView.
+     *
+     * @param event The ActionEvent representing the button click or action.
+     */
+    @Override
     public void handle(ActionEvent event) {
+        // Handle VIP button click
         if (event.getSource() == mainPageView.getVIP) {
-            if(!model.userIsVip(SessionManager.getCurrentUserName())){
-                VIPView vipView = new VIPView(v ->{
-                    if(model.userIsVip(SessionManager.getCurrentUserName())){
-                        model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are now vip");
+            // Check if the current user is not VIP
+            if (!model.userIsVip(SessionManager.getCurrentUserName())) {
+                VIPView vipView = new VIPView(v -> {
+                    if (model.userIsVip(SessionManager.getCurrentUserName())) {
+                        Model.displayAlert(Alert.AlertType.INFORMATION, "Info.", "You are now VIP");
                     }
                 });
                 vipView.show();
-            }else {
-                model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
+            } else {
+                // Alert that the user is already VIP
+                Model.displayAlert(Alert.AlertType.INFORMATION, "Info.", "You are already VIP");
             }
-
         }
-        else if(event.getSource() == mainPageView.chooseRecipe){
-            recipeSelectView recipeSelectView = new recipeSelectView();
+        // Handle choose recipe button click
+        else if (event.getSource() == mainPageView.chooseRecipe) {
+            RecipeSelectView recipeSelectView = new RecipeSelectView();
             recipeSelectView.show();
         }
-        else if(event.getSource() == mainPageView.addRecipe){
-            recipeCreateView recipeCreateView = new recipeCreateView();
+        // Handle add recipe button click
+        else if (event.getSource() == mainPageView.addRecipe) {
+            RecipeCreateView recipeCreateView = new RecipeCreateView();
             recipeCreateView.show();
         }
-
-        }
+    }
 
 }
-

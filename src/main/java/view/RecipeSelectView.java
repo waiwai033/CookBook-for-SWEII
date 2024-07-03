@@ -2,8 +2,6 @@ package view;
 
 import control.RecipeSelectController;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-public class recipeSelectView extends Stage {
+
+public class RecipeSelectView extends Stage {
     public TextField searchField;
     public Button searchButton;
     public Button vipButton;
@@ -38,7 +37,7 @@ public class recipeSelectView extends Stage {
     public Label titleLabel;
 //    public AnchorPane background;
     public HashMap<Button, Integer> buttonMap = new HashMap<>();
-    public recipeSelectView() {
+    public RecipeSelectView() {
         this.setWidth(800);
         this.setHeight(600);
         this.setResizable(false);

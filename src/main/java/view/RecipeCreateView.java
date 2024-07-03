@@ -1,6 +1,6 @@
 package view;
 
-import control.recipeCreateController;
+import control.RecipeCreateController;
 import dao.mappers.PreparationStep;
 import dao.mappers.RecipeIngredient;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 
-public class recipeCreateView extends Stage {
+public class RecipeCreateView extends Stage {
 
     public boolean isEdited = false;
     public Integer editedRecipeId = 0;
@@ -37,14 +37,14 @@ public class recipeCreateView extends Stage {
     public AnchorPane instructionPane;
     public TabPane tabPane;
 
-    public recipeCreateView() {
+    public RecipeCreateView() {
         this.setTitle("");
         this.setResizable(false);
         this.setWidth(800);
         this.setHeight(600);
         init();
     }
-    public recipeCreateView(int _editedRecipeId){
+    public RecipeCreateView(int _editedRecipeId){
         this.editedRecipeId = _editedRecipeId;
         this.isEdited = true;
         this.setTitle("");
@@ -101,7 +101,6 @@ public class recipeCreateView extends Stage {
                 preparationTextField,
                 preparationTimeLabel,
                 serveNumberLabel,
-//                servenumberTextField,
                 submitButton,
                 uploadButton,
                 addButton,
@@ -121,13 +120,13 @@ public class recipeCreateView extends Stage {
         clearButton.setLayoutX(320);
         clearButton.setLayoutY(510);
         clearButton.setPrefSize(200,40);
-        clearButton.setOnAction(new recipeCreateController(this));
+        clearButton.setOnAction(new RecipeCreateController(this));
 
     }
 
     private void setBackButton() {
         backButton = new Button("Back");
-        backButton.setOnAction(new recipeCreateController(this));
+        backButton.setOnAction(new RecipeCreateController(this));
         backButton.setLayoutX(10);
         backButton.setLayoutY(10);
     }
@@ -137,7 +136,7 @@ public class recipeCreateView extends Stage {
         deleteButton.setLayoutX(260);
         deleteButton.setLayoutY(245);
         deleteButton.setPrefSize(30,30);
-        deleteButton.setOnAction(new recipeCreateController(this));
+        deleteButton.setOnAction(new RecipeCreateController(this));
     }
 
     private void setAddButton() {
@@ -145,12 +144,12 @@ public class recipeCreateView extends Stage {
         addButton.setLayoutX(260);
         addButton.setLayoutY(210);
         addButton.setPrefSize(30,30);
-        addButton.setOnAction(new recipeCreateController(this));
+        addButton.setOnAction(new RecipeCreateController(this));
     }
 
     private void setSubminButtton() {
         submitButton = new Button("Save recipe");
-        submitButton.setOnAction(new recipeCreateController(this));
+        submitButton.setOnAction(new RecipeCreateController(this));
         submitButton.setLayoutX(550);
         submitButton.setLayoutY(510);
         submitButton.setPrefSize(200,40);
@@ -161,7 +160,7 @@ public class recipeCreateView extends Stage {
         uploadButton.setLayoutX(20);
         uploadButton.setLayoutY(470);
         uploadButton.setPrefSize(200,40);
-        uploadButton.setOnAction(new recipeCreateController(this));
+        uploadButton.setOnAction(new RecipeCreateController(this));
     }
 
     private void setServenumber() {
@@ -169,11 +168,6 @@ public class recipeCreateView extends Stage {
         serveNumberLabel.setLayoutX(300);
         serveNumberLabel.setLayoutY(120);
         serveNumberLabel.setFont(Font.font("System Bold Italic", 15));
-
-//        servenumberTextField.setLayoutX(380);
-//        servenumberTextField.setLayoutY(100);
-//        servenumberTextField.setPrefSize(60,20);
-//        servenumberTextField.setAlignment(Pos.CENTER);
     }
 
     private void setPrepartionTime() {

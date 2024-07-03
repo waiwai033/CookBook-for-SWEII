@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
-public class recipeDisplayView extends Stage {
+public class RecipeDisplayView extends Stage {
     public Button editRecipeButton,deleteRecipeButton,backButton,VIPbutton;
 
 
@@ -36,7 +36,7 @@ public class recipeDisplayView extends Stage {
 
     public Integer selectedRecipeNumber;
 
-    public recipeDisplayView(Integer recipeNumber) {
+    public RecipeDisplayView(Integer recipeNumber) {
 //        this.selectedButton = selectedButton;
 
         System.out.print(recipeNumber);

@@ -26,7 +26,7 @@ public interface RecipeMapper {
      * @param recipeId the recipe id
      * @return the boolean
      */
-    boolean deleteRecipe(@Param("recipeId") int recipeId);
+    boolean deleteRecipe(@Param("recipeID") Integer recipeID);
 
     /**
      * Update recipe boolean.
@@ -43,6 +43,13 @@ public interface RecipeMapper {
      * @return the recipe by id
      */
     Recipe getRecipeById(@Param("recipeId") int recipeId);
+
+    /**
+     * Gets the newest recipe;
+     *
+     * @return the recipe
+     */
+    Recipe getNewRecipe();
 
     /**
      * Gets recipe by name.
@@ -66,4 +73,6 @@ public interface RecipeMapper {
      * @return the recipe list by category
      */
     ArrayList<Recipe> getRecipeByCategory(@Param("category") String category);
+
+
 }

@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * The interface Recipe ingredient mapper.
  * Manage the mapper between RecipeIngredient and XML.
+ *
+ * @author He Chenyi
  */
 public interface RecipeIngredientMapper {
 

@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class signupView extends Stage {
+public class SignUpView extends Stage {
     public TextField newUserTextField ,newPasswordTextField;
 
     public Label titleLabel;
@@ -21,7 +21,7 @@ public class signupView extends Stage {
     public Button createUserButton;
 
     public Button createBackButton;
-    public signupView() {
+    public SignUpView() {
         this.setTitle("Signup");
         this.setWidth(800);
         this.setHeight(600);

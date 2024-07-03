@@ -26,13 +26,13 @@
         where user_id = #{id}
     </select>
 
-    <select id="getUserByName" parameterType="string" resultType="User">
+    <select id="getUserByName" parameterType="String" resultType="User">
         select *
         from users
         where user_name = #{name}
     </select>
 
-    <update id="setVIP" parameterType="string" >
+    <update id="setVIP" parameterType="String" >
      update users set  is_vip = true where user_name = #{name}
     </update>
 

@@ -1,8 +1,6 @@
 package view;
 
-import Enter.App;
 import javafx.animation.TranslateTransition;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,15 +14,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import control.LoginPageController;
 
-public class signinView extends Stage {
+public class SignInView extends Stage {
 
     public Button signinButton;
     public Button signupButton;
     public TextField usernameTextField;
     public TextField passwordTextField;
     public Label titleLabel;
-
-    public signinView() {
+    public SignInView() {
         this.setTitle("Sign In");
         this.setWidth(800);
         this.setHeight(600);

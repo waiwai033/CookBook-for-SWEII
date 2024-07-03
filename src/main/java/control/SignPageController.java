@@ -1,50 +1,69 @@
 package control;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Model;
-import view.signupView;
+import view.SignUpView;
+
+/**
+ * Controller for handling actions on the sign-up page.
+ *
+ * @author He Chenyi, Yan Yi
+ */
 public class SignPageController implements EventHandler<ActionEvent> {
 
-    private signupView signupView;
-    private Model model;
-    public SignPageController(signupView signupView) {
+    private final SignUpView signupView;
+    private final Model model;
+    /**
+     * Constructor to initialize the controller with the SignUpView.
+     *
+     * @param signupView The SignUpView instance to be associated with this controller.
+     */
+    public SignPageController(SignUpView signupView) {
         this.signupView = signupView;
         this.model = new Model();
     }
+    /**
+     * Handles actions performed in the SignUpView.
+     *
+     * @param event The ActionEvent representing the user's action.
+     */
+    @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == signupView.createUserButton) {
-           TextField passwordtext = signupView.getNewPasswordTextField();
-           TextField usernametext = signupView.getNewUserTextField();
-//           System.out.println("Signup button pressed");
+           TextField passwordText = signupView.getNewPasswordTextField();
+           TextField usernameText = signupView.getNewUserTextField();
 
-           String username = usernametext.getText();
-           String password = passwordtext.getText();
-           System.out.print(username);
-           if(username == "" || password == ""){
-               System.out.println("Username and password are null!");
+           String username = usernameText.getText();
+           String password = passwordText.getText();
+           // Check if username or password fields are empty
+           if(username == "" ){
+               Model.displayAlert(Alert.AlertType.ERROR,"error","Please input username!");
+           }
+           else if(password == "" ){
+               Model.displayAlert(Alert.AlertType.ERROR,"error","Please input password!");
            }
            else if(model.sign(username, password)){
+               // Successful sign up
                Alert alert = new Alert(AlertType.INFORMATION);
                alert.setTitle("Sign Up");
                alert.setHeaderText(null);
                alert.setContentText("Successfully signed up!");
-
+               // Close the SignUpView upon successful sign up
                alert.showAndWait().ifPresent(response -> {
-                   // 获取当前的Stage并关闭
                    Stage stage = (Stage) signupView.getStage();
                    stage.close();
                });
            }
            else{
+               // Display error if username already exists
                Model.displayAlert(Alert.AlertType.ERROR,"error","Already have same name!");
            }
         } else if (event.getSource() == signupView.createBackButton) {
-            System.out.println("Back button clicked");
+            // Handle back button click
             signupView.close();
         }
     }

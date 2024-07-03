@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * The interface Preparation step mapper.
  * Manage the mapper between PreparationStep and XML.
+ *
+ * @author He Chenyi
  */
 public interface PreparationStepMapper {
 
@@ -20,7 +22,7 @@ public interface PreparationStepMapper {
     /**
      * Delete preparation step.
      *
-     * @param preparationStep the preparation step to delete
+     * @param recipeID the recipe's preparation steps to delete
      * @return true if the step was successfully deleted, false otherwise
      */
     boolean deletePreparationStep(@Param("recipeID") Integer recipeID);;
@@ -39,5 +41,5 @@ public interface PreparationStepMapper {
      * @param recipeId the ID of the recipe
      * @return a list of preparation steps matching the provided recipe ID
      */
-    List<PreparationStep> getPreparationStepsByRecipeId(@Param("recipeId") int recipeId);
+    List<PreparationStep> getPreparationStepsByRecipeId(@Param("recipeId") Integer recipeId);
 }

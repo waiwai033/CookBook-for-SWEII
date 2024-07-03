@@ -3,44 +3,56 @@ package dao.mappers;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * The interface User mapper.
- * Manage the mapper between User and xml.
+ * The interface UserMapper.
+ * This interface manages the mapping between User objects and the corresponding
  *
  * @author Chenyi He
  */
 public interface UserMapper {
-    /**
-     * Add user boolean.
-     *
-     * @param user the user
-     */
-    public void addUser(@Param("user") User user);
-    /**
-     * Delete user boolean.
-     *
-     * @param user the user
-     * @return the boolean
-     */
-    public boolean deleteUser(@Param("user") User user);
 
     /**
-     * Update user boolean.
+     * Adds a new user to the database.
      *
-     * @param user the user
-     * @return the boolean
+     * @param user the user to be added
      */
-    public boolean updateUser(@Param("user") User user);
+    void addUser(@Param("user") User user);
 
     /**
-     * Gets user by id.
+     * Deletes an existing user from the database.
      *
-     * @param userId the user id
-     * @return the user by id
+     * @param user the user to be deleted
+     * @return true if the deletion was successful, false otherwise
      */
-    public User getUserById(@Param("id") int userId);
+    boolean deleteUser(@Param("user") User user);
 
+    /**
+     * Updates an existing user in the database.
+     *
+     * @param user the user to be updated
+     * @return true if the update was successful, false otherwise
+     */
+    boolean updateUser(@Param("user") User user);
 
-    public User getUserByName(@Param("name") String name);
+    /**
+     * Retrieves a user from the database by their ID.
+     *
+     * @param userId the ID of the user to be retrieved
+     * @return the user with the specified ID, or null if no such user exists
+     */
+    User getUserById(@Param("id") int userId);
 
-    public void setVIP(@Param("name") String name);
+    /**
+     * Retrieves a user from the database by their name.
+     *
+     * @param name the name of the user to be retrieved
+     * @return the user with the specified name, or null if no such user exists
+     */
+    User getUserByName(@Param("name") String name);
+
+    /**
+     * Sets a user as VIP in the database by their name.
+     *
+     * @param name the name of the user to be set as VIP
+     */
+    void setVIP(@Param("name") String name);
 }

@@ -12,11 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.HashMap;
-import view.*;
 
+/**
+ * The Model Class is used to implement ModelMethod Interface
+ *
+ * @author He Chenyi
+ */
 public class Model implements ModelMethod{
     private UserMapper userMapper;
     private RecipeMapper recipeMapper;
@@ -24,146 +25,76 @@ public class Model implements ModelMethod{
     private PreparationStepMapper preparationStepMapper;
     private SqlSession sqlSession;
 
-
+    /**
+     * Constructor that initializes MyBatis and connects to the database.
+     */
     public Model(){
         String resource = "mybatis-config.xml";
         try {
             InputStream inputStream = Resources.getResourceAsStream(resource);
-
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             sqlSession = sqlSessionFactory.openSession();
             userMapper = sqlSession.getMapper(UserMapper.class);
             recipeMapper = sqlSession.getMapper(RecipeMapper.class);
             recipeIngredientMapper = sqlSession.getMapper(RecipeIngredientMapper.class);
             preparationStepMapper = sqlSession.getMapper(PreparationStepMapper.class);
-            // 处理 inputStream
         } catch (IOException e) {
-            // 处理异常，或者将异常向上层抛出
             e.printStackTrace();
         }
 
     }
 
-    public void loadLoginPage() {
-
-    }
-
-
-
-
     @Override
     public boolean sign(String name, String password) {
-        if(userMapper.getUserByName(name)!=null){
-            System.out.print("User already exist");
+        if (userMapper.getUserByName(name) != null) {
             return false;
-        }
-        else {
-            User user = new User();
-            user.setUser(name, password);
-            userMapper.addUser(user);
-            sqlSession.commit();
-            return true;
+        } else {
+            try {
+                User user = new User();
+                user.setUser(name, password);
+                userMapper.addUser(user);
+                sqlSession.commit();
+                return true;
+            } catch (Exception e) {
+                sqlSession.rollback();
+                return false;
+            }
         }
 
     }
-
 
     @Override
     public boolean login(String name, String password) {
-        User user = userMapper.getUserByName(name);
-        if(user == null){
-            displayAlert(Alert.AlertType.ERROR,"error","Please input username!");
-            System.out.print(1111);
+        try {
+            User user = userMapper.getUserByName(name);
+            if (user == null) {
+                displayAlert(Alert.AlertType.ERROR, "Error", "Please input username!");
+                return false;
+            } else if (!user.getPassword().equals(password)) {
+                displayAlert(Alert.AlertType.ERROR, "Error", "Password error");
+                return false;
+            } else {
+                SessionManager.setCurrentUserName(name);
+                return true;
+            }
+        } catch (Exception e) {
             sqlSession.rollback();
             return false;
-
         }
-        else if(!user.getPassword().equals(password)){
-            displayAlert(Alert.AlertType.ERROR,"error","password error");
-            System.out.print("password error");
-            return false;
-        }
-        else if(user.getPassword().equals(password)){
-            System.out.println("successful");
-            SessionManager.setCurrentUserName(name);
-            sqlSession.commit();
-            return true;
-        }
-        return false;
     }
 
-    @Override
-    public void logout() {
-
-    }
-
-    @Override
-    public void loadRecipePage() {
-
-//        需要变化的标签
-//       recipeNameLabel.setText("");
-//       cookingTimeLabel.setText("");
-//       preparationTimeLabel.setText("");
-//       serveNumberTextField.setText("");
-    }
-
-
-    public ArrayList<Recipe> updateRecipePageByName(String name) {
-        ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
-        String regex = ".*" + name + ".*";
-        Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
-        ArrayList<Recipe> matches = new ArrayList<>();
-        for(Recipe recipe : recipes){
-            Matcher matcher = pattern.matcher(recipe.getRecipeName());
-            if(matcher.matches()){
-                matches.add(recipe);
-            }
-        }
-        return matches;
-
-    }
-
-    @Override
-    public ArrayList<Recipe> updateRecipePageByCategory(String category) {
-        ArrayList<Recipe> recipeList = recipeMapper.getRecipeByCategory(category);
-        return recipeList;
-    }
-
-    @Override
-    public void loadAdvertisementPage() {
-
-    }
 
     @Override
     public boolean userIsVip(String userName) {
-        User user = userMapper.getUserByName(userName);
-        return user.isVip();
+        try {
+            User user = userMapper.getUserByName(userName);
+            return user.isVip();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public void loadVipPage(int userID) {
-
-    }
-
-    @Override
-    public void signVip(int userID, String password) {
-        User user = userMapper.getUserById(userID);
-        user.setVip();
-
-    }
-
-    @Override
-    public List<RecipeIngredient> loadIngredientPage(int recipeID) {
-        List<RecipeIngredient> ingredients = recipeIngredientMapper.getRecipeIngredientsByRecipeId(recipeID);
-        return ingredients;
-    }
-
-    public List<PreparationStep> loadInstructionPage(int recipeID) {
-        List<PreparationStep> instructions = preparationStepMapper.getPreparationStepsByRecipeId(recipeID);
-        return instructions;
-    }
-
-
     public  LinkedHashMap< Integer,String>   updateImageUrls(String recipeName){
         ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
         LinkedHashMap< Integer,String> imageHashMap = new LinkedHashMap<>();
@@ -174,8 +105,8 @@ public class Model implements ModelMethod{
 
         return imageHashMap;
     }
+    @Override
     public  ArrayList<String>  updateImageNames(String recipeName){
-//        System.out.println(recipeName);
         ArrayList<Recipe> recipes = recipeMapper.getRecipeByName(recipeName);
         ArrayList<String> imageNames = new ArrayList<>();
         for(Recipe recipe : recipes){
@@ -185,22 +116,7 @@ public class Model implements ModelMethod{
 
         return imageNames;
     }
-    public LinkedHashMap<String, Integer> getImageUrls(){
-        LinkedHashMap<String, Integer> imageHashMap = new LinkedHashMap<>();
-        ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
-        for(Recipe recipe : recipes){
-            imageHashMap.put(recipe.getImageUrl(),recipe.getRecipeId());
-        }
-        return imageHashMap;
-    }
-    public ArrayList<String> getImageNames() {
-        ArrayList<String> imageNames = new ArrayList<>();
-        ArrayList<Recipe> recipes = recipeMapper.getAllRecipes();
-        for (Recipe recipe : recipes) {
-            imageNames.add(recipe.getRecipeName());
-        }
-        return imageNames;
-    }
+
     public static void displayAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -209,20 +125,22 @@ public class Model implements ModelMethod{
         alert.showAndWait();
     }
 
+    @Override
     public Recipe getRecipeByID(Integer id){
         return recipeMapper.getRecipeById(id);
     }
 
+    @Override
     public List<RecipeIngredient> getIngredientByID(Integer id){
         return recipeIngredientMapper.getRecipeIngredientsByRecipeId(id);
     }
 
-    public List<PreparationStep> getRecipeInstruction(Integer id){
-        List<String> instructions = new ArrayList<>();
-        List<PreparationStep> preparationSteps = preparationStepMapper.getPreparationStepsByRecipeId(id);
-
-        return preparationSteps;
+    @Override
+    public List<PreparationStep> getRecipePreparationSteps(Integer id){
+        return preparationStepMapper.getPreparationStepsByRecipeId(id);
     }
+
+    @Override
     public List<RecipeIngredient> updateIngredientByServeNumber(Integer id,String serveNumber){
         Float serveNumberInt = Float.parseFloat(serveNumber);
         List<RecipeIngredient> updatedIngredients = new ArrayList<>();
@@ -235,81 +153,113 @@ public class Model implements ModelMethod{
         }
         return updatedIngredients;
     }
-    public void setVIP(String username){
-        User user = userMapper.getUserByName(username);
-        userMapper.setVIP(username);
-        sqlSession.commit();
+
+    @Override
+    public void setVIP(String username) {
+        try {
+            userMapper.setVIP(username);
+            sqlSession.commit();
+        } catch (Exception e) {
+           sqlSession.rollback();
+        }
     }
 
-    public void updateRecipe(Recipe recipe){
-        recipeMapper.updateRecipe(recipe);
-        sqlSession.commit();
+    @Override
+    public void updateRecipe(Recipe recipe) {
+        try {
+            recipeMapper.updateRecipe(recipe);
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
+        }
     }
-   public Integer addRecipe(Recipe recipe){
 
+    @Override
+    public Integer addRecipe(Recipe recipe){
 
+        try {
             recipeMapper.addRecipe(recipe);
             sqlSession.commit();
-            Integer recipeID = 0;
-            List<Recipe> newRecipes = recipeMapper.getRecipeByName(recipe.getRecipeName());
-            for (Recipe newRecipe : newRecipes) {
-                System.out.println(newRecipe.getRecipeId());
-                recipeID = newRecipe.getRecipeId();
-
+            Recipe newRecipe = recipeMapper.getNewRecipe();
+            return newRecipe.getRecipeId();
+        } catch (Exception e) {
+            sqlSession.rollback();
+            return 0;
         }
-        return recipeID;
 
    }
+
+    @Override
     public void addRecipeIngredient(RecipeIngredient recipeIngredient){
-        recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
-        sqlSession.commit();
-    }
-
-    public void updateRecipeIngredient(Integer recipeID,List<RecipeIngredient> recipeIngredients){
-        recipeIngredientMapper.deleteRecipeIngredient(recipeID);
-        for(RecipeIngredient recipeIngredient : recipeIngredients){
+        try {
             recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
         }
-        sqlSession.commit();
+
     }
 
+    @Override
+    public void updateRecipeIngredient(Integer recipeID,List<RecipeIngredient> recipeIngredients){
+        try {
+            recipeIngredientMapper.deleteRecipeIngredient(recipeID);
+            for (RecipeIngredient recipeIngredient : recipeIngredients) {
+                recipeIngredientMapper.addRecipeIngredient(recipeIngredient);
+            }
+            sqlSession.commit();
+        } catch (Exception e) {
+           sqlSession.rollback();
+        }
+    }
+
+    @Override
     public List<Recipe> getAllRecipes(){
         return recipeMapper.getAllRecipes();
     }
 
-    public void addRecipePreparationStep(PreparationStep preparationStep){
-        preparationStepMapper.addPreparationStep(preparationStep);
-        sqlSession.commit();
-    }
-    public void updateRecipePreparationStep(Integer recipeID, List<PreparationStep> preparationSteps){
-        preparationStepMapper.deletePreparationStep(recipeID);
-        for(PreparationStep preparationStep : preparationSteps){
+    @Override
+    public void addRecipePreparationStep(PreparationStep preparationStep) {
+        try {
             preparationStepMapper.addPreparationStep(preparationStep);
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
         }
-        sqlSession.commit();
-
     }
+
+    @Override
+    public void updateRecipePreparationStep(Integer recipeID, List<PreparationStep> preparationSteps){
+        try {
+            preparationStepMapper.deletePreparationStep(recipeID);
+            for (PreparationStep preparationStep : preparationSteps) {
+                preparationStepMapper.addPreparationStep(preparationStep);
+            }
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
+        }
+    }
+
     private static String getFileExtension(String filename) {
         if (filename.lastIndexOf(".") != -1 && filename.lastIndexOf(".") != 0) {
             return filename.substring(filename.lastIndexOf(".") + 1);
         } else {
-            return ""; // 没有扩展名的情况
+            return "";
         }
     }
+
+    @Override
     public Path duplicateImage(String imageUrl){
         String projectPath = System.getProperty("user.dir");
         String targetPath = projectPath + "/src/images/dishes";
-        System.out.println(targetPath);
         String fileExtension = getFileExtension(imageUrl);
-        System.out.println(fileExtension);
         long timestamp = System.currentTimeMillis();
         System.out.println(timestamp);
         String newFileName = timestamp + "." + fileExtension;
         Path fullPath = Paths.get(targetPath).resolve(newFileName);
-        System.out.println(fullPath.toString());
         Path imagePath = Paths.get(imageUrl);
         try {
-            // 使用 Files.copy 方法复制文件
             Files.copy(imagePath,fullPath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -319,6 +269,27 @@ public class Model implements ModelMethod{
 
     }
 
+    @Override
+    public void deleteRecipe(Integer recipeID){
+        try {
+            recipeMapper.deleteRecipe(recipeID);
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
+        }   }
+
+    @Override
+    public boolean serveNumberIsInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
 
 }
 

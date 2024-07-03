@@ -24,7 +24,7 @@
     </update>
 
     <!-- 根据食谱 ID 获取所有步骤 -->
-    <select id="getPreparationStepsByRecipeId" parameterType="int" resultType="dao.mappers.PreparationStep">
+    <select id="getPreparationStepsByRecipeId" parameterType="Integer" resultType="dao.mappers.PreparationStep">
         SELECT *
         FROM preparationstep
         WHERE recipe_id = #{recipeId}

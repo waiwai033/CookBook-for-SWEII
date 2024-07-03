@@ -7,8 +7,11 @@ import java.util.Random;
 
 /**
  * The type User.
+ * This class represents a User entity with properties such as user ID, user name,
+ * password, and VIP status. It provides methods to get and set these properties.
+ * The user ID is generated randomly.
  *
- * @author Chenyi He
+ * @author He Chenyi
  */
 @Alias("User")
 public class User implements Serializable {
@@ -19,29 +22,30 @@ public class User implements Serializable {
     private boolean is_vip;
 
     /**
-     * Gets user id.
+     * Gets the user ID.
      *
-     * @return the user id
+     * @return the user ID
      */
     public int getUserId() {
         return user_id;
     }
 
     /**
-     * Sets user id.
+     * Sets the user properties including user name and password.
+     * Also generates a random user ID and sets the VIP status to false.
      *
-     * @param userId the user id
+     * @param userName the user name
+     * @param password the password
      */
     public void setUser(String userName, String password) {
         this.user_name = userName;
         this.password = password;
         this.is_vip = false;
-
         this.user_id = 100000 + new Random().nextInt(900000);
     }
 
     /**
-     * Gets user name.
+     * Gets the user name.
      *
      * @return the user name
      */
@@ -49,10 +53,8 @@ public class User implements Serializable {
         return user_name;
     }
 
-
-
     /**
-     * Gets password.
+     * Gets the password.
      *
      * @return the password
      */
@@ -60,27 +62,37 @@ public class User implements Serializable {
         return password;
     }
 
+    /**
+     * Checks if the user is a VIP.
+     *
+     * @return true if the user is a VIP, false otherwise
+     */
     public boolean isVip() {
         return is_vip;
     }
 
     /**
-     * Sets password.
+     * Sets the password.
      *
-     * @param password the password
+     * @param password the new password
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setVip() {this.is_vip = true;}
+    /**
+     * Sets the user as VIP.
+     */
+    public void setVip() {
+        this.is_vip = true;
+    }
 
     @Override
     public String toString() {
         return "User{" +
                 "user_id=" + user_id +
                 ", user_name='" + user_name + '\'' +
-                ", password=" + password +
+                ", password='" + password + '\'' +
                 ", is_vip=" + is_vip +
                 '}';
     }
