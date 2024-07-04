@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import model.Model;
 
 /**
  * This view is used to create or edit a recipe.
@@ -239,6 +240,7 @@ public class RecipeCreateView extends Stage {
 
     private void setPrepartionTime() {
         preparationTextField = new TextField();
+        preparationTextField.setTextFormatter(Model.textFieldFormatter(3));
         preparationTextField.setLayoutX(150);
         preparationTextField.setLayoutY(200);
         preparationTextField.setPrefSize(80,20);
@@ -253,6 +255,7 @@ public class RecipeCreateView extends Stage {
 
     private void setCookingTime() {
         cookingTimeTextField = new TextField();
+        cookingTimeTextField.setTextFormatter(Model.textFieldFormatter(3));
         cookingTimeTextField.setLayoutX(150);
         cookingTimeTextField.setLayoutY(165);
         cookingTimeTextField.setPrefSize(80,20);
@@ -266,6 +269,7 @@ public class RecipeCreateView extends Stage {
 
     private void setRecipename() {
         recipeNameTextField = new TextField("");
+        recipeNameTextField.setTextFormatter(Model.textFieldFormatter(20));
         recipeNameTextField.setFont(new Font("Comic Sans MS", 50));
         recipeNameTextField.setStyle("-fx-text-fill: #333;");
         recipeNameTextField.setPrefSize(600,40);
@@ -353,7 +357,7 @@ public class RecipeCreateView extends Stage {
                         alert.setHeaderText(null);
                         alert.setContentText("Please input number");
                         alert.showAndWait();
-                        return null; // 返回 null 表示无效输入
+                        return null;
                     }
                 }
             });
@@ -361,7 +365,6 @@ public class RecipeCreateView extends Stage {
         });
         quantityColumn.setOnEditCommit(event ->{
             RecipeIngredient ingredient = event.getRowValue();
-            System.out.println(event.getNewValue());
             ingredient.setQuantity(event.getNewValue());
         });
 

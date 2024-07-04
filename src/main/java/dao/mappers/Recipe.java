@@ -25,6 +25,23 @@ public class Recipe implements Serializable {
     }
 
     /**
+     * Default constructor for the Recipe class with parameters.
+     * @param recipeId               The unique identifier of the recipe.
+     * @param recipeName             The name of the ingredient.
+     * @param serveAmount            The quantity or amount of the serve of the recipe.
+     * @param preparationTime        The preparation time of the recipe cooking.
+     * @param cookingTime`           The cooking time of the recipe cooking.
+     */
+    public Recipe(int recipeId, String recipeName, int serveAmount,int preparationTime, int cookingTime) {
+        this.recipeId = recipeId;
+        this.recipeName = recipeName;
+        this.serveAmount = serveAmount;
+        this.preparationTime = preparationTime;
+        this.cookingTime = cookingTime;
+
+    }
+
+    /**
      * Constructs a Recipe object with specified attributes.
      *
      * @param recipeId        The unique identifier for the recipe.

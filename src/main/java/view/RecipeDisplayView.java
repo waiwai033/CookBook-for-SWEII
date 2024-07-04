@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
+import model.Model;
 
 /**
  * This view is used to display a recipe.
@@ -77,9 +78,6 @@ public class RecipeDisplayView extends Stage {
      * @param recipeNumber
      */
     public RecipeDisplayView(Integer recipeNumber) {
-//        this.selectedButton = selectedButton;
-
-        System.out.print(recipeNumber);
         this.setTitle("");
         this.setResizable(false);
         this.setWidth(800);
@@ -184,7 +182,7 @@ public class RecipeDisplayView extends Stage {
         serveNumberLabel.setLayoutX(260);
         serveNumberLabel.setLayoutY(100);
         serveNumberLabel.setFont(Font.font("System Bold Italic", 15));
-
+        serveNumberTextField.setTextFormatter(Model.textFieldFormatter(3));
         serveNumberTextField.setLayoutX(380);
         serveNumberTextField.setLayoutY(100);
         serveNumberTextField.setPrefSize(60, 20);
@@ -256,12 +254,6 @@ public class RecipeDisplayView extends Stage {
 
         tableView.getColumns().addAll( nameColumn, quantityColumn, unitsColumn, descriptionColumn);
 
-//        selectedIngredients = FXCollections.observableArrayList(
-//                new RecipeIngredient(1, "Flour", "2", "cups", "All-purpose flour"),
-//                new RecipeIngredient(1, "Sugar", "3", "cup", "Granulated sugar"),
-//                new RecipeIngredient(1, "Eggs", "4", "pieces", "Large eggs"),
-//                new RecipeIngredient(1, "Butter", "1", "cup", "Unsalted butter, melted")
-//        );
 
         tableView.setItems(selectedIngredients);
 

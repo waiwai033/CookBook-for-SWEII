@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
  * The interface UserMapper.
  * This interface manages the mapping between User objects and the corresponding
  *
- * @author Chenyi He
+ * @author He Chenyi
  */
 public interface UserMapper {
 

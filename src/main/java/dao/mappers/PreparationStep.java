@@ -13,6 +13,13 @@ public class PreparationStep {
     private String description;
 
     /**
+     * Default constructor for the PreparationStep class.
+     */
+    public PreparationStep() {
+
+    }
+
+    /**
      * Constructs a PreparationStep object with the specified recipe ID, step number, and description.
      *
      * @param recipeId    The ID of the recipe to which this preparation step belongs.

@@ -36,7 +36,6 @@ public class SignPageController implements EventHandler<ActionEvent> {
         if (event.getSource() == signupView.createUserButton) {
            TextField passwordText = signupView.getNewPasswordTextField();
            TextField usernameText = signupView.getNewUserTextField();
-
            String username = usernameText.getText();
            String password = passwordText.getText();
            // Check if username or password fields are empty
@@ -59,8 +58,9 @@ public class SignPageController implements EventHandler<ActionEvent> {
                });
            }
            else{
-               // Display error if username already exists
-               Model.displayAlert(Alert.AlertType.ERROR,"error","Already have same name!");
+               passwordText.clear();
+               usernameText.clear();
+
            }
         } else if (event.getSource() == signupView.createBackButton) {
             // Handle back button click

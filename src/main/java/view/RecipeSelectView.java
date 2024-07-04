@@ -182,8 +182,6 @@ public class RecipeSelectView extends Stage {
             HashMap.Entry< Integer,String> entry = new ArrayList<>(imageUrls.entrySet()).get(i);
             String url = entry.getValue(); // 获取 url
             String imageName = imageNames.get(i);
-            System.out.println(imageName);
-            System.out.println(1);
             File imageUrl = new File(url);
             if (!imageUrl.exists()) {
                 System.out.println("not found " + url);

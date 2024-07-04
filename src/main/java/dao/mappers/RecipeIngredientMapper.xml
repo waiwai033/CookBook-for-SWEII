@@ -4,26 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mappers.RecipeIngredientMapper">
 
-    <!-- 添加食谱成分 -->
+    <!-- add recipe ingredient -->
     <insert id="addRecipeIngredient" parameterType="RecipeIngredient">
         INSERT INTO ingredient (recipe_id, name, quantity, unit, description)
         VALUES (#{recipeIngredient.recipeId}, #{recipeIngredient.name}, #{recipeIngredient.quantity}, #{recipeIngredient.unit}, #{recipeIngredient.description})
     </insert>
 
-    <!-- 删除食谱成分 -->
+    <!-- delete recipe ingredient -->
     <delete id="deleteRecipeIngredient" parameterType="Integer">
         DELETE FROM ingredient
         WHERE recipe_id = #{recipeID}
     </delete>
 
-    <!-- 更新食谱成分 -->
+    <!-- update recipe ingredient -->
     <update id="updateRecipeIngredient" parameterType="RecipeIngredient">
         UPDATE ingredient
         SET quantity = #{quantity}, unit = #{unit}, description = #{description}
         WHERE recipe_id = #{recipeId} AND name = #{name}
     </update>
 
-    <!-- 根据食谱 ID 查询所有成分 -->
+    <!-- select recipe ingreident by recipe id -->
     <select id="getRecipeIngredientsByRecipeId" parameterType="int" resultType="RecipeIngredient">
         SELECT *
         FROM ingredient

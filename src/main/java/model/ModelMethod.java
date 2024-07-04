@@ -3,6 +3,8 @@ package model;
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import dao.mappers.PreparationStep;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -123,7 +125,7 @@ public interface ModelMethod {
      */
     public boolean serveNumberIsInteger(String str);
 
-    public List<RecipeIngredient> updateIngredientByServeNumber(Integer id,String serveNumber);
+    public List<RecipeIngredient> updateIngredientByServeNumber(Integer id, String serveNumber);
 
     public List<RecipeIngredient> getIngredientByID(Integer id);
 
@@ -136,4 +138,9 @@ public interface ModelMethod {
     public void updateRecipePreparationStep(Integer recipeID, List<PreparationStep> preparationSteps);
 
     public void deleteRecipe(Integer recipeID);
-    }
+
+    public boolean validateRecipe(String recipeName, String cookingTime, String preparationTime, String recipeImage);
+
+    public boolean validateRecipeIngredient(String recipeName, Float quantity, String unit);
+
+}

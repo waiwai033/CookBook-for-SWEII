@@ -1,5 +1,4 @@
 package Enter;
-
 import javafx.stage.Stage;
 import view.*;
 

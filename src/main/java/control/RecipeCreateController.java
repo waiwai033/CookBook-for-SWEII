@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import model.Model;
 import view.RecipeCreateView;
 import view.RecipeSelectView;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,19 +74,14 @@ public class RecipeCreateController implements EventHandler<ActionEvent> {
             // Retrieve input values
             String recipeName = recipeCreateView.recipeNameTextField.getText();
             String cookingTime = recipeCreateView.cookingTimeTextField.getText();
-            String preparation = recipeCreateView.preparationTextField.getText();
-
+            String preparationTime = recipeCreateView.preparationTextField.getText();
             // Validate input
-            if (recipeName.isEmpty() || cookingTime.isEmpty() || preparation.isEmpty()) {
-                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please complete form！");
-                return;
-            }
-            if (!cookingTime.matches("\\d+") || !preparation.matches("\\d+")) {
-                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input number！");
-                return;
-            }
-            if (recipeCreateView.recipeImage.getImage() == null) {
-                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please upload image!");
+            if (!model.validateRecipe(
+                    recipeName,
+                    cookingTime,
+                    preparationTime,
+                    recipeCreateView.recipeImage.getImage() == null ? "" : recipeCreateView.recipeImage.getImage().getUrl()
+            ))   {
                 return;
             }
             Recipe recipe;
@@ -107,35 +101,14 @@ public class RecipeCreateController implements EventHandler<ActionEvent> {
             for(RecipeIngredient recipeIngredient: recipeCreateView.tableView.getItems()){
                 recipeIngredient.setRecipeId(recipeId);
                 // Validate ingredient fields
-                if(recipeIngredient.getName().isEmpty()){
-                    Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input ingredient name！");
-                    if(!recipeCreateView.isEdited) {
-                        model.deleteRecipe(recipeId);
-                    }
-                    return;
-                }
-                if(recipeIngredient.getQuantity() == null || recipeIngredient.getQuantity() == 0.0){
-                    Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input ingredient quantity ！");
-                    if(!recipeCreateView.isEdited) {
-                        model.deleteRecipe(recipeId);
-                    }
-                    return;
-                }
-                if(recipeIngredient.getUnit().isEmpty()){
-                    Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please ingredient unit！");
-                    if(!recipeCreateView.isEdited) {
-                        model.deleteRecipe(recipeId);
-                    }
-                    return;
-                }
-                if(recipeIngredient.getDescription().isEmpty()){
-                    Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input ingredient description！");
-                    if(!recipeCreateView.isEdited) {
-                        model.deleteRecipe(recipeId);
-                    }
-                    return;
-                }
 
+
+                if(!model.validateRecipeIngredient(recipeIngredient.getName(),recipeIngredient.getQuantity(),recipeIngredient.getUnit())){
+                    if(!recipeCreateView.isEdited) {
+                        model.deleteRecipe(recipeId);
+                    }
+                    return;
+                }
                 // Directly add recipe ingredient when creating recipe
                 if(!recipeCreateView.isEdited) {
                     model.addRecipeIngredient(recipeIngredient);
@@ -152,31 +125,26 @@ public class RecipeCreateController implements EventHandler<ActionEvent> {
                 model.updateRecipeIngredient(recipeId,updatedRecipeIngredients);
             }
 
-            // Prepare updated preparation steps
+            // Prepare updated preparationTime steps
             List<PreparationStep> updatedPreparationSteps = new ArrayList<>();
             for(PreparationStep preparationStep : recipeCreateView.instructionTableView.getItems()){
                 preparationStep.setRecipeId(recipeId);
-                // Directly add recipe preparation step when creating recipe
+                // Directly add recipe preparationTime step when creating recipe
                 if(!recipeCreateView.isEdited) {
                     model.addRecipePreparationStep(preparationStep);
                 }
-                // Temporarily store recipe preparation step to List when editing recipe
+                // Temporarily store recipe preparationTime step to List when editing recipe
                 else{
                     updatedPreparationSteps.add(preparationStep);
 
                 }
             }
-            // Update preparation steps if editing
+            // Update preparationTime steps if editing
             if(recipeCreateView.isEdited){
                 model.updateRecipePreparationStep(recipeId, updatedPreparationSteps);
             }
             // Show success message
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setTitle("Success");
-            successAlert.setHeaderText(null);
-            successAlert.setContentText("Recipe and ingredients added successfully!");
-            successAlert.showAndWait();
-
+            Model.displayAlert(Alert.AlertType.INFORMATION,"Success","Recipe and ingredients added successfully!");
             // Close the stage
             recipeCreateView.close();
             RecipeSelectView recipeSelectView = new RecipeSelectView();

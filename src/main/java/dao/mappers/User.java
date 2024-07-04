@@ -1,7 +1,5 @@
 package dao.mappers;
-
 import org.apache.ibatis.type.Alias;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -22,6 +20,26 @@ public class User implements Serializable {
     private boolean is_vip;
 
     /**
+     * Default constructor for the User class.
+     */
+    public User(){
+    }
+
+    /**
+     * Constructor for the User class with parameters.
+     * @param user_id    The unique identifier of the user.
+     * @param user_name  The name of the user.
+     * @param password   The password of the user.
+     * @param is_vip     The vip status of the user.
+     */
+    public User(int user_id, String user_name, String password, boolean is_vip) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.password = password;
+        this.is_vip = is_vip;
+    }
+
+    /**
      * Gets the user ID.
      *
      * @return the user ID
@@ -37,11 +55,12 @@ public class User implements Serializable {
      * @param userName the user name
      * @param password the password
      */
+
     public void setUser(String userName, String password) {
         this.user_name = userName;
         this.password = password;
         this.is_vip = false;
-        this.user_id = 100000 + new Random().nextInt(900000);
+        this.user_id = 10000000 + new Random().nextInt(90000000);
     }
 
     /**

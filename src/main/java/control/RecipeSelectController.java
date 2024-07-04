@@ -45,8 +45,6 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
             recipeSelectView.imageNames.add(recipe.getRecipeName());
 
             recipeSelectView.imageUrls.put( recipe.getRecipeId(),recipe.getImageUrl());
-            System.out.println(recipe.getRecipeName());
-            System.out.println(recipe.getImageUrl());
         }
 
     }

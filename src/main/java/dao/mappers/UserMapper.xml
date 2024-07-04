@@ -3,35 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mappers.UserMapper">
+    <!-- add user -->
     <insert id="addUser" parameterType="User">
         insert into users
         values (#{user.user_id}, #{user.user_name}, #{user.password}, #{user.is_vip})
 
     </insert>
 
+    <!-- delete user by id-->
     <delete id="deleteUser" parameterType="User">
         delete from user_table
         where user_id = #{user.userId}
     </delete>
-
+    <!-- update user by id-->
     <update id="updateUser" parameterType="User">
         update users
         set user_name = #{user.userName}, password = #{user.password}
         where user_id = #{user.userId}
     </update>
-
+    <!-- select user by id -->
     <select id="getUserById" parameterType="int" resultType="User">
         select *
         from users
         where user_id = #{id}
     </select>
 
+    <!-- select user by name -->
     <select id="getUserByName" parameterType="String" resultType="User">
         select *
         from users
         where user_name = #{name}
     </select>
-
+    <!-- set vip of user -->
     <update id="setVIP" parameterType="String" >
      update users set  is_vip = true where user_name = #{name}
     </update>

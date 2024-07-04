@@ -14,6 +14,13 @@ public class RecipeIngredient {
     private String description;
 
     /**
+     * Default constructor for the RecipeIngredient class.
+     */
+    public RecipeIngredient() {
+
+    }
+
+    /**
      * Constructs a RecipeIngredient object with specified attributes.
      *
      * @param recipeId    The unique identifier of the recipe this ingredient belongs to.

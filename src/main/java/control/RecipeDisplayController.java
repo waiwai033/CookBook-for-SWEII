@@ -14,8 +14,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import model.Model;
 import view.*;
-import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 /**
  * Controller for handling actions on the Recipe Display page.

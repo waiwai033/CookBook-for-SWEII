@@ -2,16 +2,21 @@ package model;
 import config.SessionManager;
 import dao.mappers.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextFormatter;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 
 /**
  * The Model Class is used to implement ModelMethod Interface
@@ -24,7 +29,8 @@ public class Model implements ModelMethod{
     private RecipeIngredientMapper recipeIngredientMapper;
     private PreparationStepMapper preparationStepMapper;
     private SqlSession sqlSession;
-
+    private static final float MAX_QUANTITY = 99999.0f;
+    private static final int MAX_LENGTH = 20;
     /**
      * Constructor that initializes MyBatis and connects to the database.
      */
@@ -47,8 +53,20 @@ public class Model implements ModelMethod{
     @Override
     public boolean sign(String name, String password) {
         if (userMapper.getUserByName(name) != null) {
+            Model.displayAlert(Alert.AlertType.WARNING, "warn","user already exist");
+
             return false;
-        } else {
+        }
+        else  if(name.matches("-?\\d+")){
+            Model.displayAlert(Alert.AlertType.WARNING, "warn","user name can't be pure integer");
+            return false;
+        }
+        else  if(password.matches("-?\\d+")){
+            Model.displayAlert(Alert.AlertType.WARNING, "warn","password can't be pure integer");
+            return false;
+
+        }
+        else {
             try {
                 User user = new User();
                 user.setUser(name, password);
@@ -284,11 +302,88 @@ public class Model implements ModelMethod{
             return false;
         }
         try {
-            Integer.parseInt(str);
+            return Integer.parseInt(str)> 0;
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static  TextFormatter<String> textFieldFormatter(int maxLength) {
+        TextFormatter<String> temp;
+        temp = new TextFormatter<>(change -> {
+            if(change.isAdded()){
+                if(change.getControlText().length() >= maxLength) {
+                    change.setText("");
+                }
+
+            }
+            return change;
+        });
+        return temp;
+    }
+
+
+    @Override
+    public boolean validateRecipeIngredient(String recipeName, Float quantity, String unit){
+        if(recipeName.isEmpty()){
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input ingredient name！");
+            return false;
+        }
+        if (recipeName.length() > MAX_LENGTH) {
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Ingredient name is too long！");
+            return false;
+        }
+        if(quantity == null || quantity == 0.0){
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input ingredient quantity ！");
+            return false;
+        }
+        if(quantity>MAX_QUANTITY){
+            Model.displayAlert(Alert.AlertType.WARNING, "WARN", "quantity is too large!");
+
+            return false;
+        }
+
+
+        if(unit.isEmpty()){
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please ingredient unit！");
+
+            return false;
+        }
+        if(unit.length() > MAX_LENGTH){
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Unit too long！");
+            return false;
+        }
+        if (unit.matches("\\d+")) {
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Unit cannot be pure numbers！");
+            return false;
+        }
         return true;
+    }
+    @Override
+    public boolean validateRecipe(String recipeName, String cookingTime, String preparationTime, String recipeImage){
+        if (recipeName.isEmpty()) {
+                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input recipe name！");
+                return false;
+            }
+            if (cookingTime.isEmpty()) {
+                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input cooking time！");
+                return false;
+            }
+            if (preparationTime.isEmpty()) {
+                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input preparationTime time！");
+                return false;
+
+            }
+            if (!cookingTime.matches("\\d+") || !preparationTime.matches("\\d+")) {
+                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input number！");
+                return false;
+            }
+            if (recipeImage.isEmpty()) {
+                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please upload image!");
+                return false;
+            }
+            return true;
+
     }
 
 }

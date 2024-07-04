@@ -1,15 +1,12 @@
 package dao.mappers;
-
 import org.apache.ibatis.annotations.Param;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The interface Recipe mapper.
  * Manage the mapper between Recipe and xml.
  *
- * @author Chenyi He
+ * @author He Chenyi
  */
 public interface RecipeMapper {
     /**

@@ -37,7 +37,6 @@ public class VIPViewController implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == vipView.button1) {
-            System.out.print(111);
             model.setVIP(SessionManager.getCurrentUserName());
             Model.displayAlert(Alert.AlertType.INFORMATION,"Info.","Successfully join VIP!");
             vipView.close();
@@ -47,7 +46,6 @@ public class VIPViewController implements EventHandler<ActionEvent> {
 
         }
         if (event.getSource() == vipView.button2) {
-            System.out.print(111);
             vipView.close();
 
         }

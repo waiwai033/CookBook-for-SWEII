@@ -4,26 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mappers.PreparationStepMapper">
 
-    <!-- 添加食谱步骤 -->
+    <!-- add recipe preparation step -->
     <insert id="addPreparationStep" parameterType="dao.mappers.PreparationStep">
         INSERT INTO preparationstep (recipe_id, step, description)
         VALUES (#{preparationStep.recipeId}, #{preparationStep.step}, #{preparationStep.description})
     </insert>
 
-    <!-- 删除食谱步骤 -->
+    <!-- delete recipe preparation step -->
     <delete id="deletePreparationStep" parameterType="Integer">
         DELETE FROM preparationstep
         WHERE recipe_id = #{recipeID}
     </delete>
 
-    <!-- 更新食谱步骤 -->
+    <!-- update recipe preparation step -->
     <update id="updatePreparationStep" parameterType="dao.mappers.PreparationStep">
         UPDATE preparationstep
         SET description = #{description}
         WHERE recipe_id = #{recipeId} AND step = #{step}
     </update>
 
-    <!-- 根据食谱 ID 获取所有步骤 -->
+    <!-- get all recipe preparation steps by Id -->
     <select id="getPreparationStepsByRecipeId" parameterType="Integer" resultType="dao.mappers.PreparationStep">
         SELECT *
         FROM preparationstep

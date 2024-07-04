@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+import model.Model;
 /**
  * This view is for users to sign up.
  * @author Yan Yi
@@ -116,6 +116,7 @@ public class SignUpView extends Stage {
         PasswordLabel.setLayoutY(240);
 
         newPasswordTextField = new PasswordField();
+        newPasswordTextField.setTextFormatter(Model.textFieldFormatter(18));
         newPasswordTextField.setLayoutX(242);
         newPasswordTextField.setLayoutY(242);
         newPasswordTextField.setPrefSize(200,30);
@@ -130,6 +131,7 @@ public class SignUpView extends Stage {
         UsernameLabel.setLayoutY(150);
 
         newUserTextField = new TextField();
+        newUserTextField.setTextFormatter(Model.textFieldFormatter(18));
         newUserTextField.setLayoutX(245);
         newUserTextField.setLayoutY(152);
         newUserTextField.setPrefSize(200,30);
