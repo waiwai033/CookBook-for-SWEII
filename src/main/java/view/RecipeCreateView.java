@@ -201,7 +201,7 @@ public class RecipeCreateView extends Stage {
     private void setDeleteButton() {
         deleteButton = new Button("-");
         deleteButton.setLayoutX(260);
-        deleteButton.setLayoutY(245);
+        deleteButton.setLayoutY(285);
         deleteButton.setPrefSize(30,30);
         deleteButton.setOnAction(new RecipeCreateController(this));
     }
@@ -209,7 +209,7 @@ public class RecipeCreateView extends Stage {
     private void setAddButton() {
         addButton = new Button("+");
         addButton.setLayoutX(260);
-        addButton.setLayoutY(210);
+        addButton.setLayoutY(240);
         addButton.setPrefSize(30,30);
         addButton.setOnAction(new RecipeCreateController(this));
     }
@@ -239,12 +239,12 @@ public class RecipeCreateView extends Stage {
 
     private void setPrepartionTime() {
         preparationTextField = new TextField();
-        preparationTextField.setLayoutX(150);
+        preparationTextField.setLayoutX(200);
         preparationTextField.setLayoutY(200);
         preparationTextField.setPrefSize(80,20);
         preparationTextField.setAlignment(Pos.CENTER);
 
-        preparationTimeLabel = new Label("Prepare Time:");
+        preparationTimeLabel = new Label("Prepare Time(min):");
         preparationTimeLabel.setFont(new Font("Times New Roman", 20));
         preparationTimeLabel.setLayoutX(20);
         preparationTimeLabel.setLayoutY(200);
@@ -253,12 +253,12 @@ public class RecipeCreateView extends Stage {
 
     private void setCookingTime() {
         cookingTimeTextField = new TextField();
-        cookingTimeTextField.setLayoutX(150);
+        cookingTimeTextField.setLayoutX(200);
         cookingTimeTextField.setLayoutY(165);
         cookingTimeTextField.setPrefSize(80,20);
         cookingTimeTextField.setAlignment(Pos.CENTER);
 
-        cookingTimeLabel = new Label("Cooking Time:");
+        cookingTimeLabel = new Label("Cooking Time(min):");
         cookingTimeLabel.setFont(new Font("Times New Roman", 20));
         cookingTimeLabel.setLayoutX(20);
         cookingTimeLabel.setLayoutY(160);
