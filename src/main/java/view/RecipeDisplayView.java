@@ -16,26 +16,66 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
+
+/**
+ * This view is used to display a recipe.
+ *
+ * @author Yan Yi
+ */
 public class RecipeDisplayView extends Stage {
-    public Button editRecipeButton,deleteRecipeButton,backButton,VIPbutton;
-
-
+    /**
+     *  Button to edit recipe
+     */
+    public Button editRecipeButton,/**
+     *  Button to delete recipe
+     **/
+    deleteRecipeButton,/**
+     *  Button to turn back
+     **/
+    backButton,/**
+     *  Button to get VIP
+     **/
+    VIPbutton;
+    /**
+     *  List to display ingredients
+     */
     public ObservableList<RecipeIngredient> selectedIngredients = FXCollections.observableArrayList();
+    /**
+     *  Label to display recipe name
+     */
     public Label recipeNameLabel=new Label("");
-    public Label serveNumberLabel;
+    /**
+     *  Label to display cooking time
+     */
     public Label cookingTimeLabel = new Label();
+    /**
+     *  Label to display preparation time
+     */
     public Label preparationTimeLabel = new Label();
+    /**
+     *  TextField to change serving number
+     */
     public TextField serveNumberTextField = new TextField("dsd");
-    public ImageView recipeImage;
+    /**
+     *  String to store imageurl
+     */
     public String imageurl = "";
-
-    private Tab ingredientsTab, instructionsTab;
-
-    public TableView<RecipeIngredient> tableView;
+    /**
+     *  TextArea to display instructions
+     */
     public TextArea instructionsTextArea = new TextArea();;
-
+    /**
+     *  Integer to store selected recipe number
+     */
     public Integer selectedRecipeNumber;
+    private Tab ingredientsTab, instructionsTab;
+    private ImageView recipeImage;
+    private Label serveNumberLabel;
 
+    /**
+     *  Constructor of RecipeDisplayView
+     * @param recipeNumber
+     */
     public RecipeDisplayView(Integer recipeNumber) {
 //        this.selectedButton = selectedButton;
 
@@ -194,7 +234,7 @@ public class RecipeDisplayView extends Stage {
 
     private void setIngredientsTab() {
         ingredientsTab = new Tab("Ingredients");
-        tableView = new TableView<>();
+        TableView<RecipeIngredient> tableView = new TableView<>();
         tableView.setLayoutX(0);
         tableView.setLayoutY(0);
         tableView.setPrefSize(500,350);

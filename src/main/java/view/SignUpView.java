@@ -12,15 +12,32 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * This view is for users to sign up.
+ * @author Yan Yi
+ */
 public class SignUpView extends Stage {
-    public TextField newUserTextField ,newPasswordTextField;
-
-    public Label titleLabel;
-    public ImageView imageView;
-
+    /**
+     * TextField for input username.
+     */
+    public TextField newUserTextField,/**
+     * TextField for input password.
+     **/
+    newPasswordTextField;
+    /**
+     * Button for create a new user.
+     */
     public Button createUserButton;
-
+    /**
+     * Button for back to sign in page.
+     */
     public Button createBackButton;
+
+    private Label titleLabel;
+    private ImageView imageView;
+    /**
+     * Constructor for SignUpView.
+     */
     public SignUpView() {
         this.setTitle("Signup");
         this.setWidth(800);
@@ -28,13 +45,31 @@ public class SignUpView extends Stage {
         this.setResizable(false);
         init();
     }
+
+    /**
+     * This method is to get username.
+     * @return username
+     */
     public TextField getNewUserTextField() {
         return newUserTextField;
     }
+
+    /**
+     * This method is to get password
+     * @return password
+     */
     public TextField getNewPasswordTextField() {
         return newPasswordTextField;
     }
-    public void init() {
+
+    /**
+     * This method is to get the stage.
+     * @return Stage
+     */
+    public Stage getStage() {
+        return (Stage) createUserButton.getScene().getWindow();
+    }
+    private void init() {
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800, 600);
         setupImageBackground();
@@ -102,23 +137,21 @@ public class SignUpView extends Stage {
         return UsernameLabel;
 
     }
-    public void setSignupButton() {
+    private void setSignupButton() {
         createUserButton = new Button("Create");
         createUserButton.setOnAction(new SignPageController(this));
         createUserButton.setLayoutX(150);
         createUserButton.setLayoutY(320);
         createUserButton.setPrefSize(100,40);
     }
-    public void setBackButton() {
+    private void setBackButton() {
         createBackButton = new Button("Already have account");
         createBackButton.setLayoutX(350);
         createBackButton.setLayoutY(320);
         createBackButton.setPrefSize(200,40);
         createBackButton.setOnAction(new SignPageController(this));
     }
-    public Stage getStage() {
-        return (Stage) createUserButton.getScene().getWindow();
-    }
+
 
 }
 

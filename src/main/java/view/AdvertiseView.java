@@ -13,10 +13,45 @@ import javafx.scene.media.MediaView;
 
 import java.nio.file.Paths;
 
+
+/**
+ * View for advertisement. Showing a video to users. Additional task for cookbook.
+ *
+ * @author Yan Yi
+ */
 public class AdvertiseView extends Stage {
+
+    /**
+     * Skip button to skip the video.
+     */
     public Button skipButton;
+    /**
+     * Media player for the video.
+     */
     public MediaPlayer mediaPlayer;
 
+    /**
+     * Set the onEndOfMedia event handler.
+     * @param handler
+     */
+    public void setOnEndOfMedia(Runnable handler) {
+        if (mediaPlayer != null) {
+            mediaPlayer.setOnEndOfMedia(handler);
+        }
+    }
+
+    /**
+     * Set the onSkipButton event handler.
+     * @param handler
+     */
+    public void setOnSkipButton(EventHandler<ActionEvent> handler) {
+        skipButton.setOnAction(handler);
+    }
+
+
+    /**
+     * Constructor for AdvertiseView.
+     */
     public AdvertiseView(){
         this.setTitle("");
         this.setResizable(false);
@@ -48,15 +83,7 @@ public class AdvertiseView extends Stage {
         this.setScene(scene);
         mediaPlayer.setAutoPlay(true);
     }
-    public void setOnEndOfMedia(Runnable handler) {
-        if (mediaPlayer != null) {
-            mediaPlayer.setOnEndOfMedia(handler);
-        }
-    }
 
-    public void setOnSkipButton(EventHandler<ActionEvent> handler) {
-        skipButton.setOnAction(handler);
-    }
 }
 
 

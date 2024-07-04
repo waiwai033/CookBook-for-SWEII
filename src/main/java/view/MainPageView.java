@@ -15,14 +15,29 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * This view is the main page
+ *
+ * @author Yan Yi
+ */
 public class MainPageView extends Stage {
-
+    /**
+     * Button to choose recipe
+     */
     public Button chooseRecipe;
+    /**
+     * Button to add recipe
+     */
     public Button addRecipe;
+    /**
+     * Button to get VIP
+     */
     public Button getVIP;
-    public ImageView imageView;
+    private ImageView imageView;
 
-
+    /**
+     * Instantiates a new main page
+     */
     public MainPageView(){
         this.setTitle("mainpage");
         this.setResizable(false);
@@ -36,8 +51,6 @@ public class MainPageView extends Stage {
         background.setPrefSize(800, 600);
         setupImageBackground();
 
-
-
         Label welcome = setupWelcomeLabel();
         setLeftButton();
         setRightButton();
@@ -50,12 +63,10 @@ public class MainPageView extends Stage {
                 getVIP
         );
 
-
         Scene scene = new Scene(background);
         this.setScene(scene);
 
     }
-
     private void setRightButton() {
         addRecipe = new Button();
         File imageFile = new File("src/images/UIDesign/right.PNG");
@@ -77,7 +88,6 @@ public class MainPageView extends Stage {
             System.out.println("Image file not found");
         }
     }
-
     private void setLeftButton() {
         chooseRecipe = new Button();
         File imageFile = new File("src/images/UIDesign/left.PNG");
@@ -113,7 +123,7 @@ public class MainPageView extends Stage {
         welcomeLabel.setFont(welcomeFont);
         return welcomeLabel;
     }
-    public void setVIPButton() {
+    private void setVIPButton() {
         getVIP = new Button("Join our VIP!");
         getVIP.setOnAction(new MainPageController(this));
         getVIP.setLayoutX(650);

@@ -21,29 +21,63 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
+/**
+ * This class represents the view for recipe selection.
+ * @author Yan Yi
+ */
 public class RecipeSelectView extends Stage {
+    /**
+     * The search field for searching recipes.
+     */
     public TextField searchField;
+    /**
+     * The search button for searching recipes.
+     */
     public Button searchButton;
+    /**
+     * The VIP button for getting VIP
+     */
     public Button vipButton;
+    /**
+     * The back button for going back to the main menu.
+     */
     public Button backButton;
+    /**
+     * The next button for navigating to the next page of recipes.
+     */
     public Button nextButton;
+    /**
+     * The previous button for navigating to the previous page of recipes.
+     */
     public Button prevButton;
+    /**
+     * The list of recipe button images on the current page.
+     */
+    public LinkedHashMap<Integer, String> imageUrls = new LinkedHashMap<>();
+    /**
+     * The list of recipe button names on the current page.
+     */
+    public List<String> imageNames;
+    /**
+     * The list of recipe button on the current page.
+     */
+    public HashMap<Button, Integer> buttonMap = new HashMap<>();
+    private Label titleLabel;
     private int currentPage = 0;
     private static final int ITEMS_PER_PAGE = 3;
-    public LinkedHashMap<Integer, String> imageUrls = new LinkedHashMap<>();
-    public List<String> imageNames;
-    public List<Button> buttonList = new ArrayList<>();
-    public Label titleLabel;
-//    public AnchorPane background;
-    public HashMap<Button, Integer> buttonMap = new HashMap<>();
+    private List<Button> buttonList = new ArrayList<>();
+
+    /**
+     * Constructor for the RecipeSelectView class.
+     *
+     */
     public RecipeSelectView() {
         this.setWidth(800);
         this.setHeight(600);
         this.setResizable(false);
         init();
     }
-    public void init(){
+    private void init(){
         // Load initial data
         RecipeSelectController controller = new RecipeSelectController(this);
         controller.initializeData();
@@ -92,6 +126,7 @@ public class RecipeSelectView extends Stage {
         Scene scene = new Scene(background);
         this.setScene(scene);
     }
+
     private void setVIPButton() {
         vipButton = new Button("GetVIP!");
         vipButton.setOnAction(new RecipeSelectController(this));
@@ -138,7 +173,7 @@ public class RecipeSelectView extends Stage {
         });
     }
 
-    public void setRecipeButtons(Pane pane, int page) {
+    private void setRecipeButtons(Pane pane, int page) {
         pane.getChildren().clear();
         int start = page * ITEMS_PER_PAGE;
         int end = Math.min(start + ITEMS_PER_PAGE, imageUrls.size());
@@ -172,13 +207,6 @@ public class RecipeSelectView extends Stage {
         Button recipeButton = new Button();
         recipeButton.setOnAction(new RecipeSelectController(this));
         buttonList.add(recipeButton);
-//        recipeButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                System.out.println("Clicked on image: " + imageName);
-//                // 这里可以添加其他点击事件处理逻辑
-//            }
-//        });
         ImageView imageView = new ImageView(recipeImage);
         imageView.setFitHeight(200);
         imageView.setFitWidth(200);
@@ -192,7 +220,8 @@ public class RecipeSelectView extends Stage {
         vbox.setSpacing(10); // Add some spacing between button and label
         return vbox;
     }
-    public void setSearchField() {
+
+    private void setSearchField() {
         searchField = new TextField();
         searchField.setPrefHeight(40.0);
         searchField.setPrefWidth(400.0);

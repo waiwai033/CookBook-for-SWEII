@@ -11,10 +11,26 @@ import javafx.stage.Stage;
 
 import java.util.function.Consumer;
 
+/**
+ * This view is for user to try VIP
+ */
 public class VIPView extends Stage {
+    /**
+     * Button for Become VIP
+     */
     public Button button1;
+    /**
+     * Button for turning back.
+     */
     public Button button2;
+    /**
+     *  Consumer for status of VIP
+     */
     public Consumer<Void> onBecomeVIP;
+    /**
+     * Constructor for VIPView
+     * @param onBecomeVIP
+     */
     public VIPView(Consumer<Void> onBecomeVIP) {
         this.setTitle("TryVIP");
         this.setResizable(false);
@@ -48,7 +64,6 @@ public class VIPView extends Stage {
         Scene scene = new Scene(background);
         this.setScene(scene);
     }
-
     private Label setuplabel(String context,int x,int y,int size) {
         Label label = new Label(context);
         label.setLayoutX(x);
@@ -57,14 +72,14 @@ public class VIPView extends Stage {
         label.setFont(font);
         return label;
     }
-    public void setButton1() {
+    private void setButton1() {
         button1 = new Button("Join right now");
         button1.setOnAction(new VIPViewController(this,onBecomeVIP));
         button1.setLayoutX(50);
         button1.setLayoutY(520);
         button1.setPrefSize(100,40);
     }
-    public void setButton2() {
+    private void setButton2() {
         button2 = new Button("Cancel");
         button2.setOnAction(new VIPViewController(this,onBecomeVIP));
         button2.setLayoutX(250);

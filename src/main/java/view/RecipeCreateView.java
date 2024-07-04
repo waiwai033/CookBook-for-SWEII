@@ -19,24 +19,77 @@ import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-
+/**
+ * This view is used to create or edit a recipe.
+ *
+ * @author Yan Yi
+ */
 public class RecipeCreateView extends Stage {
-
+    /**
+     *  Boolean to judge whether the recipe is edited or created
+     */
     public boolean isEdited = false;
+    /**
+     *  The recipe id of the recipe that is edited.
+     */
     public Integer editedRecipeId = 0;
-    public Button submitButton,backButton,uploadButton,addButton,deleteButton,clearButton;
-    public TextField recipeNameTextField,preparationTextField, cookingTimeTextField,servenumberTextField;
+    /**
+     *  Button for submit recipe
+     */
+    public Button submitButton,/**
+     *  Button for cancel recipe
+     */
+    backButton,/**
+     *  Button for upload image
+     **/
+    uploadButton,/**
+     *  Button for add ingredient
+     **/
+    addButton,/**
+     *  Button for delete ingredient
+     **/
+    deleteButton,/**
+     *  Button for clear ingredient
+     **/
+    clearButton;
+    /**
+     *  TextField for recipe name
+     */
+    public TextField recipeNameTextField,/**
+     *  TextField for recipe description
+     **/
+    preparationTextField,/**
+     *  TextField for recipe cooking time
+     **/
+    cookingTimeTextField;
+    /**
+     * ImageView for recipe image
+     */
     public ImageView recipeImage;
+    /**
+     * TableView for recipe ingredients
+     */
     public TableView<RecipeIngredient> tableView;
+    /**
+     * TableView for recipe preparation steps
+     */
     public TableView<PreparationStep> instructionTableView;
-    public TextArea instructionTextArea = new TextArea();
-    private Label cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
+    /**
+     *  Tab for ingredients
+     */
     public Tab ingredientsTab;
+    /**
+     *  Tab for instruction
+     */
     public Tab instructionTab;
-    public AnchorPane ingredientsPane;
-    public AnchorPane instructionPane;
+    /**
+     * Tab for ingredients and instruction
+     */
     public TabPane tabPane;
-
+    private Label cookingTimeLabel,preparationTimeLabel,serveNumberLabel;
+    /**
+     *  Instantiates a new create recipe view.
+     */
     public RecipeCreateView() {
         this.setTitle("");
         this.setResizable(false);
@@ -44,6 +97,12 @@ public class RecipeCreateView extends Stage {
         this.setHeight(600);
         init();
     }
+
+    /**
+     * Instantiates a edit recipe view
+     *
+     * @param _editedRecipeId
+     */
     public RecipeCreateView(int _editedRecipeId){
         this.editedRecipeId = _editedRecipeId;
         this.isEdited = true;
@@ -53,7 +112,15 @@ public class RecipeCreateView extends Stage {
         this.setHeight(600);
         init();
     }
-    public void init() {
+    /**
+     * Setup image
+     * @param temp
+     */
+    public void updateImage(String temp) {
+        recipeImage.setImage(new Image("file:"+ temp));
+    }
+
+    private void init() {
         AnchorPane background = new AnchorPane();
         background.setPrefSize(800,600);
         background.setStyle("-fx-background-color: #f6ef97;");
@@ -241,7 +308,7 @@ public class RecipeCreateView extends Stage {
         );
 
         instructionTableView.getColumns().addAll(stepColumn,descriptionColumn);
-        instructionPane = new AnchorPane();
+        AnchorPane instructionPane = new AnchorPane();
         instructionPane.setPrefSize(450,350);
         instructionPane.setStyle("-fx-background-color: transparent;");
         instructionPane.setLayoutX(0);
@@ -316,7 +383,7 @@ public class RecipeCreateView extends Stage {
 
         tableView.getColumns().addAll(nameColumn, quantityColumn, unitsColumn, descriptionColumn);
 
-        ingredientsPane = new AnchorPane();
+        AnchorPane ingredientsPane = new AnchorPane();
         ingredientsPane.setPrefSize(450,350);
         ingredientsPane.setStyle("-fx-background-color: transparent;");
         ingredientsPane.setLayoutX(0);
@@ -325,7 +392,7 @@ public class RecipeCreateView extends Stage {
         ingredientsTab.setContent(ingredientsPane);
     }
 
-    public void setupImage() {
+    private void setupImage() {
             recipeImage = new ImageView();
             recipeImage.setFitWidth(200);
             recipeImage.setFitHeight(200);
@@ -333,11 +400,6 @@ public class RecipeCreateView extends Stage {
             recipeImage.setLayoutY(0);
         }
 
-
-
-    public void updateImage(String temp) {
-        recipeImage.setImage(new Image("file:"+ temp));
-    }
 }
 
 

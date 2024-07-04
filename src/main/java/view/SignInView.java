@@ -14,13 +14,25 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import control.LoginPageController;
 
+/**
+ *  This view is for users to sign in.
+ * @author Yan Yi
+ */
 public class SignInView extends Stage {
-
+    /**
+     * Button for sign in.
+     */
     public Button signinButton;
+    /**
+     * Button for sign up.
+     */
     public Button signupButton;
-    public TextField usernameTextField;
-    public TextField passwordTextField;
-    public Label titleLabel;
+    private TextField usernameTextField;
+    private TextField passwordTextField;
+    private Label titleLabel;
+    /**
+     * Constructor for sign in.
+     */
     public SignInView() {
         this.setTitle("Sign In");
         this.setWidth(800);
@@ -28,11 +40,18 @@ public class SignInView extends Stage {
         this.setResizable(false);
         start();
     }
-
-
+    /**
+     * This method is to get username.
+     * @return username
+     */
     public TextField getNewUserTextField() {
         return usernameTextField;
     }
+
+    /**
+     * This method is to get password.
+     * @return password
+     */
     public TextField getNewPasswordTextField() {
         return passwordTextField;
     }
@@ -55,8 +74,7 @@ public class SignInView extends Stage {
         transition.play();
     }
 
-
-    public void start() {
+    private void start() {
         AnchorPane backPane = new AnchorPane();
         backPane.setPrefSize(800, 600);
         double width = backPane.getPrefWidth() / 2;
@@ -77,7 +95,6 @@ public class SignInView extends Stage {
         startAnimation(imageView3, -width/4, 0);
         startAnimation(imageView4, -width/4, 0);
         startAnimation(imageView4a, -width/4, 0);
-
 
 
         AnchorPane frontPane = new AnchorPane();
@@ -109,7 +126,7 @@ public class SignInView extends Stage {
         titleLabel.setLayoutY(30);
     }
 
-    public void setSigninButton() {
+    private void setSigninButton() {
         signinButton = new Button("Sign In");
         signinButton.setOnAction(new LoginPageController(this));
         signinButton.setLayoutX(150);
@@ -117,7 +134,7 @@ public class SignInView extends Stage {
         signinButton.setPrefSize(100,40);
     }
 
-    public void setSignupButton() {
+    private void setSignupButton() {
         signupButton = new Button("Sign up");
         signupButton.setOnAction(new LoginPageController(this));
         signupButton.setLayoutX(350);
@@ -125,7 +142,7 @@ public class SignInView extends Stage {
         signupButton.setPrefSize(100,40);
     }
 
-    public Label setUsernameTextField() {
+    private Label setUsernameTextField() {
         Label UsernameLabel = new Label("Username:");
         UsernameLabel.setFont(new Font("Times New Roman", 25));
         UsernameLabel.setLayoutX(120);
@@ -139,7 +156,7 @@ public class SignInView extends Stage {
         return UsernameLabel;
     }
 
-    public Label setPasswordTextField() {
+    private Label setPasswordTextField() {
         Label PasswordLabel = new Label("Password:");
         PasswordLabel.setFont(new Font("Times New Roman", 25));
         PasswordLabel.setLayoutX(120);
