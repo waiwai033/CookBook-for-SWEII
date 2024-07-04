@@ -53,6 +53,7 @@ public class LoginPageController implements EventHandler<ActionEvent> {
                 // If login successful, show the main page view
                 MainPageView mainPageView = new MainPageView();
                 mainPageView.show();
+                signinView.close();
             }
         }
     }

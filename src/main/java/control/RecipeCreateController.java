@@ -10,6 +10,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Model;
 import view.RecipeCreateView;
+import view.RecipeSelectView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -175,6 +177,11 @@ public class RecipeCreateController implements EventHandler<ActionEvent> {
             successAlert.setContentText("Recipe and ingredients added successfully!");
             successAlert.showAndWait();
 
+            // Close the stage
+            recipeCreateView.close();
+            RecipeSelectView recipeSelectView = new RecipeSelectView();
+            recipeSelectView.show();
+
         }
 
 
@@ -248,8 +255,8 @@ public class RecipeCreateController implements EventHandler<ActionEvent> {
         recipeCreateView.recipeNameTextField.clear();
         recipeCreateView.preparationTextField.clear();
         recipeCreateView.cookingTimeTextField.clear();
-        recipeCreateView.instructionTextArea.clear();
         recipeCreateView.tableView.getItems().clear();
+        recipeCreateView.instructionTableView.getItems().clear();
         recipeCreateView.recipeImage.setImage(null);
     }
 }

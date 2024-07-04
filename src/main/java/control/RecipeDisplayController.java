@@ -101,19 +101,13 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
                     // If user confirms deletion, delete the recipe and associated image file
-                    String imageUrl = selectedRecipe.getImageUrl();
-                    File imageFile = new File(imageUrl);
-                    if (imageFile.exists()) {
-                        try {
-                            Files.delete(imageFile.toPath());
-                        } catch (Exception e) {
-                            System.err.println("Failed to delete image file: " + e.getMessage());
-                        }
-                    }
                     model.deleteRecipe(selectedRecipe.getRecipeId());
                     Model.displayAlert(Alert.AlertType.INFORMATION,"Info","Successfully deleted this recipe");
                 }
             });
+            recipeDisplayView.close();
+            RecipeSelectView recipeSelectView = new RecipeSelectView();
+            recipeSelectView.show();
         }else if (event.getSource() == recipeDisplayView.editRecipeButton) {
             // Handle edit recipe button click
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Do you want to edit this recipe?", ButtonType.YES, ButtonType.NO);

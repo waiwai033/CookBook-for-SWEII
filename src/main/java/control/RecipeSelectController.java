@@ -69,7 +69,7 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
                 // Handle end of media event to close AdvertiseView and show RecipeDisplayView
                 advertiseView.setOnEndOfMedia(() -> {
                     advertiseView.close();
-                    // 展示 RecipeDisplayView
+                    // Show RecipeDisplayView
                     RecipeDisplayView view = new RecipeDisplayView(recipeNumber);
                     view.show();
                 });
