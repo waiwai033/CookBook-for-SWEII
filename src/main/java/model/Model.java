@@ -273,7 +273,6 @@ public class Model implements ModelMethod{
         String targetPath = projectPath + "/src/images/dishes";
         String fileExtension = getFileExtension(imageUrl);
         long timestamp = System.currentTimeMillis();
-        System.out.println(timestamp);
         String newFileName = timestamp + "." + fileExtension;
         Path fullPath = Paths.get(targetPath).resolve(newFileName);
         Path imagePath = Paths.get(imageUrl);
@@ -345,12 +344,12 @@ public class Model implements ModelMethod{
 
 
         if(unit.isEmpty()){
-            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please ingredient unit！");
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input ingredient unit！");
 
             return false;
         }
         if(unit.length() > MAX_LENGTH){
-            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Unit too long！");
+            Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Unit is too long！");
             return false;
         }
         if (unit.matches("\\d+")) {
@@ -365,6 +364,10 @@ public class Model implements ModelMethod{
                 Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input recipe name！");
                 return false;
             }
+        if(recipeName.length() > MAX_LENGTH){
+                Model.displayAlert(Alert.AlertType.WARNING,"Warn","Recipe name is too long");
+                return false;
+        }
             if (cookingTime.isEmpty()) {
                 Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input cooking time！");
                 return false;
@@ -374,14 +377,16 @@ public class Model implements ModelMethod{
                 return false;
 
             }
+            if(cookingTime.length() > MAX_LENGTH || preparationTime.length() > MAX_LENGTH){
+                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Time number is too large！");
+                return false;
+            }
             if (!cookingTime.matches("\\d+") || !preparationTime.matches("\\d+")) {
                 Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please input number！");
                 return false;
             }
-            if (recipeImage.isEmpty()) {
-                Model.displayAlert(Alert.AlertType.WARNING, "Warn", "Please upload image!");
-                return false;
-            }
+
+
             return true;
 
     }
