@@ -12,12 +12,5 @@ public class ApplicationEntrance extends javafx.application.Application {
     public void start(Stage stage) throws Exception {
         SignInView signinView = new SignInView();
         signinView.show();
-
-//          recipeDisplayView view = new recipeDisplayView();
-//          view.show();
-//        MainPageView mainPageView = new MainPageView();
-//        mainPageView.show();
-//        VIPView vipView = new VIPView();
-//        vipView.show();
     }
 }
