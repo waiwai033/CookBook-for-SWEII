@@ -20,7 +20,7 @@ public interface RecipeMapper {
     /**
      * Delete recipe boolean.
      *
-     * @param recipeId the recipe id
+     * @param recipeID the recipe id
      * @return the boolean
      */
     boolean deleteRecipe(@Param("recipeID") Integer recipeID);

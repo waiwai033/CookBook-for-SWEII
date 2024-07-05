@@ -33,10 +33,7 @@ public class RecipeDisplayView extends Stage {
     deleteRecipeButton,/**
      *  Button to turn back
      **/
-    backButton,/**
-     *  Button to get VIP
-     **/
-    VIPbutton;
+    backButton;
     /**
      *  List to display ingredients
      */
@@ -121,7 +118,6 @@ public class RecipeDisplayView extends Stage {
         setBackButton();
         setEditButton();
         setDeleteButton();
-        setVIPButton();
 
 
         background.getChildren().addAll(
@@ -134,23 +130,12 @@ public class RecipeDisplayView extends Stage {
                 serveNumberTextField,
                 backButton,
                 editRecipeButton,
-                deleteRecipeButton,
-                VIPbutton);
+                deleteRecipeButton
+        );
 
 
         Scene scene = new Scene(background);
         this.setScene(scene);
-    }
-
-    private void setVIPButton() {
-        VIPbutton = new Button("""
-                        join our
-                        VIP Plan !
-                        """);
-        VIPbutton.setPrefSize(100,100);
-        VIPbutton.setLayoutX(660);
-        VIPbutton.setLayoutY(20);
-        VIPbutton.setOnAction(new RecipeDisplayController(this));
     }
 
     private void setDeleteButton() {

@@ -77,22 +77,7 @@ public class RecipeDisplayController implements EventHandler<ActionEvent> {
      * @param event The ActionEvent representing the user's action.
      */
     public void handle(ActionEvent event) {
-        if (event.getSource() == recipeDisplayView.VIPbutton) {
-            // Handle VIP button click
-            if(!model.userIsVip(SessionManager.getCurrentUserName())){
-                // If user is not VIP, open VIPView for user to become VIP
-                VIPView vipView = new VIPView(v ->{
-                    if (model.userIsVip(SessionManager.getCurrentUserName())){
-                        Model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are now vip");
-                    }
-                });
-                vipView.show();
-            }else {
-                // If user is already VIP, display information message
-                Model.displayAlert(Alert.AlertType.INFORMATION,"Info.","You are already vip");
-            }
-
-        } else if (event.getSource() == recipeDisplayView.deleteRecipeButton) {
+        if (event.getSource() == recipeDisplayView.deleteRecipeButton) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this recipe?", ButtonType.YES, ButtonType.NO);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
