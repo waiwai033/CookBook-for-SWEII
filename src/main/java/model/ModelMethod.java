@@ -1,11 +1,7 @@
 package model;
-
 import dao.mappers.Recipe;
 import dao.mappers.RecipeIngredient;
 import dao.mappers.PreparationStep;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.image.Image;
-
 import java.nio.file.Path;
 import java.util.List;
 import java.util.HashMap;
@@ -17,7 +13,7 @@ import java.util.HashMap;
  * It also includes methods for user sign-up, login, VIP status check,
  * and various operations related to recipes and ingredients.
  *
- * @author hechenyi
+ * @author He Chenyi
  */
 public interface ModelMethod {
 
@@ -125,22 +121,80 @@ public interface ModelMethod {
      */
     public boolean serveNumberIsInteger(String str);
 
+    /**
+     * Updates the ingredients of a recipe based on the number of servings.
+     *
+     * @param id          the ID of the recipe
+     * @param serveNumber the number of servings to update the ingredients for
+     * @return a list of updated ingredients based on the number of servings
+     */
     public List<RecipeIngredient> updateIngredientByServeNumber(Integer id, String serveNumber);
 
+    /**
+     * Retrieves the ingredients of a recipe by its ID.
+     *
+     * @param id the ID of the recipe
+     * @return a list of ingredients for the recipe
+     */
     public List<RecipeIngredient> getIngredientByID(Integer id);
 
+    /**
+     * Sets a user as VIP based on their username.
+     *
+     * @param username the username of the user to set as VIP
+     */
     public void setVIP(String username);
 
+
+    /**
+     * Updates an existing recipe in the database.
+     *
+     * @param recipe the recipe with updated information
+     */
     public void updateRecipe(Recipe recipe);
 
+    /**
+     * Adds a new preparation step for a recipe to the database.
+     *
+     * @param preparationStep the preparation step to be added
+     */
     public void addRecipePreparationStep(PreparationStep preparationStep);
 
+    /**
+     * Updates the preparation steps of a recipe with the given ID.
+     *
+     * @param recipeID          the ID of the recipe
+     * @param preparationSteps the list of preparation steps to update
+     */
     public void updateRecipePreparationStep(Integer recipeID, List<PreparationStep> preparationSteps);
 
+    /**
+     * Deletes a recipe from the database based on its ID.
+     *
+     * @param recipeID the ID of the recipe to delete
+     */
     public void deleteRecipe(Integer recipeID);
 
+    /**
+     * Validates the given recipe details.
+     *
+     * @param recipeName      the name of the recipe
+     * @param cookingTime     the cooking time of the recipe
+     * @param preparationTime the preparation time of the recipe
+     * @param recipeImage     the image associated with the recipe
+     * @return true if the recipe details are valid, false otherwise
+     */
     public boolean validateRecipe(String recipeName, String cookingTime, String preparationTime, String recipeImage);
 
+
+    /**
+     * Validates the given recipe ingredient details.
+     *
+     * @param recipeName the name of the recipe
+     * @param quantity   the quantity of the ingredient
+     * @param unit       the unit of the ingredient
+     * @return true if the recipe ingredient details are valid, false otherwise
+     */
     public boolean validateRecipeIngredient(String recipeName, Float quantity, String unit);
 
 }

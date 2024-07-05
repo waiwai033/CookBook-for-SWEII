@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import model.Model;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -221,9 +223,9 @@ public class RecipeSelectView extends Stage {
 
     private void setSearchField() {
         searchField = new TextField();
+        searchField.setTextFormatter(Model.textFieldFormatter(50));
         searchField.setPrefHeight(40.0);
         searchField.setPrefWidth(400.0);
-        searchField.setText("Search");
         searchField.setLayoutX(200);
         searchField.setLayoutY(100);
         searchField.setEditable(true);

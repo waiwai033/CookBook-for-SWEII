@@ -7,9 +7,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -30,7 +27,7 @@ public class Model implements ModelMethod{
     private PreparationStepMapper preparationStepMapper;
     private SqlSession sqlSession;
     private static final float MAX_QUANTITY = 99999.0f;
-    private static final int MAX_LENGTH = 20;
+    private static final int MAX_LENGTH = 50;
     /**
      * Constructor that initializes MyBatis and connects to the database.
      */
@@ -85,11 +82,15 @@ public class Model implements ModelMethod{
     public boolean login(String name, String password) {
         try {
             User user = userMapper.getUserByName(name);
-            if (user == null) {
+            if(name.isEmpty()){
                 displayAlert(Alert.AlertType.ERROR, "Error", "Please input username!");
                 return false;
+            }
+            if (user == null) {
+                displayAlert(Alert.AlertType.ERROR, "Error", "Username error!");
+                return false;
             } else if (!user.getPassword().equals(password)) {
-                displayAlert(Alert.AlertType.ERROR, "Error", "Password error");
+                displayAlert(Alert.AlertType.ERROR, "Error", "Password error!");
                 return false;
             } else {
                 SessionManager.setCurrentUserName(name);
@@ -141,6 +142,7 @@ public class Model implements ModelMethod{
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+
     }
 
     @Override

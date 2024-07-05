@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 
 /**
  * This view is for user to try VIP
+ * @author Yan Yi
  */
 public class VIPView extends Stage {
     /**

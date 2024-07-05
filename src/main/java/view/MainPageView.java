@@ -39,7 +39,7 @@ public class MainPageView extends Stage {
      * Instantiates a new main page
      */
     public MainPageView(){
-        this.setTitle("mainpage");
+        this.setTitle("Digital Recipe");
         this.setResizable(false);
         this.setWidth(800);
         this.setHeight(600);

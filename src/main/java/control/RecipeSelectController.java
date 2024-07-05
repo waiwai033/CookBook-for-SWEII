@@ -114,6 +114,7 @@ public class RecipeSelectController implements EventHandler<ActionEvent> {
         else if(actionEvent.getSource() == recipeSelectView.searchButton){
             String recipeName = recipeSelectView.searchField.textProperty().getValue();
             recipeSelectView.update(model.updateImageUrls(recipeName), model.updateImageNames(recipeName));
+            recipeSelectView.searchField.setText(recipeName);
         }
         // Handle back button click
         else if(actionEvent.getSource() == recipeSelectView.backButton){
