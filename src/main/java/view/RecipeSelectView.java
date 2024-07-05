@@ -109,6 +109,12 @@ public class RecipeSelectView extends Stage {
 
     }
 
+    /**
+     * Updates the view with new recipe data.
+     *
+     * @param _imageUrls
+     * @param _imageNames
+     */
     public void update(LinkedHashMap<Integer, String>  _imageUrls, ArrayList<String> _imageNames){
         imageUrls = _imageUrls;
         imageNames = _imageNames;
@@ -116,7 +122,6 @@ public class RecipeSelectView extends Stage {
         background.setPrefSize(800, 600);
         background.setStyle("-fx-background-color: #f6ef97;");
         Pane pane = new Pane();
-
         setRecipeButtons(pane, currentPage);
         setNextButton(pane);
         setPreButton(pane);
@@ -124,7 +129,8 @@ public class RecipeSelectView extends Stage {
         setSearchButton();
         setBackButton();
         setVIPButton();
-        background.getChildren().addAll(pane, nextButton, prevButton,searchField,searchButton,vipButton,backButton);
+        setTitleLabel();
+        background.getChildren().addAll(pane, nextButton, prevButton,searchField,searchButton,vipButton,backButton,titleLabel);
         Scene scene = new Scene(background);
         this.setScene(scene);
     }
