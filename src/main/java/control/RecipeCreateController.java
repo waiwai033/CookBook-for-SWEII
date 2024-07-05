@@ -12,6 +12,7 @@ import model.Model;
 import view.RecipeCreateView;
 import view.RecipeSelectView;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,9 +87,12 @@ public class RecipeCreateController implements EventHandler<ActionEvent> {
             }
             Recipe recipe;
             Integer recipeId = 0;
+            String fullImageUrl = recipeCreateView.recipeImage.getImage().getUrl().replace("file:", "");
+            String fileName = Paths.get(fullImageUrl).getFileName().toString();
             // Create or update recipe based on editing status
             if(!recipeCreateView.isEdited) {
-                recipe = new Recipe(0,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()),recipeCreateView.recipeImage.getImage().getUrl().replace("file:", ""));
+                System.out.println(fileName);
+                recipe = new Recipe(0,recipeCreateView.recipeNameTextField.getText(),1,Integer.parseInt(recipeCreateView.cookingTimeTextField.getText()),Integer.parseInt(recipeCreateView.preparationTextField.getText()), "src/images/dishes/" + fileName);
                 recipeId = model.addRecipe(recipe);
             }
             else{

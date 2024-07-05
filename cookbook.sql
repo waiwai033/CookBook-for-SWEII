@@ -2,7 +2,6 @@
 --
 -- Host: localhost    Database: cookbook
 -- ------------------------------------------------------
--- Source serve type    MySQL
 -- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -88,7 +87,7 @@ CREATE TABLE `recipe` (
   `image_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`recipe_id`),
   UNIQUE KEY `name_UNIQUE` (`name`,`recipe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +96,7 @@ CREATE TABLE `recipe` (
 
 LOCK TABLES `recipe` WRITE;
 /*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
-INSERT INTO `recipe` VALUES (85,'hongshaorou',1,20,40,'/Users/hechenyi/Desktop/software/CookBook-for-SWEII/src/images/dishes/1720076093234.png'),(86,'Stir-fried meat with chili',1,30,30,'/Users/hechenyi/Desktop/software/CookBook-for-SWEII/src/images/dishes/1720076724647.png'),(87,'Coca-Cola chicken wings',1,40,30,'/Users/hechenyi/Desktop/software/CookBook-for-SWEII/src/images/dishes/1720076975228.png'),(88,'scrambled egg with tomato',1,10,20,'/Users/hechenyi/Desktop/software/CookBook-for-SWEII/src/images/dishes/1720077197871.png');
+INSERT INTO `recipe` VALUES (85,'hongshaorou',1,20,40,'src/images/dishes/1720076093234.png'),(86,'Stir-fried meat with chili',1,30,30,'src/images/dishes/1720076724647.png'),(87,'Coca-Cola chicken wings',1,40,30,'src/images/dishes/1720076975228.png'),(88,'scrambled egg with tomato',1,10,20,'src/images/dishes/1720077197871.png');
 /*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +122,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (35273678,'dddddd','ddd',0),(49689913,'hcyhcyhcyhcyhcy','password123',0),(72386490,'hcy123','password123',0),(78135363,'hcyhcyhcy','password123',0);
+INSERT INTO `users` VALUES (18592666,'qweqwe','qwe',0),(23561147,'qwe','qwe',1),(35273678,'dddddd','ddd',0),(49689913,'hcyhcyhcyhcyhcy','password123',0),(72386490,'hcy123','password123',0),(78135363,'hcyhcyhcy','password123',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -136,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-05 12:00:13
+-- Dump completed on 2024-07-05 14:28:27

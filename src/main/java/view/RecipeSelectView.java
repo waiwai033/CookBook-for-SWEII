@@ -180,7 +180,6 @@ public class RecipeSelectView extends Stage {
         int start = page * ITEMS_PER_PAGE;
         int end = Math.min(start + ITEMS_PER_PAGE, imageUrls.size());
         for (int i = start; i < end; i++) {
-            // 获取第 i 对的键值对
             HashMap.Entry< Integer,String> entry = new ArrayList<>(imageUrls.entrySet()).get(i);
             String url = entry.getValue(); // 获取 url
             String imageName = imageNames.get(i);
