@@ -4,7 +4,6 @@
 <h3>Overview</h3>
 The Digital cookbook is an application for showing and building recipes.  Users can see available recipes and search for recipes.
 The cookbook will display detailed information including ingredients, needed time for preparation and cooking, the picture of product. Additionally users can create, edit and delete recipes if they want.
-
 <h3>Environment</h3>
 
 > <ol>
@@ -15,8 +14,10 @@ The cookbook will display detailed information including ingredients, needed tim
 > <li>Build Tool: Maven(https://maven.apache.org)</li>
 > </ol> 
 
+
 <h4>Before running the project please configure your database first </h4>
 <h3>Database configuration</h3>
+
 > <ol>
 > <li>Create a database called cookbook in MySQL and execute "use cookbook" command
 > <li>Run cookbook.sql on your MySQL bash or MySQL Workbench  </li>
@@ -27,6 +28,7 @@ The cookbook will display detailed information including ingredients, needed tim
 
 <h3>How to Run the Maven Project</h3>
 <h4>In Maven projects, IntelliJ IDEA or Eclipse usually automatically detects and downloads the required dependencies. </h4>
+
 > <ol>
 > <li>Open Eclipse and import project</li>
 > <li>Select maven project</li>
@@ -38,4 +40,3 @@ The cookbook will display detailed information including ingredients, needed tim
 <h3>Tips</h3>
 In this project package it has already run environments for both Eclipse and IntelliJ IDEA, you can run the project in either IDE.
 And you must have a nice cooking experience with this application!!!
-
